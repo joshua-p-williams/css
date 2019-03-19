@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Dusk\DuskServiceProvider;
-
+use App\Validators\ParticipantValidators;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         \Laravel\Passport\Passport::withoutCookieSerialization();
+        
+        ParticipantValidators::init();
     }
 
     /**

@@ -24,8 +24,8 @@ class Contact extends Model
     {
         return [
             'company_id' => 'integer|exists:contact_companies,id|max:4294967295|required',
-            'category_id' => 'integer|exists:categories,id|max:4294967295|required',
-            'name' => 'max:191|required',
+            'category_id' => 'integer|exists:categories,id|max:4294967295|required|categoryMatchesTeam',
+            'name' => 'max:191|required|uniqueParticipant',
             'phone' => 'max:191|nullable',
             'email' => 'max:191|nullable',
             'address' => 'max:191|nullable'
@@ -36,8 +36,8 @@ class Contact extends Model
     {
         return [
             'company_id' => 'integer|exists:contact_companies,id|max:4294967295|required',
-            'category_id' => 'integer|exists:categories,id|max:4294967295|required',
-            'name' => 'max:191|required',
+            'category_id' => 'integer|exists:categories,id|max:4294967295|required|categoryMatchesTeam',
+            'name' => 'max:191|required|uniqueParticipant',
             'phone' => 'max:191|nullable',
             'email' => 'max:191|nullable',
             'address' => 'max:191|nullable'
