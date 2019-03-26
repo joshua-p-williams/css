@@ -24,8 +24,8 @@ class Score extends Model
     public static function storeValidation($request)
     {
         return [
-            'event_id' => 'integer|exists:events,id|max:4294967295|required',
-            'company_id' => 'integer|exists:contact_companies,id|max:4294967295|nullable',
+            'event_id' => 'integer|exists:events,id|max:4294967295|required|uniqueScore',
+            'company_id' => 'integer|exists:contact_companies,id|max:4294967295|required|participantMatchesTeam',
             'contact_id' => 'integer|exists:contacts,id|max:4294967295|required',
             'score' => 'integer|max:2147483647|required'
         ];
@@ -34,8 +34,8 @@ class Score extends Model
     public static function updateValidation($request)
     {
         return [
-            'event_id' => 'integer|exists:events,id|max:4294967295|required',
-            'company_id' => 'integer|exists:contact_companies,id|max:4294967295|nullable',
+            'event_id' => 'integer|exists:events,id|max:4294967295|required|uniqueScore',
+            'company_id' => 'integer|exists:contact_companies,id|max:4294967295|required|participantMatchesTeam',
             'contact_id' => 'integer|exists:contacts,id|max:4294967295|required',
             'score' => 'integer|max:2147483647|required'
         ];
