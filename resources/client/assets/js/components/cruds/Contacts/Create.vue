@@ -125,8 +125,16 @@ export default {
     },
     methods: {
         ...mapActions('ContactsSingle', ['storeData', 'resetState', 'setCompany', 'setCategory', 'setName', 'setPhone', 'setEmail', 'setAddress', 'fetchContactcompaniesAll', 'fetchCategoriesAll']),
+        categorySelected(categoryId) {
+            this.categoriesAll.forEach( item => {
+                if (item.id == categoryId) {
+                    this.updateCategory(item);
+                }
+            });
+        },
         updateCompany(value) {
-            this.setCompany(value)
+            this.setCompany(value);
+            this.categorySelected(value.category_id);
         },
         updateCategory(value) {
             this.setCategory(value)

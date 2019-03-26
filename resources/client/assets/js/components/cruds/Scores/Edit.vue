@@ -47,7 +47,7 @@
                                             label="name"
                                             @input="updateContact"
                                             :value="item.contact"
-                                            :options="contactsAll"
+                                            :options="contactsByCompany"
                                             />
                                 </div>
                                 <div class="form-group">
@@ -92,6 +92,14 @@ export default {
     },
     computed: {
         ...mapGetters('ScoresSingle', ['item', 'loading', 'eventsAll', 'contactcompaniesAll', 'contactsAll']),
+        contactsByCompany() {
+            let participants = this.contactsAll;
+
+            if (this.item.company && this.item.company.id) {
+                participants = participants.filter(i => i.company_id == this.item.company.id);
+            }
+            return participants;
+        }
     },
     created() {
         this.fetchData(this.$route.params.id)
