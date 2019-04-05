@@ -47,7 +47,7 @@ class CreateSummaryViews extends Migration
             s.category_name ,
             s.company_id ,
             s.company_name ,
-            sum(s.score) as total_score
+            sum(s.score) as score
         from
             v_score_summary s
         group by
