@@ -208,12 +208,12 @@ class CreateSummaryViews extends Migration
         ");
 
         DB::statement("
-        create or replace view v_event_category_completion as
+        create or replace view v_category_completion as
         select
-            cat.id as category_id ,
-            cat.name as category_name ,
             e.id as event_id ,
             e.name as event_name ,
+            cat.id as category_id ,
+            cat.name as category_name ,
             COALESCE(event_category_completion.participant_count, 0) as participant_count ,
             COALESCE(event_category_completion.submitted_score_count, 0) as submitted_score_count,
             case
@@ -270,14 +270,14 @@ class CreateSummaryViews extends Migration
         ");
 
         DB::statement("
-        create or replace view v_event_team_completion as
+        create or replace view v_team_completion as
         select
-            cc.id as company_id ,
-            cc.name as company_name ,
-            cat.id as category_id ,
-            cat.name as category_name , 
             e.id as event_id ,
             e.name as event_name ,
+            cat.id as category_id ,
+            cat.name as category_name , 
+            cc.id as company_id ,
+            cc.name as company_name ,
             COALESCE(event_team_completion.participant_count, 0) as participant_count ,
             COALESCE(event_team_completion.submitted_score_count, 0) as submitted_score_count,
             case
@@ -339,8 +339,8 @@ class CreateSummaryViews extends Migration
      */
     public function down()
     {
-        DB::statement("DROP VIEW v_event_team_completion");
-        DB::statement("DROP VIEW v_event_category_completion");
+        DB::statement("DROP VIEW v_team_completion");
+        DB::statement("DROP VIEW v_category_completion");
         DB::statement("DROP VIEW v_overall_ranking");
         DB::statement("DROP VIEW v_individual_ranking");
         DB::statement("DROP VIEW v_team_ranking");
