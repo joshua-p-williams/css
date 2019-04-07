@@ -87,6 +87,8 @@ Vue.component('vue-button-spinner', require('./components/VueButtonSpinner.vue')
 Vue.component('v-select', vSelect)
 Vue.component('vue-ckeditor', VueCkeditor)
 Vue.component('category-completion', require('./components/Results/CategoryCompletion.vue'))
+Vue.component('team-completion', require('./components/Results/TeamCompletion.vue'))
+Vue.component('individual-completion', require('./components/Results/IndividualCompletion.vue'))
 
 moment.updateLocale(window.app_locale, {
     week: {

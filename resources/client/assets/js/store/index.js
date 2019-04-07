@@ -4,6 +4,8 @@ import Alert from './modules/alert'
 import ChangePassword from './modules/change_password'
 import Rules from './modules/rules'
 import CategoryCompletionsIndex from './modules/CategoryCompletions'
+import TeamCompletionsIndex from './modules/TeamCompletions'
+import IndividualCompletionsIndex from './modules/IndividualCompletions'
 import PermissionsIndex from './modules/Permissions'
 import PermissionsSingle from './modules/Permissions/single'
 import RolesIndex from './modules/Roles'
@@ -35,6 +37,8 @@ export default new Vuex.Store({
         ChangePassword,
         Rules,
         CategoryCompletionsIndex,
+        TeamCompletionsIndex,
+        IndividualCompletionsIndex,
         PermissionsIndex,
         PermissionsSingle,
         RolesIndex,

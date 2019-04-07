@@ -3,8 +3,8 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Category Completion</h3><br />
-                    <span>See what events and categories are still awaiting scores</span>
+                    <h3 class="box-title">Team Completion</h3><br />
+                    <span>See what teams are still awaiting scores in various events</span>
                 </div>
 
                 <div class="box-body">
@@ -53,13 +53,14 @@ export default {
             columns: [
                 { title: 'Event', field: 'event_name', sortable: true },
                 { title: 'Category', field: 'category_name', sortable: true },
+                { title: 'Team', field: 'company_name', sortable: true },
                 { title: '% Complete', field: 'percent_complete', sortable: true },
             ],
             query: { sort: 'percent_complete', order: 'asc' },
             xprops: {
-                module: 'CategoryCompletionsIndex',
-                route: 'categoryCompletions',
-                permission_prefix: 'categoryCompletion_'
+                module: 'TeamCompletionsIndex',
+                route: 'teamCompletions',
+                permission_prefix: 'teamCompletion_'
             }
         }
     },
@@ -70,7 +71,7 @@ export default {
         this.resetState()
     },
     computed: {
-        ...mapGetters('CategoryCompletionsIndex', ['data', 'total', 'loading', 'relationships']),
+        ...mapGetters('TeamCompletionsIndex', ['data', 'total', 'loading', 'relationships']),
     },
     watch: {
         query: {
@@ -81,7 +82,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('CategoryCompletionsIndex', ['fetchData', 'setQuery', 'resetState']),
+        ...mapActions('TeamCompletionsIndex', ['fetchData', 'setQuery', 'resetState']),
     }
 }</script>
 
