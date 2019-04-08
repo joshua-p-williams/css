@@ -59,6 +59,7 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">
+                    <overall-results v-if="outstandingSelection == 'overall'" :event="event" :category="category"></overall-results>
                     <team-results v-if="outstandingSelection == 'team'" :event="event" :category="category"></team-results>
                     <individual-results v-if="outstandingSelection == 'individual'" :event="event" :category="category"></individual-results>
                 </div>
