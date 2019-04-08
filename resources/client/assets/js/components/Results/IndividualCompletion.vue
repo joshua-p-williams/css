@@ -54,7 +54,7 @@ export default {
                 { title: 'Event', field: 'event_name', sortable: true },
                 { title: 'Category', field: 'category_name', sortable: true },
                 { title: 'Team', field: 'company_name', sortable: true },
-                { title: 'Individual', field: 'contact_name', sortable: true },
+                { title: 'Name', field: 'contact_name', sortable: true },
             ],
             query: { sort: 'contact_name', order: 'asc' },
             xprops: {

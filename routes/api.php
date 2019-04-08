@@ -16,4 +16,5 @@ Route::group(['prefix' => '/v1', 'middleware' => ['auth:api'], 'namespace' => 'A
     Route::get('categoryCompletions', 'CategoryCompletionsController@index');
     Route::get('teamCompletions', 'TeamCompletionsController@index');
     Route::get('individualCompletions', 'IndividualCompletionsController@index');
+    Route::get('individualResults', 'IndividualResultsController@index');
 });
