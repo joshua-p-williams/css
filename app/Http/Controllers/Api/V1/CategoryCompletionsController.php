@@ -12,10 +12,13 @@ use Illuminate\Support\Facades\Gate;
 
 class CategoryCompletionsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        
+        $data = CategoryCompletion::with(['event', 'category'])
+                ->ByEventId($request->input('eventId'))
+                ->ByCategoryId($request->input('categoryId'))
+                ->HasParticipants()->get();
 
-        return new CategoryCompletionResource(CategoryCompletion::with(['event', 'category'])->HasParticipants()->get());
+        return new CategoryCompletionResource($data);
     }
 }

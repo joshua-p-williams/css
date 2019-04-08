@@ -160,6 +160,8 @@ class CreateSummaryViews extends Migration
         select
             s.category_id ,
             s.category_name ,
+            cmp.id as company_id ,
+            cmp.name as company_name ,
             s.contact_id ,
             s.contact_name ,
             sum(s.score) as score ,
@@ -167,11 +169,14 @@ class CreateSummaryViews extends Migration
             sum(s.tie_breaker_2) as tie_breaker_2 ,
             sum(s.tie_breaker_3) as tie_breaker_3 ,
             sum(s.tie_breaker_4) as tie_breaker_4
-        from
-            v_individual_ranking s
+        from v_individual_ranking s
+        inner join contacts c on s.contact_id = c.id
+        left join contact_companies cmp on c.company_id = cmp.id
         group by
             s.category_id ,
             s.category_name ,
+            cmp.id,
+            cmp.name,
             s.contact_id ,
             s.contact_name
         order by

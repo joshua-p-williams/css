@@ -89,6 +89,9 @@ Vue.component('vue-ckeditor', VueCkeditor)
 Vue.component('category-completion', require('./components/Results/CategoryCompletion.vue'))
 Vue.component('team-completion', require('./components/Results/TeamCompletion.vue'))
 Vue.component('individual-completion', require('./components/Results/IndividualCompletion.vue'))
+Vue.component('overall-results', require('./components/Results/OverallResults.vue'))
+Vue.component('team-results', require('./components/Results/TeamResults.vue'))
+Vue.component('individual-results', require('./components/Results/IndividualResults.vue'))
 
 moment.updateLocale(window.app_locale, {
     week: {

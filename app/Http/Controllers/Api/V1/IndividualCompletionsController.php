@@ -12,8 +12,13 @@ use Illuminate\Support\Facades\Gate;
 
 class IndividualCompletionsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return new IndividualRankingResource(IndividualRanking::with(['event', 'category', 'company', 'contact'])->UnScored()->get());
+        $data = IndividualRanking::with(['event', 'category', 'company', 'contact'])
+                ->ByEventId($request->input('eventId'))
+                ->ByCategoryId($request->input('categoryId'))
+                ->UnScored()->get();
+
+        return new IndividualRankingResource($data);
     }
 }

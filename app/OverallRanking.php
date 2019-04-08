@@ -4,17 +4,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class IndividualRanking
+ * Class TeamRanking
  *
  * @package App
  * @property string $event
  * @property string $contact
- * @property integer $IndividualRanking
+ * @property integer $TeamRanking
 */
-class IndividualRanking extends Model
+class OverallRanking extends Model
 {
-    protected $table = 'v_individual_ranking';
-    protected $primaryKey = 'none';
+    protected $table = 'v_overall_ranking';
+    protected $primaryKey = 'contact_id';
 
     public function event()
     {
@@ -34,10 +34,6 @@ class IndividualRanking extends Model
     public function contact()
     {
         return $this->belongsTo(Contact::class, 'contact_id');
-    }
-
-    public function scopeUnScored($query) {
-        return $query->whereNull('score_id');
     }
 
     public function scopeOrderByWinner($query) {

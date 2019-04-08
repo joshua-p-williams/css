@@ -24,10 +24,10 @@ const getters = {
 }
 
 const actions = {
-    fetchData({ commit, state }) {
+    fetchData({ commit, state }, constraints) {
         commit('setLoading', true)
 
-        axios.get('/api/v1/individualCompletions')
+        axios.get('/api/v1/individualCompletions', { params: constraints})
             .then(response => {
                 commit('setAll', response.data.data)
             })

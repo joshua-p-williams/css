@@ -12,9 +12,11 @@ const getters = {
     data: state => {
         let rows = state.all
 
+        /* Use the api sort
         if (state.query.sort) {
             rows = _.orderBy(state.all, state.query.sort, state.query.order)
         }
+        */
 
         return rows.slice(state.query.offset, state.query.offset + state.query.limit)
     },
@@ -27,7 +29,7 @@ const actions = {
     fetchData({ commit, state }, constraints) {
         commit('setLoading', true)
 
-        axios.get('/api/v1/teamCompletions', { params: constraints})
+        axios.get('/api/v1/overallResults', { params: constraints})
             .then(response => {
                 commit('setAll', response.data.data)
             })

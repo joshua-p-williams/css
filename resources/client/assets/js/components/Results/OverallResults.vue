@@ -3,9 +3,8 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Category Completion</h3><br />
-                    <span>See what events and categories are still awaiting scores</span>
-                    <span v-if="event"><br /><strong>Event:</strong> {{event.name}}</span>
+                    <h3 class="box-title">Overall Results</h3><br />
+                    <span>See the top scores overall</span>
                     <span v-if="category"><br /><strong>Category:</strong> {{category.name}}</span>
                 </div>
 
@@ -50,14 +49,14 @@ import DatatableList from '../dtmodules/DatatableList'
 import DatatableCheckbox from '../dtmodules/DatatableCheckbox'
 
 export default {
-    props: ['event', 'category'],
+    props: ['category'],
     data() {
         return {
-            query: { sort: 'percent_complete', order: 'asc' },
+            query: { sort: null, order: null },
             xprops: {
-                module: 'CategoryCompletionsIndex',
-                route: 'categoryCompletions',
-                permission_prefix: 'categoryCompletion_'
+                module: 'OverallResultsIndex',
+                route: 'overallResults',
+                permission_prefix: 'overallResult_'
             }
         }
     },
@@ -68,18 +67,20 @@ export default {
         this.resetState()
     },
     computed: {
-        ...mapGetters('CategoryCompletionsIndex', ['data', 'total', 'loading', 'relationships']),
+        ...mapGetters('OverallResultsIndex', ['data', 'total', 'loading', 'relationships']),
         columns: function () {
             let columns = [
-                { title: '% Complete', field: 'percent_complete', sortable: true },
+                { title: 'Team', field: 'company_name', sortable: false },
+                { title: 'Name', field: 'contact_name', sortable: false },
+                { title: 'Score', field: 'score', sortable: false },
+                { title: 'Tie 1', field: 'tie_breaker_1', sortable: false },
+                { title: 'Tie 2', field: 'tie_breaker_2', sortable: false },
+                { title: 'Tie 3', field: 'tie_breaker_3', sortable: false },
+                { title: 'Tie 4', field: 'tie_breaker_4', sortable: false },
             ];
 
-            if (!this.event) {
-                columns.push({ title: 'Event', field: 'event_name', sortable: true });
-            }
-
             if (!this.category) {
-                columns.push({ title: 'Category', field: 'category_name', sortable: true });
+                columns.push({ title: 'Category', field: 'category_name', sortable: false });
             }
 
             return columns;
@@ -92,23 +93,14 @@ export default {
             },
             deep: true
         },
-        event: function (newVal, oldVal) {
-            this.refresh();
-        },
         category: function (newVal, oldVal) {
             this.refresh();
         },
     },
     methods: {
-        ...mapActions('CategoryCompletionsIndex', ['fetchData', 'setQuery', 'resetState']),
+        ...mapActions('OverallResultsIndex', ['fetchData', 'setQuery', 'resetState']),
         refresh: function () {
-            let constraints = (this.event || this.category) ? {eventId: null, categoryId: null} : null;
-            if (this.event) {
-                constraints.eventId = this.event.id;
-            }
-            if (this.category) {
-                constraints.categoryId = this.category.id;
-            }
+            let constraints = this.category ? {categoryId: this.category.id} : null;
             this.fetchData(constraints);
         }
     }

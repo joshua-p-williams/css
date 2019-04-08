@@ -3,8 +3,8 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Category Completion</h3><br />
-                    <span>See what events and categories are still awaiting scores</span>
+                    <h3 class="box-title">Individual Results</h3><br />
+                    <span>See the top scores for individuals</span>
                     <span v-if="event"><br /><strong>Event:</strong> {{event.name}}</span>
                     <span v-if="category"><br /><strong>Category:</strong> {{category.name}}</span>
                 </div>
@@ -53,11 +53,11 @@ export default {
     props: ['event', 'category'],
     data() {
         return {
-            query: { sort: 'percent_complete', order: 'asc' },
+            query: { sort: null, order: null },
             xprops: {
-                module: 'CategoryCompletionsIndex',
-                route: 'categoryCompletions',
-                permission_prefix: 'categoryCompletion_'
+                module: 'IndividualResultsIndex',
+                route: 'individualResults',
+                permission_prefix: 'individualResult_'
             }
         }
     },
@@ -68,18 +68,24 @@ export default {
         this.resetState()
     },
     computed: {
-        ...mapGetters('CategoryCompletionsIndex', ['data', 'total', 'loading', 'relationships']),
+        ...mapGetters('IndividualResultsIndex', ['data', 'total', 'loading', 'relationships']),
         columns: function () {
             let columns = [
-                { title: '% Complete', field: 'percent_complete', sortable: true },
+                { title: 'Team', field: 'company_name', sortable: false },
+                { title: 'Name', field: 'contact_name', sortable: false },
+                { title: 'Score', field: 'score', sortable: false },
+                { title: 'Tie 1', field: 'tie_breaker_1', sortable: false },
+                { title: 'Tie 2', field: 'tie_breaker_2', sortable: false },
+                { title: 'Tie 3', field: 'tie_breaker_3', sortable: false },
+                { title: 'Tie 4', field: 'tie_breaker_4', sortable: false },
             ];
 
             if (!this.event) {
-                columns.push({ title: 'Event', field: 'event_name', sortable: true });
+                columns.push({ title: 'Event', field: 'event_name', sortable: false });
             }
 
             if (!this.category) {
-                columns.push({ title: 'Category', field: 'category_name', sortable: true });
+                columns.push({ title: 'Category', field: 'category_name', sortable: false });
             }
 
             return columns;
@@ -100,7 +106,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions('CategoryCompletionsIndex', ['fetchData', 'setQuery', 'resetState']),
+        ...mapActions('IndividualResultsIndex', ['fetchData', 'setQuery', 'resetState']),
         refresh: function () {
             let constraints = (this.event || this.category) ? {eventId: null, categoryId: null} : null;
             if (this.event) {
