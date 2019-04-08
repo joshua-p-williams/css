@@ -17,7 +17,7 @@ class CategoryCompletionsController extends Controller
         $data = CategoryCompletion::with(['event', 'category'])
                 ->ByEventId($request->input('eventId'))
                 ->ByCategoryId($request->input('categoryId'))
-                ->HasParticipants()->get();
+                ->HasParticipants()->Unfinished()->get();
 
         return new CategoryCompletionResource($data);
     }

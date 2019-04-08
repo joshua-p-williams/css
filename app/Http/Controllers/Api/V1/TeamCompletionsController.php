@@ -17,7 +17,7 @@ class TeamCompletionsController extends Controller
         $data = TeamCompletion::with(['event', 'category', 'company'])
                 ->ByEventId($request->input('eventId'))
                 ->ByCategoryId($request->input('categoryId'))
-                ->HasParticipants()->get();
+                ->HasParticipants()->Unfinished()->get();
 
         return new TeamCompletionResource($data);
     }

@@ -30,6 +30,10 @@ class CategoryCompletion extends Model
         return $query->where('participant_count', '>', 0);
     }
 
+    public function scopeUnfinished($query) {
+        return $query->where('percent_complete', '<', 100);
+    }
+
     public function scopeByEventId($query, $val) {
         if (empty($val)) {
             return $query;
