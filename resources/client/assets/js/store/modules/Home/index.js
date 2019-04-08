@@ -4,7 +4,7 @@ function initialState() {
         category: null,
         eventsAll: [],
         categoriesAll: [],
-        outstandingSelection: 'category',
+        outstandingSelection: 'overall',
         loading: false,
     }
 }

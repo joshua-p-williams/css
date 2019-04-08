@@ -38,4 +38,18 @@ class TeamRanking extends Model
                      ->orderBy('tie_breaker_3', 'desc')
                      ->orderBy('tie_breaker_4', 'desc');
     }
+
+    public function scopeByEventId($query, $val) {
+        if (empty($val)) {
+            return $query;
+        }
+        return $query->where('event_id', $val);
+    }
+
+    public function scopeByCategoryId($query, $val) {
+        if (empty($val)) {
+            return $query;
+        }
+        return $query->where('category_id', $val);
+    }
 }

@@ -7,6 +7,7 @@ import HomeIndex from './modules/Home'
 import CategoryCompletionsIndex from './modules/CategoryCompletions'
 import TeamCompletionsIndex from './modules/TeamCompletions'
 import IndividualCompletionsIndex from './modules/IndividualCompletions'
+import TeamResultsIndex from './modules/TeamResults'
 import IndividualResultsIndex from './modules/IndividualResults'
 import PermissionsIndex from './modules/Permissions'
 import PermissionsSingle from './modules/Permissions/single'
@@ -42,6 +43,7 @@ export default new Vuex.Store({
         CategoryCompletionsIndex,
         TeamCompletionsIndex,
         IndividualCompletionsIndex,
+        TeamResultsIndex,
         IndividualResultsIndex,
         PermissionsIndex,
         PermissionsSingle,

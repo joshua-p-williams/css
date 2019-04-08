@@ -347,24 +347,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            selection: 'category'
-        };
-    },
-
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])('HomeIndex', ['event', 'category', 'outstandingSelection', 'loading', 'eventsAll', 'categoriesAll'])),
     created: function created() {
         this.fetchEventsAll();
@@ -379,8 +365,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.setCategory(value);
         },
 
-        selectCategory: function selectCategory() {
-            this.setOutstandingSelection('category');
+        selectOverall: function selectOverall() {
+            this.setOutstandingSelection('overall');
         },
         selectTeam: function selectTeam() {
             this.setOutstandingSelection('team');
@@ -451,6 +437,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -459,9 +447,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['event', 'category'],
     data: function data() {
         return {
-            columns: [{ title: 'Event', field: 'event_name', sortable: true }, { title: 'Category', field: 'category_name', sortable: true }, { title: '% Complete', field: 'percent_complete', sortable: true }],
             query: { sort: 'percent_complete', order: 'asc' },
             xprops: {
                 module: 'CategoryCompletionsIndex',
@@ -477,7 +465,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.resetState();
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])('CategoryCompletionsIndex', ['data', 'total', 'loading', 'relationships'])),
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])('CategoryCompletionsIndex', ['data', 'total', 'loading', 'relationships']), {
+        columns: function columns() {
+            var columns = [{ title: '% Complete', field: 'percent_complete', sortable: true }];
+
+            if (!this.event) {
+                columns.push({ title: 'Event', field: 'event_name', sortable: true });
+            }
+
+            if (!this.category) {
+                columns.push({ title: 'Category', field: 'category_name', sortable: true });
+            }
+
+            return columns;
+        }
+    }),
     watch: {
         query: {
             handler: function handler(query) {
@@ -485,9 +487,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
 
             deep: true
+        },
+        event: function event(newVal, oldVal) {
+            this.refresh();
+        },
+        category: function category(newVal, oldVal) {
+            this.refresh();
         }
     },
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapActions"])('CategoryCompletionsIndex', ['fetchData', 'setQuery', 'resetState']))
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapActions"])('CategoryCompletionsIndex', ['fetchData', 'setQuery', 'resetState']), {
+        refresh: function refresh() {
+            var constraints = this.event || this.category ? { eventId: null, categoryId: null } : null;
+            if (this.event) {
+                constraints.eventId = this.event.id;
+            }
+            if (this.category) {
+                constraints.categoryId = this.category.id;
+            }
+            this.fetchData(constraints);
+        }
+    })
 });
 
 /***/ }),
@@ -550,6 +569,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -558,9 +579,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['event', 'category'],
     data: function data() {
         return {
-            columns: [{ title: 'Event', field: 'event_name', sortable: true }, { title: 'Category', field: 'category_name', sortable: true }, { title: 'Team', field: 'company_name', sortable: true }, { title: 'Name', field: 'contact_name', sortable: true }],
             query: { sort: 'contact_name', order: 'asc' },
             xprops: {
                 module: 'IndividualCompletionsIndex',
@@ -576,7 +597,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.resetState();
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])('IndividualCompletionsIndex', ['data', 'total', 'loading', 'relationships'])),
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])('IndividualCompletionsIndex', ['data', 'total', 'loading', 'relationships']), {
+        columns: function columns() {
+            var columns = [{ title: 'Team', field: 'company_name', sortable: true }, { title: 'Name', field: 'contact_name', sortable: true }];
+
+            if (!this.event) {
+                columns.push({ title: 'Event', field: 'event_name', sortable: true });
+            }
+
+            if (!this.category) {
+                columns.push({ title: 'Category', field: 'category_name', sortable: true });
+            }
+
+            return columns;
+        }
+    }),
     watch: {
         query: {
             handler: function handler(query) {
@@ -584,9 +619,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
 
             deep: true
+        },
+        event: function event(newVal, oldVal) {
+            this.refresh();
+        },
+        category: function category(newVal, oldVal) {
+            this.refresh();
         }
     },
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapActions"])('IndividualCompletionsIndex', ['fetchData', 'setQuery', 'resetState']))
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapActions"])('IndividualCompletionsIndex', ['fetchData', 'setQuery', 'resetState']), {
+        refresh: function refresh() {
+            var constraints = this.event || this.category ? { eventId: null, categoryId: null } : null;
+            if (this.event) {
+                constraints.eventId = this.event.id;
+            }
+            if (this.category) {
+                constraints.categoryId = this.category.id;
+            }
+            this.fetchData(constraints);
+        }
+    })
 });
 
 /***/ }),
@@ -781,6 +833,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 
@@ -789,9 +843,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['event', 'category'],
     data: function data() {
         return {
-            columns: [{ title: 'Event', field: 'event_name', sortable: true }, { title: 'Category', field: 'category_name', sortable: true }, { title: 'Team', field: 'company_name', sortable: true }, { title: '% Complete', field: 'percent_complete', sortable: true }],
             query: { sort: 'percent_complete', order: 'asc' },
             xprops: {
                 module: 'TeamCompletionsIndex',
@@ -807,7 +861,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.resetState();
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])('TeamCompletionsIndex', ['data', 'total', 'loading', 'relationships'])),
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])('TeamCompletionsIndex', ['data', 'total', 'loading', 'relationships']), {
+        columns: function columns() {
+            var columns = [{ title: 'Team', field: 'company_name', sortable: true }, { title: '% Complete', field: 'percent_complete', sortable: true }];
+
+            if (!this.event) {
+                columns.push({ title: 'Event', field: 'event_name', sortable: true });
+            }
+
+            if (!this.category) {
+                columns.push({ title: 'Category', field: 'category_name', sortable: true });
+            }
+
+            return columns;
+        }
+    }),
     watch: {
         query: {
             handler: function handler(query) {
@@ -815,9 +883,158 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
 
             deep: true
+        },
+        event: function event(newVal, oldVal) {
+            this.refresh();
+        },
+        category: function category(newVal, oldVal) {
+            this.refresh();
         }
     },
-    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapActions"])('TeamCompletionsIndex', ['fetchData', 'setQuery', 'resetState']))
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapActions"])('TeamCompletionsIndex', ['fetchData', 'setQuery', 'resetState']), {
+        refresh: function refresh() {
+            var constraints = this.event || this.category ? { eventId: null, categoryId: null } : null;
+            if (this.event) {
+                constraints.eventId = this.event.id;
+            }
+            if (this.category) {
+                constraints.categoryId = this.category.id;
+            }
+            this.fetchData(constraints);
+        }
+    })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/client/assets/js/components/Results/TeamResults.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dtmodules_DatatableActions__ = __webpack_require__("./resources/client/assets/js/components/dtmodules/DatatableActions.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dtmodules_DatatableActions___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__dtmodules_DatatableActions__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dtmodules_DatatableSingle__ = __webpack_require__("./resources/client/assets/js/components/dtmodules/DatatableSingle.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dtmodules_DatatableSingle___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__dtmodules_DatatableSingle__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dtmodules_DatatableList__ = __webpack_require__("./resources/client/assets/js/components/dtmodules/DatatableList.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dtmodules_DatatableList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__dtmodules_DatatableList__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dtmodules_DatatableCheckbox__ = __webpack_require__("./resources/client/assets/js/components/dtmodules/DatatableCheckbox.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dtmodules_DatatableCheckbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__dtmodules_DatatableCheckbox__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['event', 'category'],
+    data: function data() {
+        return {
+            query: { sort: null, order: null },
+            xprops: {
+                module: 'TeamResultsIndex',
+                route: 'individualResults',
+                permission_prefix: 'individualResult_'
+            }
+        };
+    },
+    created: function created() {
+        this.fetchData();
+    },
+    destroyed: function destroyed() {
+        this.resetState();
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapGetters"])('TeamResultsIndex', ['data', 'total', 'loading', 'relationships']), {
+        columns: function columns() {
+            var columns = [{ title: 'Name', field: 'company_name', sortable: false }, { title: 'Score', field: 'score', sortable: false }, { title: 'Tie 1', field: 'tie_breaker_1', sortable: false }, { title: 'Tie 2', field: 'tie_breaker_2', sortable: false }, { title: 'Tie 3', field: 'tie_breaker_3', sortable: false }, { title: 'Tie 4', field: 'tie_breaker_4', sortable: false }];
+
+            if (!this.event) {
+                columns.push({ title: 'Event', field: 'event_name', sortable: false });
+            }
+
+            if (!this.category) {
+                columns.push({ title: 'Category', field: 'category_name', sortable: false });
+            }
+
+            return columns;
+        }
+    }),
+    watch: {
+        query: {
+            handler: function handler(query) {
+                this.setQuery(query);
+            },
+
+            deep: true
+        },
+        event: function event(newVal, oldVal) {
+            this.refresh();
+        },
+        category: function category(newVal, oldVal) {
+            this.refresh();
+        }
+    },
+    methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["mapActions"])('TeamResultsIndex', ['fetchData', 'setQuery', 'resetState']), {
+        refresh: function refresh() {
+            var constraints = this.event || this.category ? { eventId: null, categoryId: null } : null;
+            if (this.event) {
+                constraints.eventId = this.event.id;
+            }
+            if (this.category) {
+                constraints.categoryId = this.category.id;
+            }
+            this.fetchData(constraints);
+        }
+    })
 });
 
 /***/ }),
@@ -5813,7 +6030,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6098,7 +6315,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6263,7 +6480,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6323,7 +6540,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6339,6 +6556,21 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 // module
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8ac16386\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/client/assets/js/components/Results/TeamResults.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -27308,7 +27540,32 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-xs-12" }, [
       _c("div", { staticClass: "box" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "box-header with-border" }, [
+          _c("h3", { staticClass: "box-title" }, [
+            _vm._v("Individual Completion")
+          ]),
+          _c("br"),
+          _vm._v(" "),
+          _c("span", [
+            _vm._v("See what individuals are still awaiting scores")
+          ]),
+          _vm._v(" "),
+          _vm.event
+            ? _c("span", [
+                _c("br"),
+                _c("strong", [_vm._v("Event:")]),
+                _vm._v(" " + _vm._s(_vm.event.name))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.category
+            ? _c("span", [
+                _c("br"),
+                _c("strong", [_vm._v("Category:")]),
+                _vm._v(" " + _vm._s(_vm.category.name))
+              ])
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "box-body" }, [
           _c("div", { staticClass: "btn-group" }, [
@@ -27317,7 +27574,7 @@ var render = function() {
               {
                 staticClass: "btn btn-default btn-sm",
                 attrs: { type: "button" },
-                on: { click: _vm.fetchData }
+                on: { click: _vm.refresh }
               },
               [
                 _c("i", {
@@ -27335,7 +27592,7 @@ var render = function() {
           { staticClass: "box-body" },
           [
             _vm.loading
-              ? _c("div", { staticClass: "row" }, [_vm._m(1)])
+              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
               : _vm._e(),
             _vm._v(" "),
             !_vm.loading
@@ -27357,17 +27614,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-header with-border" }, [
-      _c("h3", { staticClass: "box-title" }, [_vm._v("Individual Completion")]),
-      _c("br"),
-      _vm._v(" "),
-      _c("span", [_vm._v("See what individuals are still awaiting scores")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -29646,7 +29892,30 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-xs-12" }, [
       _c("div", { staticClass: "box" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "box-header with-border" }, [
+          _c("h3", { staticClass: "box-title" }, [_vm._v("Team Completion")]),
+          _c("br"),
+          _vm._v(" "),
+          _c("span", [
+            _vm._v("See what teams are still awaiting scores in various events")
+          ]),
+          _vm._v(" "),
+          _vm.event
+            ? _c("span", [
+                _c("br"),
+                _c("strong", [_vm._v("Event:")]),
+                _vm._v(" " + _vm._s(_vm.event.name))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.category
+            ? _c("span", [
+                _c("br"),
+                _c("strong", [_vm._v("Category:")]),
+                _vm._v(" " + _vm._s(_vm.category.name))
+              ])
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "box-body" }, [
           _c("div", { staticClass: "btn-group" }, [
@@ -29655,7 +29924,7 @@ var render = function() {
               {
                 staticClass: "btn btn-default btn-sm",
                 attrs: { type: "button" },
-                on: { click: _vm.fetchData }
+                on: { click: _vm.refresh }
               },
               [
                 _c("i", {
@@ -29673,7 +29942,7 @@ var render = function() {
           { staticClass: "box-body" },
           [
             _vm.loading
-              ? _c("div", { staticClass: "row" }, [_vm._m(1)])
+              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
               : _vm._e(),
             _vm._v(" "),
             !_vm.loading
@@ -29695,19 +29964,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-header with-border" }, [
-      _c("h3", { staticClass: "box-title" }, [_vm._v("Team Completion")]),
-      _c("br"),
-      _vm._v(" "),
-      _c("span", [
-        _vm._v("See what teams are still awaiting scores in various events")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -30998,7 +31254,32 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-xs-12" }, [
       _c("div", { staticClass: "box" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "box-header with-border" }, [
+          _c("h3", { staticClass: "box-title" }, [
+            _vm._v("Category Completion")
+          ]),
+          _c("br"),
+          _vm._v(" "),
+          _c("span", [
+            _vm._v("See what events and categories are still awaiting scores")
+          ]),
+          _vm._v(" "),
+          _vm.event
+            ? _c("span", [
+                _c("br"),
+                _c("strong", [_vm._v("Event:")]),
+                _vm._v(" " + _vm._s(_vm.event.name))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.category
+            ? _c("span", [
+                _c("br"),
+                _c("strong", [_vm._v("Category:")]),
+                _vm._v(" " + _vm._s(_vm.category.name))
+              ])
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "box-body" }, [
           _c("div", { staticClass: "btn-group" }, [
@@ -31007,7 +31288,7 @@ var render = function() {
               {
                 staticClass: "btn btn-default btn-sm",
                 attrs: { type: "button" },
-                on: { click: _vm.fetchData }
+                on: { click: _vm.refresh }
               },
               [
                 _c("i", {
@@ -31025,7 +31306,7 @@ var render = function() {
           { staticClass: "box-body" },
           [
             _vm.loading
-              ? _c("div", { staticClass: "row" }, [_vm._m(1)])
+              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
               : _vm._e(),
             _vm._v(" "),
             !_vm.loading
@@ -31047,19 +31328,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-header with-border" }, [
-      _c("h3", { staticClass: "box-title" }, [_vm._v("Category Completion")]),
-      _c("br"),
-      _vm._v(" "),
-      _c("span", [
-        _vm._v("See what events and categories are still awaiting scores")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -31563,11 +31831,11 @@ var render = function() {
                     {
                       staticClass: "btn btn-default btn-sm",
                       attrs: { type: "button" },
-                      on: { click: _vm.selectCategory }
+                      on: { click: _vm.selectOverall }
                     },
                     [
                       _c("i", { staticClass: "fa fa-university" }),
-                      _vm._v(" Category\n                            ")
+                      _vm._v(" Overall\n                            ")
                     ]
                   ),
                   _vm._v(" "),
@@ -31596,20 +31864,68 @@ var render = function() {
                       _vm._v(" Individual\n                            ")
                     ]
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { attrs: { for: "event" } }, [_vm._v("Event")]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        name: "event",
+                        label: "name",
+                        value: _vm.event,
+                        options: _vm.eventsAll
+                      },
+                      on: { input: _vm.updateEvent }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { attrs: { for: "category" } }, [
+                      _vm._v("Category")
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        name: "category",
+                        label: "name",
+                        value: _vm.category,
+                        options: _vm.categoriesAll
+                      },
+                      on: { input: _vm.updateCategory }
+                    })
+                  ],
+                  1
+                )
               ])
             ])
           ])
         ]),
         _vm._v(" "),
-        _vm.outstandingSelection == "category"
-          ? _c("category-completion")
+        _vm.outstandingSelection == "overall"
+          ? _c("category-completion", {
+              attrs: { event: _vm.event, category: _vm.category }
+            })
           : _vm._e(),
         _vm._v(" "),
-        _vm.outstandingSelection == "team" ? _c("team-completion") : _vm._e(),
+        _vm.outstandingSelection == "team"
+          ? _c("team-completion", {
+              attrs: { event: _vm.event, category: _vm.category }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _vm.outstandingSelection == "individual"
-          ? _c("individual-completion")
+          ? _c("individual-completion", {
+              attrs: { event: _vm.event, category: _vm.category }
+            })
           : _vm._e()
       ],
       1
@@ -31617,63 +31933,21 @@ var render = function() {
     _vm._v(" "),
     _c("section", { staticClass: "content" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-xs-12" }, [
-          _c("div", { staticClass: "box" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _c("div", { staticClass: "box-body" }, [
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { attrs: { for: "event" } }, [_vm._v("Event")]),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      name: "event",
-                      label: "name",
-                      value: _vm.event,
-                      options: _vm.eventsAll
-                    },
-                    on: { input: _vm.updateEvent }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-group" },
-                [
-                  _c("label", { attrs: { for: "category" } }, [
-                    _vm._v("Category")
-                  ]),
-                  _vm._v(" "),
-                  _c("v-select", {
-                    attrs: {
-                      name: "category",
-                      label: "name",
-                      value: _vm.category,
-                      options: _vm.categoriesAll
-                    },
-                    on: { input: _vm.updateCategory }
-                  })
-                ],
-                1
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
         _c(
           "div",
           { staticClass: "col-xs-12" },
           [
-            _c("individual-results", {
-              attrs: { event: _vm.event, category: _vm.category }
-            })
+            _vm.outstandingSelection == "team"
+              ? _c("team-results", {
+                  attrs: { event: _vm.event, category: _vm.category }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.outstandingSelection == "individual"
+              ? _c("individual-results", {
+                  attrs: { event: _vm.event, category: _vm.category }
+                })
+              : _vm._e()
           ],
           1
         )
@@ -31695,19 +31969,16 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "box-header with-border" }, [
-      _c("h3", { staticClass: "box-title" }, [_vm._v("Scores Outstanding")]),
+      _c("h3", { staticClass: "box-title" }, [
+        _vm._v("Outstanding Scores and Current Results")
+      ]),
       _c("br"),
       _vm._v(" "),
-      _c("span", [_vm._v("See what is still waiting to be scored")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "box-header with-border" }, [
-      _c("h3", { staticClass: "box-title" }, [_vm._v("Event Results")]),
-      _c("br")
+      _c("span", [
+        _vm._v(
+          "See what is still waiting to be scored as well as the current results."
+        )
+      ])
     ])
   }
 ]
@@ -31749,6 +32020,109 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-808a5428", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-8ac16386\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/client/assets/js/components/Results/TeamResults.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-xs-12" }, [
+      _c("div", { staticClass: "box" }, [
+        _c("div", { staticClass: "box-header with-border" }, [
+          _c("h3", { staticClass: "box-title" }, [_vm._v("Team Results")]),
+          _c("br"),
+          _vm._v(" "),
+          _c("span", [_vm._v("See the top scores for teams")]),
+          _vm._v(" "),
+          _vm.event
+            ? _c("span", [
+                _c("br"),
+                _c("strong", [_vm._v("Event:")]),
+                _vm._v(" " + _vm._s(_vm.event.name))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.category
+            ? _c("span", [
+                _c("br"),
+                _c("strong", [_vm._v("Category:")]),
+                _vm._v(" " + _vm._s(_vm.category.name))
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "box-body" }, [
+          _c("div", { staticClass: "btn-group" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default btn-sm",
+                attrs: { type: "button" },
+                on: { click: _vm.refresh }
+              },
+              [
+                _c("i", {
+                  staticClass: "fa fa-refresh",
+                  class: { "fa-spin": _vm.loading }
+                }),
+                _vm._v(" Refresh\n                    ")
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "box-body" },
+          [
+            _vm.loading
+              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.loading
+              ? _c("datatable", {
+                  attrs: {
+                    columns: _vm.columns,
+                    data: _vm.data,
+                    total: _vm.total,
+                    query: _vm.query,
+                    xprops: _vm.xprops
+                  }
+                })
+              : _vm._e()
+          ],
+          1
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xs-4 col-xs-offset-4" }, [
+      _c("div", { staticClass: "alert text-center" }, [
+        _c("i", { staticClass: "fa fa-spin fa-refresh" }),
+        _vm._v(" Loading\n                        ")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-8ac16386", module.exports)
   }
 }
 
@@ -34580,6 +34954,33 @@ if(false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8ac16386\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/client/assets/js/components/Results/TeamResults.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8ac16386\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/client/assets/js/components/Results/TeamResults.vue");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/vue-style-loader/lib/addStylesClient.js")("384984aa", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8ac16386\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TeamResults.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8ac16386\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TeamResults.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8eef5e2e\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/client/assets/js/components/cruds/Contacts/Edit.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35071,6 +35472,7 @@ Vue.component('category-completion', __webpack_require__("./resources/client/ass
 Vue.component('team-completion', __webpack_require__("./resources/client/assets/js/components/Results/TeamCompletion.vue"));
 Vue.component('individual-completion', __webpack_require__("./resources/client/assets/js/components/Results/IndividualCompletion.vue"));
 Vue.component('individual-results', __webpack_require__("./resources/client/assets/js/components/Results/IndividualResults.vue"));
+Vue.component('team-results', __webpack_require__("./resources/client/assets/js/components/Results/TeamResults.vue"));
 
 moment.updateLocale(window.app_locale, {
     week: {
@@ -35577,6 +35979,58 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-4b924b65", Component.options)
   } else {
     hotAPI.reload("data-v-4b924b65", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/client/assets/js/components/Results/TeamResults.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__("./node_modules/vue-style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-8ac16386\",\"scoped\":true,\"hasInlineConfig\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./resources/client/assets/js/components/Results/TeamResults.vue")
+}
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/client/assets/js/components/Results/TeamResults.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-8ac16386\",\"hasScoped\":true,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/client/assets/js/components/Results/TeamResults.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-8ac16386"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/client/assets/js/components/Results/TeamResults.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8ac16386", Component.options)
+  } else {
+    hotAPI.reload("data-v-8ac16386", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -38116,27 +38570,29 @@ var routes = [{ path: '/home', component: __WEBPACK_IMPORTED_MODULE_2__component
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_CategoryCompletions__ = __webpack_require__("./resources/client/assets/js/store/modules/CategoryCompletions/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_TeamCompletions__ = __webpack_require__("./resources/client/assets/js/store/modules/TeamCompletions/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__modules_IndividualCompletions__ = __webpack_require__("./resources/client/assets/js/store/modules/IndividualCompletions/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modules_IndividualResults__ = __webpack_require__("./resources/client/assets/js/store/modules/IndividualResults/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_Permissions__ = __webpack_require__("./resources/client/assets/js/store/modules/Permissions/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_Permissions_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Permissions/single.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_Roles__ = __webpack_require__("./resources/client/assets/js/store/modules/Roles/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_Roles_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Roles/single.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_Users__ = __webpack_require__("./resources/client/assets/js/store/modules/Users/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__modules_Users_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Users/single.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__modules_FaqCategories__ = __webpack_require__("./resources/client/assets/js/store/modules/FaqCategories/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__modules_FaqCategories_single__ = __webpack_require__("./resources/client/assets/js/store/modules/FaqCategories/single.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__modules_FaqQuestions__ = __webpack_require__("./resources/client/assets/js/store/modules/FaqQuestions/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__modules_FaqQuestions_single__ = __webpack_require__("./resources/client/assets/js/store/modules/FaqQuestions/single.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__modules_Categories__ = __webpack_require__("./resources/client/assets/js/store/modules/Categories/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__modules_Categories_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Categories/single.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__modules_Events__ = __webpack_require__("./resources/client/assets/js/store/modules/Events/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__modules_Events_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Events/single.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__modules_ContactCompanies__ = __webpack_require__("./resources/client/assets/js/store/modules/ContactCompanies/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__modules_ContactCompanies_single__ = __webpack_require__("./resources/client/assets/js/store/modules/ContactCompanies/single.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__modules_Contacts__ = __webpack_require__("./resources/client/assets/js/store/modules/Contacts/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__modules_Contacts_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Contacts/single.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__modules_Scores__ = __webpack_require__("./resources/client/assets/js/store/modules/Scores/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__modules_Scores_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Scores/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modules_TeamResults__ = __webpack_require__("./resources/client/assets/js/store/modules/TeamResults/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_IndividualResults__ = __webpack_require__("./resources/client/assets/js/store/modules/IndividualResults/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_Permissions__ = __webpack_require__("./resources/client/assets/js/store/modules/Permissions/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_Permissions_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Permissions/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_Roles__ = __webpack_require__("./resources/client/assets/js/store/modules/Roles/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_Roles_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Roles/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__modules_Users__ = __webpack_require__("./resources/client/assets/js/store/modules/Users/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__modules_Users_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Users/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__modules_FaqCategories__ = __webpack_require__("./resources/client/assets/js/store/modules/FaqCategories/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__modules_FaqCategories_single__ = __webpack_require__("./resources/client/assets/js/store/modules/FaqCategories/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__modules_FaqQuestions__ = __webpack_require__("./resources/client/assets/js/store/modules/FaqQuestions/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__modules_FaqQuestions_single__ = __webpack_require__("./resources/client/assets/js/store/modules/FaqQuestions/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__modules_Categories__ = __webpack_require__("./resources/client/assets/js/store/modules/Categories/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__modules_Categories_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Categories/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__modules_Events__ = __webpack_require__("./resources/client/assets/js/store/modules/Events/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__modules_Events_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Events/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__modules_ContactCompanies__ = __webpack_require__("./resources/client/assets/js/store/modules/ContactCompanies/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__modules_ContactCompanies_single__ = __webpack_require__("./resources/client/assets/js/store/modules/ContactCompanies/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__modules_Contacts__ = __webpack_require__("./resources/client/assets/js/store/modules/Contacts/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__modules_Contacts_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Contacts/single.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__modules_Scores__ = __webpack_require__("./resources/client/assets/js/store/modules/Scores/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__modules_Scores_single__ = __webpack_require__("./resources/client/assets/js/store/modules/Scores/single.js");
+
 
 
 
@@ -38181,27 +38637,28 @@ var debug = "development" !== 'production';
         CategoryCompletionsIndex: __WEBPACK_IMPORTED_MODULE_6__modules_CategoryCompletions__["a" /* default */],
         TeamCompletionsIndex: __WEBPACK_IMPORTED_MODULE_7__modules_TeamCompletions__["a" /* default */],
         IndividualCompletionsIndex: __WEBPACK_IMPORTED_MODULE_8__modules_IndividualCompletions__["a" /* default */],
-        IndividualResultsIndex: __WEBPACK_IMPORTED_MODULE_9__modules_IndividualResults__["a" /* default */],
-        PermissionsIndex: __WEBPACK_IMPORTED_MODULE_10__modules_Permissions__["a" /* default */],
-        PermissionsSingle: __WEBPACK_IMPORTED_MODULE_11__modules_Permissions_single__["a" /* default */],
-        RolesIndex: __WEBPACK_IMPORTED_MODULE_12__modules_Roles__["a" /* default */],
-        RolesSingle: __WEBPACK_IMPORTED_MODULE_13__modules_Roles_single__["a" /* default */],
-        UsersIndex: __WEBPACK_IMPORTED_MODULE_14__modules_Users__["a" /* default */],
-        UsersSingle: __WEBPACK_IMPORTED_MODULE_15__modules_Users_single__["a" /* default */],
-        FaqCategoriesIndex: __WEBPACK_IMPORTED_MODULE_16__modules_FaqCategories__["a" /* default */],
-        FaqCategoriesSingle: __WEBPACK_IMPORTED_MODULE_17__modules_FaqCategories_single__["a" /* default */],
-        FaqQuestionsIndex: __WEBPACK_IMPORTED_MODULE_18__modules_FaqQuestions__["a" /* default */],
-        FaqQuestionsSingle: __WEBPACK_IMPORTED_MODULE_19__modules_FaqQuestions_single__["a" /* default */],
-        CategoriesIndex: __WEBPACK_IMPORTED_MODULE_20__modules_Categories__["a" /* default */],
-        CategoriesSingle: __WEBPACK_IMPORTED_MODULE_21__modules_Categories_single__["a" /* default */],
-        EventsIndex: __WEBPACK_IMPORTED_MODULE_22__modules_Events__["a" /* default */],
-        EventsSingle: __WEBPACK_IMPORTED_MODULE_23__modules_Events_single__["a" /* default */],
-        ContactCompaniesIndex: __WEBPACK_IMPORTED_MODULE_24__modules_ContactCompanies__["a" /* default */],
-        ContactCompaniesSingle: __WEBPACK_IMPORTED_MODULE_25__modules_ContactCompanies_single__["a" /* default */],
-        ContactsIndex: __WEBPACK_IMPORTED_MODULE_26__modules_Contacts__["a" /* default */],
-        ContactsSingle: __WEBPACK_IMPORTED_MODULE_27__modules_Contacts_single__["a" /* default */],
-        ScoresIndex: __WEBPACK_IMPORTED_MODULE_28__modules_Scores__["a" /* default */],
-        ScoresSingle: __WEBPACK_IMPORTED_MODULE_29__modules_Scores_single__["a" /* default */]
+        TeamResultsIndex: __WEBPACK_IMPORTED_MODULE_9__modules_TeamResults__["a" /* default */],
+        IndividualResultsIndex: __WEBPACK_IMPORTED_MODULE_10__modules_IndividualResults__["a" /* default */],
+        PermissionsIndex: __WEBPACK_IMPORTED_MODULE_11__modules_Permissions__["a" /* default */],
+        PermissionsSingle: __WEBPACK_IMPORTED_MODULE_12__modules_Permissions_single__["a" /* default */],
+        RolesIndex: __WEBPACK_IMPORTED_MODULE_13__modules_Roles__["a" /* default */],
+        RolesSingle: __WEBPACK_IMPORTED_MODULE_14__modules_Roles_single__["a" /* default */],
+        UsersIndex: __WEBPACK_IMPORTED_MODULE_15__modules_Users__["a" /* default */],
+        UsersSingle: __WEBPACK_IMPORTED_MODULE_16__modules_Users_single__["a" /* default */],
+        FaqCategoriesIndex: __WEBPACK_IMPORTED_MODULE_17__modules_FaqCategories__["a" /* default */],
+        FaqCategoriesSingle: __WEBPACK_IMPORTED_MODULE_18__modules_FaqCategories_single__["a" /* default */],
+        FaqQuestionsIndex: __WEBPACK_IMPORTED_MODULE_19__modules_FaqQuestions__["a" /* default */],
+        FaqQuestionsSingle: __WEBPACK_IMPORTED_MODULE_20__modules_FaqQuestions_single__["a" /* default */],
+        CategoriesIndex: __WEBPACK_IMPORTED_MODULE_21__modules_Categories__["a" /* default */],
+        CategoriesSingle: __WEBPACK_IMPORTED_MODULE_22__modules_Categories_single__["a" /* default */],
+        EventsIndex: __WEBPACK_IMPORTED_MODULE_23__modules_Events__["a" /* default */],
+        EventsSingle: __WEBPACK_IMPORTED_MODULE_24__modules_Events_single__["a" /* default */],
+        ContactCompaniesIndex: __WEBPACK_IMPORTED_MODULE_25__modules_ContactCompanies__["a" /* default */],
+        ContactCompaniesSingle: __WEBPACK_IMPORTED_MODULE_26__modules_ContactCompanies_single__["a" /* default */],
+        ContactsIndex: __WEBPACK_IMPORTED_MODULE_27__modules_Contacts__["a" /* default */],
+        ContactsSingle: __WEBPACK_IMPORTED_MODULE_28__modules_Contacts_single__["a" /* default */],
+        ScoresIndex: __WEBPACK_IMPORTED_MODULE_29__modules_Scores__["a" /* default */],
+        ScoresSingle: __WEBPACK_IMPORTED_MODULE_30__modules_Scores_single__["a" /* default */]
     },
     strict: debug
 }));
@@ -38501,13 +38958,13 @@ var getters = {
 };
 
 var actions = {
-    fetchData: function fetchData(_ref) {
+    fetchData: function fetchData(_ref, constraints) {
         var commit = _ref.commit,
             state = _ref.state;
 
         commit('setLoading', true);
 
-        axios.get('/api/v1/categoryCompletions').then(function (response) {
+        axios.get('/api/v1/categoryCompletions', { params: constraints }).then(function (response) {
             commit('setAll', response.data.data);
         }).catch(function (error) {
             message = error.response.data.message || error.message;
@@ -40087,7 +40544,7 @@ function initialState() {
         category: null,
         eventsAll: [],
         categoriesAll: [],
-        outstandingSelection: 'category',
+        outstandingSelection: 'overall',
         loading: false
     };
 }
@@ -40225,13 +40682,13 @@ var getters = {
 };
 
 var actions = {
-    fetchData: function fetchData(_ref) {
+    fetchData: function fetchData(_ref, constraints) {
         var commit = _ref.commit,
             state = _ref.state;
 
         commit('setLoading', true);
 
-        axios.get('/api/v1/individualCompletions').then(function (response) {
+        axios.get('/api/v1/individualCompletions', { params: constraints }).then(function (response) {
             commit('setAll', response.data.data);
         }).catch(function (error) {
             message = error.response.data.message || error.message;
@@ -40319,7 +40776,6 @@ var actions = {
         var commit = _ref.commit,
             state = _ref.state;
 
-        console.log(constraints);
         commit('setLoading', true);
 
         axios.get('/api/v1/individualResults', { params: constraints }).then(function (response) {
@@ -41330,13 +41786,103 @@ var getters = {
 };
 
 var actions = {
-    fetchData: function fetchData(_ref) {
+    fetchData: function fetchData(_ref, constraints) {
         var commit = _ref.commit,
             state = _ref.state;
 
         commit('setLoading', true);
 
-        axios.get('/api/v1/teamCompletions').then(function (response) {
+        axios.get('/api/v1/teamCompletions', { params: constraints }).then(function (response) {
+            commit('setAll', response.data.data);
+        }).catch(function (error) {
+            message = error.response.data.message || error.message;
+            commit('setError', message);
+            console.log(message);
+        }).finally(function () {
+            commit('setLoading', false);
+        });
+    },
+    setQuery: function setQuery(_ref2, value) {
+        var commit = _ref2.commit;
+
+        commit('setQuery', purify(value));
+    },
+    resetState: function resetState(_ref3) {
+        var commit = _ref3.commit;
+
+        commit('resetState');
+    }
+};
+
+var mutations = {
+    setAll: function setAll(state, items) {
+        state.all = items;
+    },
+    setLoading: function setLoading(state, loading) {
+        state.loading = loading;
+    },
+    setQuery: function setQuery(state, query) {
+        state.query = query;
+    },
+    resetState: function resetState(state) {
+        state = Object.assign(state, initialState());
+    }
+};
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: initialState,
+    getters: getters,
+    actions: actions,
+    mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/client/assets/js/store/modules/TeamResults/index.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function initialState() {
+    return {
+        all: [],
+        relationships: {},
+        query: {},
+        loading: false
+    };
+}
+
+var getters = {
+    data: function data(state) {
+        var rows = state.all;
+
+        /* Use the api sort
+        if (state.query.sort) {
+            rows = _.orderBy(state.all, state.query.sort, state.query.order)
+        }
+        */
+
+        return rows.slice(state.query.offset, state.query.offset + state.query.limit);
+    },
+    total: function total(state) {
+        return state.all.length;
+    },
+    loading: function loading(state) {
+        return state.loading;
+    },
+    relationships: function relationships(state) {
+        return state.relationships;
+    }
+};
+
+var actions = {
+    fetchData: function fetchData(_ref, constraints) {
+        var commit = _ref.commit,
+            state = _ref.state;
+
+        commit('setLoading', true);
+
+        axios.get('/api/v1/teamResults', { params: constraints }).then(function (response) {
             commit('setAll', response.data.data);
         }).catch(function (error) {
             message = error.response.data.message || error.message;

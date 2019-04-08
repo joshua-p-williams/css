@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\TeamCompletion;
+use App\TeamRanking;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TeamCompletion as TeamCompletionResource;
+use App\Http\Resources\TeamRanking as TeamRankingResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 
 
-class TeamCompletionsController extends Controller
+class TeamResultsController extends Controller
 {
     public function index(Request $request)
     {
-        $data = TeamCompletion::with(['event', 'category', 'company'])
+        $data = TeamRanking::with(['event', 'category', 'company'])
                 ->ByEventId($request->input('eventId'))
                 ->ByCategoryId($request->input('categoryId'))
-                ->HasParticipants()->get();
+                ->OrderByWinner()->get();
 
-        return new TeamCompletionResource($data);
+        return new TeamRankingResource($data);
     }
 }

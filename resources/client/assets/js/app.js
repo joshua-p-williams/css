@@ -90,6 +90,7 @@ Vue.component('category-completion', require('./components/Results/CategoryCompl
 Vue.component('team-completion', require('./components/Results/TeamCompletion.vue'))
 Vue.component('individual-completion', require('./components/Results/IndividualCompletion.vue'))
 Vue.component('individual-results', require('./components/Results/IndividualResults.vue'))
+Vue.component('team-results', require('./components/Results/TeamResults.vue'))
 
 moment.updateLocale(window.app_locale, {
     week: {

@@ -5,11 +5,13 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Individual Completion</h3><br />
                     <span>See what individuals are still awaiting scores</span>
+                    <span v-if="event"><br /><strong>Event:</strong> {{event.name}}</span>
+                    <span v-if="category"><br /><strong>Category:</strong> {{category.name}}</span>
                 </div>
 
                 <div class="box-body">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm" @click="fetchData">
+                        <button type="button" class="btn btn-default btn-sm" @click="refresh">
                             <i class="fa fa-refresh" :class="{'fa-spin': loading}"></i> Refresh
                         </button>
                     </div>
@@ -48,14 +50,9 @@ import DatatableList from '../dtmodules/DatatableList'
 import DatatableCheckbox from '../dtmodules/DatatableCheckbox'
 
 export default {
+    props: ['event', 'category'],
     data() {
         return {
-            columns: [
-                { title: 'Event', field: 'event_name', sortable: true },
-                { title: 'Category', field: 'category_name', sortable: true },
-                { title: 'Team', field: 'company_name', sortable: true },
-                { title: 'Name', field: 'contact_name', sortable: true },
-            ],
             query: { sort: 'contact_name', order: 'asc' },
             xprops: {
                 module: 'IndividualCompletionsIndex',
@@ -72,6 +69,22 @@ export default {
     },
     computed: {
         ...mapGetters('IndividualCompletionsIndex', ['data', 'total', 'loading', 'relationships']),
+        columns: function () {
+            let columns = [
+                { title: 'Team', field: 'company_name', sortable: true },
+                { title: 'Name', field: 'contact_name', sortable: true },
+            ];
+
+            if (!this.event) {
+                columns.push({ title: 'Event', field: 'event_name', sortable: true });
+            }
+
+            if (!this.category) {
+                columns.push({ title: 'Category', field: 'category_name', sortable: true });
+            }
+
+            return columns;
+        }
     },
     watch: {
         query: {
@@ -79,10 +92,26 @@ export default {
                 this.setQuery(query)
             },
             deep: true
-        }
+        },
+        event: function (newVal, oldVal) {
+            this.refresh();
+        },
+        category: function (newVal, oldVal) {
+            this.refresh();
+        },
     },
     methods: {
         ...mapActions('IndividualCompletionsIndex', ['fetchData', 'setQuery', 'resetState']),
+        refresh: function () {
+            let constraints = (this.event || this.category) ? {eventId: null, categoryId: null} : null;
+            if (this.event) {
+                constraints.eventId = this.event.id;
+            }
+            if (this.category) {
+                constraints.categoryId = this.category.id;
+            }
+            this.fetchData(constraints);
+        }
     }
 }</script>
 

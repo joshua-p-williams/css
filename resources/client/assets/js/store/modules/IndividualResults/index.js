@@ -27,7 +27,6 @@ const getters = {
 
 const actions = {
     fetchData({ commit, state }, constraints) {
-        console.log(constraints);
         commit('setLoading', true)
 
         axios.get('/api/v1/individualResults', { params: constraints})
