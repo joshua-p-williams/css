@@ -65,7 +65,7 @@ export default {
         }
     },
     created() {
-        this.fetchData()
+        this.refresh()
     },
     destroyed() {
         this.resetState()

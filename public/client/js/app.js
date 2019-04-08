@@ -464,7 +464,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     created: function created() {
-        this.fetchData();
+        this.refresh();
     },
     destroyed: function destroyed() {
         this.resetState();
@@ -600,7 +600,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     created: function created() {
-        this.fetchData();
+        this.refresh();
     },
     destroyed: function destroyed() {
         this.resetState();
@@ -736,7 +736,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     created: function created() {
-        this.fetchData();
+        this.refresh();
     },
     destroyed: function destroyed() {
         this.resetState();
@@ -871,7 +871,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     created: function created() {
-        this.fetchData();
+        this.refresh();
     },
     destroyed: function destroyed() {
         this.resetState();
@@ -994,7 +994,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     created: function created() {
-        this.fetchData();
+        this.refresh();
     },
     destroyed: function destroyed() {
         this.resetState();
@@ -1130,7 +1130,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     created: function created() {
-        this.fetchData();
+        this.refresh();
     },
     destroyed: function destroyed() {
         this.resetState();
