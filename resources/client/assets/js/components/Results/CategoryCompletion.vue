@@ -9,7 +9,11 @@
                     <span v-if="category"><br /><strong>Category:</strong> {{category.name}}</span>
                 </div>
 
-                <div class="box-body">
+                <div class="box-body" v-if="!loading && !total">
+                    All Complete
+                </div>
+
+                <div class="box-body" v-if="loading || total">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default btn-sm" @click="refresh">
                             <i class="fa fa-refresh" :class="{'fa-spin': loading}"></i> Refresh
@@ -17,7 +21,7 @@
                     </div>
                 </div>
 
-                <div class="box-body">
+                <div class="box-body" v-if="loading || total">
 
                     <div class="row" v-if="loading">
                         <div class="col-xs-4 col-xs-offset-4">

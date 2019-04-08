@@ -440,6 +440,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -528,6 +532,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dtmodules_DatatableCheckbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__dtmodules_DatatableCheckbox__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
 //
 //
 //
@@ -704,6 +712,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -792,6 +804,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dtmodules_DatatableCheckbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__dtmodules_DatatableCheckbox__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
 //
 //
 //
@@ -954,6 +970,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -1042,6 +1062,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dtmodules_DatatableCheckbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__dtmodules_DatatableCheckbox__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
 //
 //
 //
@@ -6149,7 +6173,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6434,7 +6458,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6599,7 +6623,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6629,7 +6653,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6704,7 +6728,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -6809,7 +6833,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -27701,48 +27725,58 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "btn-group" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-sm",
-                attrs: { type: "button" },
-                on: { click: _vm.refresh }
-              },
-              [
-                _c("i", {
-                  staticClass: "fa fa-refresh",
-                  class: { "fa-spin": _vm.loading }
-                }),
-                _vm._v(" Refresh\n                    ")
-              ]
-            )
-          ])
-        ]),
+        !_vm.loading && !_vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _vm._v("\n                All Complete\n            ")
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "box-body" },
-          [
-            _vm.loading
-              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.loading
-              ? _c("datatable", {
-                  attrs: {
-                    columns: _vm.columns,
-                    data: _vm.data,
-                    total: _vm.total,
-                    query: _vm.query,
-                    xprops: _vm.xprops
-                  }
-                })
-              : _vm._e()
-          ],
-          1
-        )
+        _vm.loading || _vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "btn-group" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.refresh }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-refresh",
+                      class: { "fa-spin": _vm.loading }
+                    }),
+                    _vm._v(" Refresh\n                    ")
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.loading || _vm.total
+          ? _c(
+              "div",
+              { staticClass: "box-body" },
+              [
+                _vm.loading
+                  ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.loading
+                  ? _c("datatable", {
+                      attrs: {
+                        columns: _vm.columns,
+                        data: _vm.data,
+                        total: _vm.total,
+                        query: _vm.query,
+                        xprops: _vm.xprops
+                      }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+          : _vm._e()
       ])
     ])
   ])
@@ -30051,48 +30085,58 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "btn-group" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-sm",
-                attrs: { type: "button" },
-                on: { click: _vm.refresh }
-              },
-              [
-                _c("i", {
-                  staticClass: "fa fa-refresh",
-                  class: { "fa-spin": _vm.loading }
-                }),
-                _vm._v(" Refresh\n                    ")
-              ]
-            )
-          ])
-        ]),
+        !_vm.loading && !_vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _vm._v("\n                All Complete\n            ")
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "box-body" },
-          [
-            _vm.loading
-              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.loading
-              ? _c("datatable", {
-                  attrs: {
-                    columns: _vm.columns,
-                    data: _vm.data,
-                    total: _vm.total,
-                    query: _vm.query,
-                    xprops: _vm.xprops
-                  }
-                })
-              : _vm._e()
-          ],
-          1
-        )
+        _vm.loading || _vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "btn-group" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.refresh }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-refresh",
+                      class: { "fa-spin": _vm.loading }
+                    }),
+                    _vm._v(" Refresh\n                    ")
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.loading || _vm.total
+          ? _c(
+              "div",
+              { staticClass: "box-body" },
+              [
+                _vm.loading
+                  ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.loading
+                  ? _c("datatable", {
+                      attrs: {
+                        columns: _vm.columns,
+                        data: _vm.data,
+                        total: _vm.total,
+                        query: _vm.query,
+                        xprops: _vm.xprops
+                      }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+          : _vm._e()
       ])
     ])
   ])
@@ -31415,48 +31459,58 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "btn-group" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-sm",
-                attrs: { type: "button" },
-                on: { click: _vm.refresh }
-              },
-              [
-                _c("i", {
-                  staticClass: "fa fa-refresh",
-                  class: { "fa-spin": _vm.loading }
-                }),
-                _vm._v(" Refresh\n                    ")
-              ]
-            )
-          ])
-        ]),
+        !_vm.loading && !_vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _vm._v("\n                All Complete\n            ")
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "box-body" },
-          [
-            _vm.loading
-              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.loading
-              ? _c("datatable", {
-                  attrs: {
-                    columns: _vm.columns,
-                    data: _vm.data,
-                    total: _vm.total,
-                    query: _vm.query,
-                    xprops: _vm.xprops
-                  }
-                })
-              : _vm._e()
-          ],
-          1
-        )
+        _vm.loading || _vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "btn-group" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.refresh }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-refresh",
+                      class: { "fa-spin": _vm.loading }
+                    }),
+                    _vm._v(" Refresh\n                    ")
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.loading || _vm.total
+          ? _c(
+              "div",
+              { staticClass: "box-body" },
+              [
+                _vm.loading
+                  ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.loading
+                  ? _c("datatable", {
+                      attrs: {
+                        columns: _vm.columns,
+                        data: _vm.data,
+                        total: _vm.total,
+                        query: _vm.query,
+                        xprops: _vm.xprops
+                      }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+          : _vm._e()
       ])
     ])
   ])
@@ -31648,48 +31702,58 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "btn-group" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-sm",
-                attrs: { type: "button" },
-                on: { click: _vm.refresh }
-              },
-              [
-                _c("i", {
-                  staticClass: "fa fa-refresh",
-                  class: { "fa-spin": _vm.loading }
-                }),
-                _vm._v(" Refresh\n                    ")
-              ]
-            )
-          ])
-        ]),
+        !_vm.loading && !_vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _vm._v("\n                No Results Submitted\n            ")
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "box-body" },
-          [
-            _vm.loading
-              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.loading
-              ? _c("datatable", {
-                  attrs: {
-                    columns: _vm.columns,
-                    data: _vm.data,
-                    total: _vm.total,
-                    query: _vm.query,
-                    xprops: _vm.xprops
-                  }
-                })
-              : _vm._e()
-          ],
-          1
-        )
+        _vm.loading || _vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "btn-group" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.refresh }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-refresh",
+                      class: { "fa-spin": _vm.loading }
+                    }),
+                    _vm._v(" Refresh\n                    ")
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.loading || _vm.total
+          ? _c(
+              "div",
+              { staticClass: "box-body" },
+              [
+                _vm.loading
+                  ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.loading
+                  ? _c("datatable", {
+                      attrs: {
+                        columns: _vm.columns,
+                        data: _vm.data,
+                        total: _vm.total,
+                        query: _vm.query,
+                        xprops: _vm.xprops
+                      }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+          : _vm._e()
       ])
     ])
   ])
@@ -32293,48 +32357,58 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "btn-group" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-sm",
-                attrs: { type: "button" },
-                on: { click: _vm.refresh }
-              },
-              [
-                _c("i", {
-                  staticClass: "fa fa-refresh",
-                  class: { "fa-spin": _vm.loading }
-                }),
-                _vm._v(" Refresh\n                    ")
-              ]
-            )
-          ])
-        ]),
+        !_vm.loading && !_vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _vm._v("\n                No Results Submitted\n            ")
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "box-body" },
-          [
-            _vm.loading
-              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.loading
-              ? _c("datatable", {
-                  attrs: {
-                    columns: _vm.columns,
-                    data: _vm.data,
-                    total: _vm.total,
-                    query: _vm.query,
-                    xprops: _vm.xprops
-                  }
-                })
-              : _vm._e()
-          ],
-          1
-        )
+        _vm.loading || _vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "btn-group" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.refresh }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-refresh",
+                      class: { "fa-spin": _vm.loading }
+                    }),
+                    _vm._v(" Refresh\n                    ")
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.loading || _vm.total
+          ? _c(
+              "div",
+              { staticClass: "box-body" },
+              [
+                _vm.loading
+                  ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.loading
+                  ? _c("datatable", {
+                      attrs: {
+                        columns: _vm.columns,
+                        data: _vm.data,
+                        total: _vm.total,
+                        query: _vm.query,
+                        xprops: _vm.xprops
+                      }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+          : _vm._e()
       ])
     ])
   ])
@@ -33081,48 +33155,58 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "btn-group" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-default btn-sm",
-                attrs: { type: "button" },
-                on: { click: _vm.refresh }
-              },
-              [
-                _c("i", {
-                  staticClass: "fa fa-refresh",
-                  class: { "fa-spin": _vm.loading }
-                }),
-                _vm._v(" Refresh\n                    ")
-              ]
-            )
-          ])
-        ]),
+        !_vm.loading && !_vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _vm._v("\n                No Results Submitted\n            ")
+            ])
+          : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "box-body" },
-          [
-            _vm.loading
-              ? _c("div", { staticClass: "row" }, [_vm._m(0)])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.loading
-              ? _c("datatable", {
-                  attrs: {
-                    columns: _vm.columns,
-                    data: _vm.data,
-                    total: _vm.total,
-                    query: _vm.query,
-                    xprops: _vm.xprops
-                  }
-                })
-              : _vm._e()
-          ],
-          1
-        )
+        _vm.loading || _vm.total
+          ? _c("div", { staticClass: "box-body" }, [
+              _c("div", { staticClass: "btn-group" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default btn-sm",
+                    attrs: { type: "button" },
+                    on: { click: _vm.refresh }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-refresh",
+                      class: { "fa-spin": _vm.loading }
+                    }),
+                    _vm._v(" Refresh\n                    ")
+                  ]
+                )
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.loading || _vm.total
+          ? _c(
+              "div",
+              { staticClass: "box-body" },
+              [
+                _vm.loading
+                  ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.loading
+                  ? _c("datatable", {
+                      attrs: {
+                        columns: _vm.columns,
+                        data: _vm.data,
+                        total: _vm.total,
+                        query: _vm.query,
+                        xprops: _vm.xprops
+                      }
+                    })
+                  : _vm._e()
+              ],
+              1
+            )
+          : _vm._e()
       ])
     ])
   ])
