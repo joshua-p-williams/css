@@ -199,7 +199,7 @@ class CreateSummaryViews extends Migration
         inner join contact_companies cmp on s.company_id = cmp.id
         where s.deleted_at is null
         and e.deleted_at is null
-        group by s.event_id, s.company_id
+        group by s.event_id, cmp.name, s.event_id, e.name, s.company_id
         ");
 
         DB::statement("
@@ -211,7 +211,7 @@ class CreateSummaryViews extends Migration
         from contacts c
         inner join contact_companies cmp on c.company_id = cmp.id
         /*where c.deleted_at is null and cmp.deleted_at is null*/
-        group by c.company_id
+        group by c.company_id, cmp.name
         ");
 
         DB::statement("
@@ -270,7 +270,7 @@ class CreateSummaryViews extends Migration
         and e.deleted_at is null
         /*and c.deleted_at is null*/
         and cat.deleted_at is null
-        group by s.event_id, cat.id 
+        group by s.event_id, e.name, c.category_id, cat.name  
         ");
 
         DB::statement("
