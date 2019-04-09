@@ -187,6 +187,49 @@ class CreateSummaryViews extends Migration
         ");
 
         DB::statement("
+        create or replace view v_tc_submitted_scores as
+        select
+            s.company_id ,
+            cmp.name as company_name ,
+            s.event_id ,
+            e.name as event_name ,
+            count(*) as submitted_score_count
+        from scores s
+        inner join events e on s.event_id = e.id
+        inner join contact_companies cmp on s.company_id = cmp.id
+        where s.deleted_at is null
+        and e.deleted_at is null
+        group by s.event_id, s.company_id
+        ");
+
+        DB::statement("
+        create or replace view v_tc_team_participants as
+        select
+            c.company_id ,
+            cmp.name as company_name ,
+            count(*) as participant_count
+        from contacts c
+        inner join contact_companies cmp on c.company_id = cmp.id
+        /*where c.deleted_at is null and cmp.deleted_at is null*/
+        group by c.company_id
+        ");
+
+        DB::statement("
+        create or replace view v_tc_event_team_completion as
+        select
+            e.id as event_id ,
+            e.name as event_name ,
+            team_participants.company_id ,
+            team_participants.company_name ,
+            team_participants.participant_count ,
+            COALESCE(submitted_scores.submitted_score_count, 0) as submitted_score_count ,
+            (COALESCE(submitted_scores.submitted_score_count, 0) / team_participants.participant_count) * 100 as percent_complete
+        from events e
+        join v_tc_team_participants team_participants
+        left join v_tc_submitted_scores submitted_scores on e.id = submitted_scores.event_id and team_participants.company_id = submitted_scores.company_id
+        ");
+
+        DB::statement("
         create or replace view v_team_completion as
         select
             e.id as event_id ,
@@ -204,48 +247,58 @@ class CreateSummaryViews extends Migration
         from contact_companies cc
         join events e
         left join categories cat on cc.category_id = cat.id
-        left join (
-            /* event_team_completion - Get the completion summary by event and category */
-            select
-                e.id as event_id ,
-                e.name as event_name ,
-                team_participants.company_id ,
-                team_participants.company_name ,
-                team_participants.participant_count ,
-                COALESCE(submitted_scores.submitted_score_count, 0) as submitted_score_count ,
-                (COALESCE(submitted_scores.submitted_score_count, 0) / team_participants.participant_count) * 100 as percent_complete
-            from events e
-            join (
-                /* team_participants - Get the total participants in a team */
-                select
-                    c.company_id ,
-                    cmp.name as company_name ,
-                    count(*) as participant_count
-                from contacts c
-                inner join contact_companies cmp on c.company_id = cmp.id
-                /*where c.deleted_at is null and cmp.deleted_at is null*/
-                group by c.company_id
-            ) team_participants
-            left join (
-                /* submitted_scores - Get the number of scores turned in for an event by team */
-                select
-                    s.company_id ,
-                    cmp.name as company_name ,
-                    s.event_id ,
-                    e.name as event_name ,
-                    count(*) as submitted_score_count
-                from scores s
-                inner join events e on s.event_id = e.id
-                inner join contact_companies cmp on s.company_id = cmp.id
-                where s.deleted_at is null
-                and e.deleted_at is null
-                group by s.event_id, s.company_id
-            ) submitted_scores on e.id = submitted_scores.event_id and team_participants.company_id = submitted_scores.company_id
-        ) event_team_completion on e.id = event_team_completion.event_id and cc.id = event_team_completion.company_id
+        left join v_tc_event_team_completion event_team_completion on e.id = event_team_completion.event_id and cc.id = event_team_completion.company_id
         where e.deleted_at is null
         and cat.deleted_at is null
         /*and cc.deleted_at is null*/
         order by cc.name, e.name
+        ");
+
+        DB::statement("
+        create or replace view v_cc_submitted_scores as
+        select
+            s.event_id ,
+            e.name as event_name ,
+            c.category_id ,
+            cat.name as category_name ,
+            count(*) as submitted_score_count
+        from scores s
+        inner join events e on s.event_id = e.id
+        inner join contacts c on s.contact_id = c.id
+        inner join categories cat on c.category_id = cat.id
+        where s.deleted_at is null
+        and e.deleted_at is null
+        /*and c.deleted_at is null*/
+        and cat.deleted_at is null
+        group by s.event_id, cat.id 
+        ");
+
+        DB::statement("
+        create or replace view v_cc_category_paricipants as
+        select
+            c.category_id ,
+            cat.name as category_name,
+            count(*) as participant_count
+        from contacts c
+        inner join categories cat on c.category_id = cat.id
+        where cat.deleted_at is null
+        /*and c.deleted_at is null*/
+        group by c.category_id, cat.name
+        ");
+
+        DB::statement("
+        create or replace view v_cc_event_category_completion as
+        select
+            e.id as event_id ,
+            e.name as event_name ,
+            category_paricipants.category_id ,
+            category_paricipants.category_name ,
+            category_paricipants.participant_count ,
+            COALESCE(submitted_scores.submitted_score_count, 0) as submitted_score_count ,
+            (COALESCE(submitted_scores.submitted_score_count, 0) / category_paricipants.participant_count) * 100 as percent_complete
+        from events e
+        join v_cc_category_paricipants category_paricipants
+        left join v_cc_submitted_scores submitted_scores on e.id = submitted_scores.event_id and category_paricipants.category_id = submitted_scores.category_id
         ");
 
         DB::statement("
@@ -263,48 +316,7 @@ class CreateSummaryViews extends Migration
             end percent_complete
         from categories cat
         join events e
-        left join (
-            /* event_category_completion - Get the completion summary by event and category */
-            select
-                e.id as event_id ,
-                e.name as event_name ,
-                category_paricipants.category_id ,
-                category_paricipants.category_name ,
-                category_paricipants.participant_count ,
-                COALESCE(submitted_scores.submitted_score_count, 0) as submitted_score_count ,
-                (COALESCE(submitted_scores.submitted_score_count, 0) / category_paricipants.participant_count) * 100 as percent_complete
-            from events e
-            join (
-                /* category_paricipants - Get the total participants in a category */
-                select
-                    c.category_id ,
-                    cat.name as category_name,
-                    count(*) as participant_count
-                from contacts c
-                inner join categories cat on c.category_id = cat.id
-                where cat.deleted_at is null
-                /*and c.deleted_at is null*/
-                group by c.category_id, cat.name
-            ) category_paricipants
-            left join (
-                /* submitted_scores - Get the number of scores turned in for a event / category */
-                select
-                    s.event_id ,
-                    e.name as event_name ,
-                    c.category_id ,
-                    cat.name as category_name ,
-                    count(*) as submitted_score_count
-                from scores s
-                inner join events e on s.event_id = e.id
-                inner join contacts c on s.contact_id = c.id
-                inner join categories cat on c.category_id = cat.id
-                where s.deleted_at is null
-                and e.deleted_at is null
-                /*and c.deleted_at is null*/
-                and cat.deleted_at is null
-                group by s.event_id, cat.id 
-            ) submitted_scores on e.id = submitted_scores.event_id and category_paricipants.category_id = submitted_scores.category_id
-        ) event_category_completion on e.id = event_category_completion.event_id and cat.id = event_category_completion.category_id
+        left join v_cc_event_category_completion event_category_completion on e.id = event_category_completion.event_id and cat.id = event_category_completion.category_id
         where cat.deleted_at is null
         and e.deleted_at is null
         order by cat.name, e.name
@@ -319,7 +331,13 @@ class CreateSummaryViews extends Migration
     public function down()
     {
         DB::statement("DROP VIEW v_category_completion");
+        DB::statement("DROP VIEW v_cc_event_category_completion");
+        DB::statement("DROP VIEW v_cc_category_paricipants");
+        DB::statement("DROP VIEW v_cc_submitted_scores");
         DB::statement("DROP VIEW v_team_completion");
+        DB::statement("DROP VIEW v_tc_event_team_completion");
+        DB::statement("DROP VIEW v_tc_team_participants");
+        DB::statement("DROP VIEW v_tc_submitted_scores");
         DB::statement("DROP VIEW v_overall_ranking");
         DB::statement("DROP VIEW v_team_ranking");
         DB::statement("DROP VIEW v_individual_ranking");
