@@ -50,8 +50,11 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'strict' => true,
+            'strict' => false, //'strict' => true, // Changed for cpanel hosting
             'engine' => null,
+            'options'   => [
+                \PDO::ATTR_EMULATE_PREPARES => true // Also added for cpanel hosting
+            ],
         ],
 
         'pgsql' => [
