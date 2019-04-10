@@ -16,6 +16,10 @@ class TeamCompletion extends Model
     protected $table = 'v_team_completion';
     protected $primaryKey = 'none';
 
+    protected $casts = [
+        'percent_complete' => 'integer',
+    ];    
+
     public function event()
     {
         return $this->belongsTo(Event::class, 'event_id')->withTrashed();
