@@ -66,7 +66,7 @@ export default {
     data() {
         return {
             columns: [
-                { title: '#', field: 'id', sortable: true, colStyle: 'width: 50px;' },
+                { title: '#', field: 'id', sortable: true, colStyle: 'width: 50px;', visible: false },
                 { title: 'Team', field: 'company', tdComp: DatatableSingle },
                 { title: 'Category', field: 'category', tdComp: DatatableSingle },
                 { title: 'Name', field: 'name', sortable: true },
