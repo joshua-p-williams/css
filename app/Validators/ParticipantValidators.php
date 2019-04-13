@@ -4,8 +4,8 @@ namespace App\Validators;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\ContactCompany;
-use App\Contact;
+use App\ParticipantTeam;
+use App\Participant;
 use DB;
 
 class ParticipantValidators {
@@ -15,10 +15,10 @@ class ParticipantValidators {
             $matches = false;
             $data = $validator->getData();
 
-            if (array_key_exists('company_id', $data)) {
-                $company = ContactCompany::find($data['company_id']);
-                if ($company !== null) {
-                    $matches = ($company->category_id == $value);
+            if (array_key_exists('team_id', $data)) {
+                $team = ParticipantTeam::find($data['team_id']);
+                if ($team !== null) {
+                    $matches = ($team->category_id == $value);
                 }
             }
 
@@ -31,15 +31,15 @@ class ParticipantValidators {
             $unique = false;
             $data = $validator->getData();
 
-            if (array_key_exists('company_id', $data)) {
+            if (array_key_exists('team_id', $data)) {
                 $constraints = [
                     [\DB::raw('UPPER(name)'), 'LIKE', '%' . strtoupper($value) . '%'],
-                    ['company_id', '=', $data['company_id']],
+                    ['team_id', '=', $data['team_id']],
                 ];
                 if (array_key_exists('id', $data)) {
                     $constraints[] = ['id', '<>', $data['id']];
                 }
-                $duplicate = Contact::where($constraints)->first();
+                $duplicate = Participant::where($constraints)->first();
 
                 $unique = ($duplicate === null);
             }

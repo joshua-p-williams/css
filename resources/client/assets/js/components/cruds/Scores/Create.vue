@@ -31,23 +31,23 @@
                                             />
                                 </div>
                                 <div class="form-group">
-                                    <label for="company">Team</label>
+                                    <label for="team">Team</label>
                                     <v-select
-                                            name="company"
+                                            name="team"
                                             label="name"
-                                            @input="updateCompany"
-                                            :value="item.company"
-                                            :options="contactcompaniesAll"
+                                            @input="updateTeam"
+                                            :value="item.team"
+                                            :options="participantteamsAll"
                                             />
                                 </div>
                                 <div class="form-group">
-                                    <label for="contact">Participant *</label>
+                                    <label for="participant">Participant *</label>
                                     <v-select
-                                            name="contact"
+                                            name="participant"
                                             label="name"
-                                            @input="updateContact"
-                                            :value="item.contact"
-                                            :options="contactsByCompany"
+                                            @input="updateParticipant"
+                                            :value="item.participant"
+                                            :options="participantsByTeam"
                                             />
                                 </div>
                                 <div class="form-group">
@@ -87,38 +87,38 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            selectedCompany: null,
+            selectedTeam: null,
         }
     },
     computed: {
-        ...mapGetters('ScoresSingle', ['item', 'loading', 'eventsAll', 'contactcompaniesAll', 'contactsAll']),
-        contactsByCompany() {
-            let participants = this.contactsAll;
+        ...mapGetters('ScoresSingle', ['item', 'loading', 'eventsAll', 'participantteamsAll', 'participantsAll']),
+        participantsByTeam() {
+            let participants = this.participantsAll;
 
-            if (this.item.company && this.item.company.id) {
-                participants = participants.filter(i => i.company_id == this.item.company.id);
+            if (this.item.team && this.item.team.id) {
+                participants = participants.filter(i => i.team_id == this.item.team.id);
             }
             return participants;
         }
     },
     created() {
         this.fetchEventsAll(),
-        this.fetchContactcompaniesAll(),
-        this.fetchContactsAll()
+        this.fetchParticipantteamsAll(),
+        this.fetchParticipantsAll()
     },
     destroyed() {
         this.resetState()
     },
     methods: {
-        ...mapActions('ScoresSingle', ['storeData', 'resetState', 'setEvent', 'setCompany', 'setContact', 'setScore', 'fetchEventsAll', 'fetchContactcompaniesAll', 'fetchContactsAll']),
+        ...mapActions('ScoresSingle', ['storeData', 'resetState', 'setEvent', 'setTeam', 'setParticipant', 'setScore', 'fetchEventsAll', 'fetchParticipantteamsAll', 'fetchParticipantsAll']),
         updateEvent(value) {
             this.setEvent(value)
         },
-        updateCompany(value) {
-            this.setCompany(value)
+        updateTeam(value) {
+            this.setTeam(value)
         },
-        updateContact(value) {
-            this.setContact(value)
+        updateParticipant(value) {
+            this.setParticipant(value)
         },
         updateScore(e) {
             this.setScore(e.target.value)

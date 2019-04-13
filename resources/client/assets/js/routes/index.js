@@ -31,14 +31,14 @@ import EventsIndex from '../components/cruds/Events/Index.vue'
 import EventsCreate from '../components/cruds/Events/Create.vue'
 import EventsShow from '../components/cruds/Events/Show.vue'
 import EventsEdit from '../components/cruds/Events/Edit.vue'
-import ContactCompaniesIndex from '../components/cruds/ContactCompanies/Index.vue'
-import ContactCompaniesCreate from '../components/cruds/ContactCompanies/Create.vue'
-import ContactCompaniesShow from '../components/cruds/ContactCompanies/Show.vue'
-import ContactCompaniesEdit from '../components/cruds/ContactCompanies/Edit.vue'
-import ContactsIndex from '../components/cruds/Contacts/Index.vue'
-import ContactsCreate from '../components/cruds/Contacts/Create.vue'
-import ContactsShow from '../components/cruds/Contacts/Show.vue'
-import ContactsEdit from '../components/cruds/Contacts/Edit.vue'
+import ParticipantTeamsIndex from '../components/cruds/ParticipantTeams/Index.vue'
+import ParticipantTeamsCreate from '../components/cruds/ParticipantTeams/Create.vue'
+import ParticipantTeamsShow from '../components/cruds/ParticipantTeams/Show.vue'
+import ParticipantTeamsEdit from '../components/cruds/ParticipantTeams/Edit.vue'
+import ParticipantsIndex from '../components/cruds/Participants/Index.vue'
+import ParticipantsCreate from '../components/cruds/Participants/Create.vue'
+import ParticipantsShow from '../components/cruds/Participants/Show.vue'
+import ParticipantsEdit from '../components/cruds/Participants/Edit.vue'
 import ScoresIndex from '../components/cruds/Scores/Index.vue'
 import ScoresCreate from '../components/cruds/Scores/Create.vue'
 import ScoresShow from '../components/cruds/Scores/Show.vue'
@@ -77,14 +77,14 @@ const routes = [
     { path: '/events/create', component: EventsCreate, name: 'events.create' },
     { path: '/events/:id', component: EventsShow, name: 'events.show' },
     { path: '/events/:id/edit', component: EventsEdit, name: 'events.edit' },
-    { path: '/contact-companies', component: ContactCompaniesIndex, name: 'contact_companies.index' },
-    { path: '/contact-companies/create', component: ContactCompaniesCreate, name: 'contact_companies.create' },
-    { path: '/contact-companies/:id', component: ContactCompaniesShow, name: 'contact_companies.show' },
-    { path: '/contact-companies/:id/edit', component: ContactCompaniesEdit, name: 'contact_companies.edit' },
-    { path: '/contacts', component: ContactsIndex, name: 'contacts.index' },
-    { path: '/contacts/create', component: ContactsCreate, name: 'contacts.create' },
-    { path: '/contacts/:id', component: ContactsShow, name: 'contacts.show' },
-    { path: '/contacts/:id/edit', component: ContactsEdit, name: 'contacts.edit' },
+    { path: '/participant-teams', component: ParticipantTeamsIndex, name: 'participant_teams.index' },
+    { path: '/participant-teams/create', component: ParticipantTeamsCreate, name: 'participant_teams.create' },
+    { path: '/participant-teams/:id', component: ParticipantTeamsShow, name: 'participant_teams.show' },
+    { path: '/participant-teams/:id/edit', component: ParticipantTeamsEdit, name: 'participant_teams.edit' },
+    { path: '/participants', component: ParticipantsIndex, name: 'participants.index' },
+    { path: '/participants/create', component: ParticipantsCreate, name: 'participants.create' },
+    { path: '/participants/:id', component: ParticipantsShow, name: 'participants.show' },
+    { path: '/participants/:id/edit', component: ParticipantsEdit, name: 'participants.edit' },
     { path: '/scores', component: ScoresIndex, name: 'scores.index' },
     { path: '/scores/create', component: ScoresCreate, name: 'scores.create' },
     { path: '/scores/:id', component: ScoresShow, name: 'scores.show' },

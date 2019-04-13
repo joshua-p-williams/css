@@ -3,13 +3,13 @@ function initialState() {
         item: {
             id: null,
             event: null,
-            company: null,
-            contact: null,
+            team: null,
+            participant: null,
             score: null,
         },
         eventsAll: [],
-        contactcompaniesAll: [],
-        contactsAll: [],
+        participantteamsAll: [],
+        participantsAll: [],
         
         loading: false,
     }
@@ -19,8 +19,8 @@ const getters = {
     item: state => state.item,
     loading: state => state.loading,
     eventsAll: state => state.eventsAll,
-    contactcompaniesAll: state => state.contactcompaniesAll,
-    contactsAll: state => state.contactsAll,
+    participantteamsAll: state => state.participantteamsAll,
+    participantsAll: state => state.participantsAll,
     
 }
 
@@ -52,15 +52,15 @@ const actions = {
             } else {
                 params.set('event_id', state.item.event.id)
             }
-            if (_.isEmpty(state.item.company)) {
-                params.set('company_id', '')
+            if (_.isEmpty(state.item.team)) {
+                params.set('team_id', '')
             } else {
-                params.set('company_id', state.item.company.id)
+                params.set('team_id', state.item.team.id)
             }
-            if (_.isEmpty(state.item.contact)) {
-                params.set('contact_id', '')
+            if (_.isEmpty(state.item.participant)) {
+                params.set('participant_id', '')
             } else {
-                params.set('contact_id', state.item.contact.id)
+                params.set('participant_id', state.item.participant.id)
             }
 
             axios.post('/api/v1/scores', params)
@@ -112,15 +112,15 @@ const actions = {
             } else {
                 params.set('event_id', state.item.event.id)
             }
-            if (_.isEmpty(state.item.company)) {
-                params.set('company_id', '')
+            if (_.isEmpty(state.item.team)) {
+                params.set('team_id', '')
             } else {
-                params.set('company_id', state.item.company.id)
+                params.set('team_id', state.item.team.id)
             }
-            if (_.isEmpty(state.item.contact)) {
-                params.set('contact_id', '')
+            if (_.isEmpty(state.item.participant)) {
+                params.set('participant_id', '')
             } else {
-                params.set('contact_id', state.item.contact.id)
+                params.set('participant_id', state.item.participant.id)
             }
 
             axios.post('/api/v1/scores/' + state.item.id, params)
@@ -151,8 +151,8 @@ const actions = {
             })
 
         dispatch('fetchEventsAll')
-    dispatch('fetchContactcompaniesAll')
-    dispatch('fetchContactsAll')
+    dispatch('fetchParticipantteamsAll')
+    dispatch('fetchParticipantsAll')
     },
     fetchEventsAll({ commit }) {
         axios.get('/api/v1/events')
@@ -160,26 +160,26 @@ const actions = {
                 commit('setEventsAll', response.data.data)
             })
     },
-    fetchContactcompaniesAll({ commit }) {
-        axios.get('/api/v1/contact-companies')
+    fetchParticipantteamsAll({ commit }) {
+        axios.get('/api/v1/participant-teams')
             .then(response => {
-                commit('setContactcompaniesAll', response.data.data)
+                commit('setParticipantteamsAll', response.data.data)
             })
     },
-    fetchContactsAll({ commit }) {
-        axios.get('/api/v1/contacts')
+    fetchParticipantsAll({ commit }) {
+        axios.get('/api/v1/participants')
             .then(response => {
-                commit('setContactsAll', response.data.data)
+                commit('setParticipantsAll', response.data.data)
             })
     },
     setEvent({ commit }, value) {
         commit('setEvent', value)
     },
-    setCompany({ commit }, value) {
-        commit('setCompany', value)
+    setTeam({ commit }, value) {
+        commit('setTeam', value)
     },
-    setContact({ commit }, value) {
-        commit('setContact', value)
+    setParticipant({ commit }, value) {
+        commit('setParticipant', value)
     },
     setScore({ commit }, value) {
         commit('setScore', value)
@@ -196,11 +196,11 @@ const mutations = {
     setEvent(state, value) {
         state.item.event = value
     },
-    setCompany(state, value) {
-        state.item.company = value
+    setTeam(state, value) {
+        state.item.team = value
     },
-    setContact(state, value) {
-        state.item.contact = value
+    setParticipant(state, value) {
+        state.item.participant = value
     },
     setScore(state, value) {
         state.item.score = value
@@ -208,11 +208,11 @@ const mutations = {
     setEventsAll(state, value) {
         state.eventsAll = value
     },
-    setContactcompaniesAll(state, value) {
-        state.contactcompaniesAll = value
+    setParticipantteamsAll(state, value) {
+        state.participantteamsAll = value
     },
-    setContactsAll(state, value) {
-        state.contactsAll = value
+    setParticipantsAll(state, value) {
+        state.participantsAll = value
     },
     
     setLoading(state, loading) {

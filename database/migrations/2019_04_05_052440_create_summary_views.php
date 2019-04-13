@@ -19,13 +19,13 @@ class CreateSummaryViews extends Migration
             e.name as tie_breaker_name ,
             cat.id as category_id ,
             cat.name as category_name ,
-            c.id as contact_id ,
-            c.name as contact_name ,
+            c.id as participant_id ,
+            c.name as participant_name ,
             SUM(COALESCE(s.score, 0)) as score
         from events e
-        join contacts c
+        join participants c
         left join categories cat on c.category_id = cat.id
-        left join scores s on c.id = s.contact_id and e.id = s.event_id
+        left join scores s on c.id = s.participant_id and e.id = s.event_id
         where e.deleted_at is null
         and cat.deleted_at is null
         and e.name = 'Responsibility Exam'
@@ -38,13 +38,13 @@ class CreateSummaryViews extends Migration
             e.name as tie_breaker_name ,
             cat.id as category_id ,
             cat.name as category_name ,
-            c.id as contact_id ,
-            c.name as contact_name ,
+            c.id as participant_id ,
+            c.name as participant_name ,
             SUM(COALESCE(s.score, 0)) as score
         from events e
-        join contacts c
+        join participants c
         left join categories cat on c.category_id = cat.id
-        left join scores s on c.id = s.contact_id and e.id = s.event_id
+        left join scores s on c.id = s.participant_id and e.id = s.event_id
         where e.deleted_at is null
         and cat.deleted_at is null
         and e.name = 'Safety Trail'
@@ -57,13 +57,13 @@ class CreateSummaryViews extends Migration
             'Combined Responsibility Events' as tie_breaker_name ,
             cat.id as category_id ,
             cat.name as category_name ,
-            c.id as contact_id ,
-            c.name as contact_name ,
+            c.id as participant_id ,
+            c.name as participant_name ,
             SUM(COALESCE(s.score, 0)) as score
         from events e
-        join contacts c
+        join participants c
         left join categories cat on c.category_id = cat.id
-        left join scores s on c.id = s.contact_id and e.id = s.event_id
+        left join scores s on c.id = s.participant_id and e.id = s.event_id
         where e.deleted_at is null
         and cat.deleted_at is null
         and e.name in ('Responsibility Exam', 'Orienteering', 'Wildlife Identification', 'Safety Trail')
@@ -76,13 +76,13 @@ class CreateSummaryViews extends Migration
             'Combined Shooting Events' as tie_breaker_name ,
             cat.id as category_id ,
             cat.name as category_name ,
-            c.id as contact_id ,
-            c.name as contact_name ,
+            c.id as participant_id ,
+            c.name as participant_name ,
             SUM(COALESCE(s.score, 0)) as score
         from events e
-        join contacts c
+        join participants c
         left join categories cat on c.category_id = cat.id
-        left join scores s on c.id = s.contact_id and e.id = s.event_id
+        left join scores s on c.id = s.participant_id and e.id = s.event_id
         where e.deleted_at is null
         and cat.deleted_at is null
         and e.name in ('Shotgun', 'Rifle', 'Archery', 'Muzzleloader')
@@ -96,10 +96,10 @@ class CreateSummaryViews extends Migration
             cat.name as category_name ,
             e.id as event_id ,
             e.name as event_name ,
-            cmp.id as company_id ,
-            cmp.name as company_name ,
-            c.id as contact_id ,
-            c.name as contact_name ,
+            cmp.id as team_id ,
+            cmp.name as team_name ,
+            c.id as participant_id ,
+            c.name as participant_name ,
             s.id as score_id ,
             COALESCE(s.score, 0) as score ,
             COALESCE(tb1.score, 0) as tie_breaker_1 ,
@@ -108,13 +108,13 @@ class CreateSummaryViews extends Migration
             COALESCE(tb4.score, 0) as tie_breaker_4 
         from categories cat
         join events e
-        inner join contacts c on cat.id = c.category_id
-        left join contact_companies cmp on c.company_id = cmp.id
-        left join scores s on e.id = s.event_id and c.id = s.contact_id
-        left join v_individual_tie_breaker_1 tb1 on s.contact_id = tb1.contact_id
-        left join v_individual_tie_breaker_2 tb2 on s.contact_id = tb2.contact_id
-        left join v_individual_tie_breaker_3 tb3 on s.contact_id = tb3.contact_id
-        left join v_individual_tie_breaker_4 tb4 on s.contact_id = tb4.contact_id
+        inner join participants c on cat.id = c.category_id
+        left join participant_teams cmp on c.team_id = cmp.id
+        left join scores s on e.id = s.event_id and c.id = s.participant_id
+        left join v_individual_tie_breaker_1 tb1 on s.participant_id = tb1.participant_id
+        left join v_individual_tie_breaker_2 tb2 on s.participant_id = tb2.participant_id
+        left join v_individual_tie_breaker_3 tb3 on s.participant_id = tb3.participant_id
+        left join v_individual_tie_breaker_4 tb4 on s.participant_id = tb4.participant_id
         where cat.deleted_at is null
         and e.deleted_at is null 
         /*and cmp.deleted_at is null*/
@@ -130,8 +130,8 @@ class CreateSummaryViews extends Migration
             s.category_name ,
             s.event_id ,
             s.event_name ,
-            s.company_id ,
-            s.company_name ,
+            s.team_id ,
+            s.team_name ,
             sum(s.score) as score ,
             sum(s.tie_breaker_1) as tie_breaker_1,
             sum(s.tie_breaker_2) as tie_breaker_2,
@@ -143,8 +143,8 @@ class CreateSummaryViews extends Migration
             s.category_name ,
             s.event_id ,
             s.event_name ,
-            s.company_id ,
-            s.company_name
+            s.team_id ,
+            s.team_name
         order by
             s.category_name,
             s.event_name,
@@ -160,25 +160,25 @@ class CreateSummaryViews extends Migration
         select
             s.category_id ,
             s.category_name ,
-            cmp.id as company_id ,
-            cmp.name as company_name ,
-            s.contact_id ,
-            s.contact_name ,
+            cmp.id as team_id ,
+            cmp.name as team_name ,
+            s.participant_id ,
+            s.participant_name ,
             sum(s.score) as score ,
             sum(s.tie_breaker_1) as tie_breaker_1 ,
             sum(s.tie_breaker_2) as tie_breaker_2 ,
             sum(s.tie_breaker_3) as tie_breaker_3 ,
             sum(s.tie_breaker_4) as tie_breaker_4
         from v_individual_ranking s
-        inner join contacts c on s.contact_id = c.id
-        left join contact_companies cmp on c.company_id = cmp.id
+        inner join participants c on s.participant_id = c.id
+        left join participant_teams cmp on c.team_id = cmp.id
         group by
             s.category_id ,
             s.category_name ,
             cmp.id,
             cmp.name,
-            s.contact_id ,
-            s.contact_name
+            s.participant_id ,
+            s.participant_name
         order by
             sum(s.tie_breaker_1) desc,
             sum(s.tie_breaker_2) desc,
@@ -189,29 +189,29 @@ class CreateSummaryViews extends Migration
         DB::statement("
         create or replace view v_tc_submitted_scores as
         select
-            s.company_id ,
-            cmp.name as company_name ,
+            s.team_id ,
+            cmp.name as team_name ,
             s.event_id ,
             e.name as event_name ,
             count(*) as submitted_score_count
         from scores s
         inner join events e on s.event_id = e.id
-        inner join contact_companies cmp on s.company_id = cmp.id
+        inner join participant_teams cmp on s.team_id = cmp.id
         where s.deleted_at is null
         and e.deleted_at is null
-        group by s.event_id, cmp.name, s.event_id, e.name, s.company_id
+        group by s.event_id, cmp.name, s.event_id, e.name, s.team_id
         ");
 
         DB::statement("
         create or replace view v_tc_team_participants as
         select
-            c.company_id ,
-            cmp.name as company_name ,
+            c.team_id ,
+            cmp.name as team_name ,
             count(*) as participant_count
-        from contacts c
-        inner join contact_companies cmp on c.company_id = cmp.id
+        from participants c
+        inner join participant_teams cmp on c.team_id = cmp.id
         /*where c.deleted_at is null and cmp.deleted_at is null*/
-        group by c.company_id, cmp.name
+        group by c.team_id, cmp.name
         ");
 
         DB::statement("
@@ -219,14 +219,14 @@ class CreateSummaryViews extends Migration
         select
             e.id as event_id ,
             e.name as event_name ,
-            team_participants.company_id ,
-            team_participants.company_name ,
+            team_participants.team_id ,
+            team_participants.team_name ,
             team_participants.participant_count ,
             COALESCE(submitted_scores.submitted_score_count, 0) as submitted_score_count ,
             (COALESCE(submitted_scores.submitted_score_count, 0) / team_participants.participant_count) * 100 as percent_complete
         from events e
         join v_tc_team_participants team_participants
-        left join v_tc_submitted_scores submitted_scores on e.id = submitted_scores.event_id and team_participants.company_id = submitted_scores.company_id
+        left join v_tc_submitted_scores submitted_scores on e.id = submitted_scores.event_id and team_participants.team_id = submitted_scores.team_id
         ");
 
         DB::statement("
@@ -236,18 +236,18 @@ class CreateSummaryViews extends Migration
             e.name as event_name ,
             cat.id as category_id ,
             cat.name as category_name , 
-            cc.id as company_id ,
-            cc.name as company_name ,
+            cc.id as team_id ,
+            cc.name as team_name ,
             COALESCE(event_team_completion.participant_count, 0) as participant_count ,
             COALESCE(event_team_completion.submitted_score_count, 0) as submitted_score_count,
             case
                 when COALESCE(event_team_completion.participant_count, 0) <= 0 then 100.00
                 else COALESCE(event_team_completion.percent_complete, 0)
             end percent_complete
-        from contact_companies cc
+        from participant_teams cc
         join events e
         left join categories cat on cc.category_id = cat.id
-        left join v_tc_event_team_completion event_team_completion on e.id = event_team_completion.event_id and cc.id = event_team_completion.company_id
+        left join v_tc_event_team_completion event_team_completion on e.id = event_team_completion.event_id and cc.id = event_team_completion.team_id
         where e.deleted_at is null
         and cat.deleted_at is null
         /*and cc.deleted_at is null*/
@@ -264,7 +264,7 @@ class CreateSummaryViews extends Migration
             count(*) as submitted_score_count
         from scores s
         inner join events e on s.event_id = e.id
-        inner join contacts c on s.contact_id = c.id
+        inner join participants c on s.participant_id = c.id
         inner join categories cat on c.category_id = cat.id
         where s.deleted_at is null
         and e.deleted_at is null
@@ -279,7 +279,7 @@ class CreateSummaryViews extends Migration
             c.category_id ,
             cat.name as category_name,
             count(*) as participant_count
-        from contacts c
+        from participants c
         inner join categories cat on c.category_id = cat.id
         where cat.deleted_at is null
         /*and c.deleted_at is null*/

@@ -1,27 +1,163 @@
 <?php
 
 return [
-		'user-management' => [		'title' => 'User management',		'fields' => [		],	],
-		'permissions' => [		'title' => 'Permissions',		'fields' => [			'title' => 'Title',		],	],
-		'roles' => [		'title' => 'Roles',		'fields' => [			'title' => 'Title',			'permission' => 'Permissions',		],	],
-		'users' => [		'title' => 'Users',		'fields' => [			'name' => 'Name',			'email' => 'Email',			'password' => 'Password',			'role' => 'Role',			'remember-token' => 'Remember token',		],	],
-		'faq-management' => [		'title' => 'FAQ Management',		'fields' => [		],	],
-		'faq-categories' => [		'title' => 'Categories',		'fields' => [		],	],
-		'faq-questions' => [		'title' => 'Questions',		'fields' => [		],	],
-		'competition' => [		'title' => 'Competition',		'fields' => [		],	],
-		'competition' => [		'title' => 'Competition',		'fields' => [		],	],
-		'categories' => [		'title' => 'Categories',		'fields' => [			'name' => 'Name',		],	],
-		'teams' => [		'title' => 'Teams',		'fields' => [		],	],
-		'participants' => [		'title' => 'Participants',		'fields' => [		],	],
-		'events' => [		'title' => 'Events',		'fields' => [			'name' => 'Name',		],	],
-		'scores' => [		'title' => 'Scores',		'fields' => [			'event' => 'Event',			'company' => 'Team',			'contact' => 'Participant',			'score' => 'Score',		],	],
-		'faq-management' => [		'title' => 'FAQ Management',		'fields' => [		],	],
-		'faq-categories' => [		'title' => 'Categories',		'fields' => [			'title' => 'Category',		],	],
-		'faq-questions' => [		'title' => 'Questions',		'fields' => [			'category' => 'Category',			'question-text' => 'Question',			'answer-text' => 'Answer',		],	],
-		'team-management' => [		'title' => 'Team Management',		'fields' => [		],	],
-		'contact-companies' => [		'title' => 'Teams',		'fields' => [			'name' => 'Team Name',			'category' => 'Category',			'primary-contact-name' => 'Primary Contact Name',			'primary-contact-phone' => 'Primary Contact Phone',			'primary-contact-email' => 'Primary Contact Email',			'state' => 'State',			'county' => 'County',		],	],
-		'contacts' => [		'title' => 'Participants',		'fields' => [			'company' => 'Team',			'category' => 'Category',			'name' => 'Name',			'phone' => 'Phone',			'email' => 'Email',			'address' => 'Address',		],	],
-		'competition' => [		'title' => 'Competition',		'fields' => [		],	],
+	
+	'user-management' => [
+		'title' => 'User management',
+		'fields' => [
+		],
+	],
+	
+	'permissions' => [
+		'title' => 'Permissions',
+		'fields' => [
+			'title' => 'Title',
+		],
+	],
+	team
+	'roles' => [
+		'title' => 'Roles',
+		'fields' => [
+			'title' => 'Title',
+			'permission' => 'Permissions',
+		],team
+	],
+	
+	'users' => [
+		'title' => 'Users',
+		'fields' => [
+			'name' => 'Name',
+			'email' => 'Email',
+			'password' => 'Password',
+			'role' => 'Role',
+			'remember-token' => 'Remember token',
+		],
+	],
+	
+	'faq-management' => [
+		'title' => 'FAQ Management',
+		'fields' => [
+		],
+	],
+	
+	'faq-categories' => [
+		'title' => 'Categories',
+		'fields' => [
+		],
+	],
+	
+	'faq-questions' => [
+		'title' => 'Questions',
+		'fields' => [
+		],
+	],
+	
+	'competition' => [
+		'title' => 'Competition',
+		'fields' => [
+		],
+	],
+	
+	'competition' => [
+		'title' => 'Competition',
+		'fields' => [
+		],
+	],
+	
+	'categories' => [
+		'title' => 'Categories',
+		'fields' => [
+			'name' => 'Name',
+		],
+	],
+	
+	'teams' => [
+		'title' => 'Teams',
+		'fields' => [
+		],
+	],
+	
+	'participants' => [
+		'title' => 'Participants',
+		'fields' => [
+		],
+	],
+	
+	'events' => [
+		'title' => 'Events',
+		'fields' => [
+			'name' => 'Name',
+		],
+	],
+	
+	'scores' => [
+		'title' => 'Scores',
+		'fields' => [
+			'event' => 'Event',
+			'company' => 'Team',
+			'participant' => 'Participant',
+			'score' => 'Score',
+		],
+	],
+	team
+	'faq-management' => [
+		'title' => 'FAQ Management',
+		'fields' => [
+		],
+	],team
+	
+	'faq-categories' => [
+		'title' => 'Categories',
+		'fields' => [
+			'title' => 'Category',
+		],
+	],
+	
+	'faq-questions' => [
+		'title' => 'Questions',
+		'fields' => [
+			'category' => 'Category',
+			'question-text' => 'Question',
+			'answer-text' => 'Answer',
+		],
+	],
+	
+	'team-management' => [
+		'title' => 'Team Management',
+		'fields' => [
+		],
+	],
+	
+	'participant-teams' => [
+		'title' => 'Teams',
+		'fields' => [
+			'name' => 'Team Name',
+			'category' => 'Category',
+			'primary-participant-name' => 'Primary Contact Name',
+			'primary-participant-phone' => 'Primary Contact Phone',
+			'primary-participant-email' => 'Primary Contact Email',
+			'state' => 'State',
+			'county' => 'County',
+		],
+	],
+	
+	'participants' => [
+		'title' => 'Participants',
+		'fields' => [
+			'company' => 'Team',
+			'category' => 'Category',
+			'name' => 'Name',
+			'phone' => 'Phone',
+			'email' => 'Email',
+			'address' => 'Address',
+		],
+	],
+	
+	'competition' => [
+		'title' => 'Competition',
+		'fields' => [
+		],
+	],
 	'qa_create' => 'Create',
 	'qa_save' => 'Save',
 	'qa_edit' => 'Edit',
@@ -98,13 +234,13 @@ return [
 	'qa_amount' => 'Amount',
 	'qa_income_categories' => 'Income categories',
 	'qa_monthly_report' => 'Monthly report',
-	'qa_companies' => 'Companies',
-	'qa_company_name' => 'Company name',
+	'qa_teams' => 'Teams',
+	'qa_company_name' => 'Team name',
 	'qa_address' => 'Address',
 	'qa_website' => 'Website',
-	'qa_contact_management' => 'Contact management',
-	'qa_contacts' => 'Contacts',
-	'qa_company' => 'Company',
+	'qa_participant_management' => 'Participant management',
+	'qa_participants' => 'Participants',
+	'qa_company' => 'Team',
 	'qa_first_name' => 'First name',
 	'qa_last_name' => 'Last name',
 	'qa_phone' => 'Phone',

@@ -75,8 +75,8 @@ export default {
         ...mapGetters('IndividualResultsIndex', ['data', 'total', 'loading', 'relationships']),
         columns: function () {
             let columns = [
-                { title: 'Team', field: 'company_name', sortable: false },
-                { title: 'Name', field: 'contact_name', sortable: false },
+                { title: 'Team', field: 'team_name', sortable: false },
+                { title: 'Name', field: 'participant_name', sortable: false },
                 { title: 'Score', field: 'score', sortable: false },
                 { title: 'Tie 1', field: 'tie_breaker_1', sortable: false },
                 { title: 'Tie 2', field: 'tie_breaker_2', sortable: false },

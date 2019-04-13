@@ -17,13 +17,13 @@ class Add5c8b1bdd19433RelationshipsToScoreTable extends Migration
                 $table->integer('event_id')->unsigned()->nullable();
                 $table->foreign('event_id', '31828_5c8ac1ed58ace')->references('id')->on('events')->onDelete('cascade');
                 }
-                if (!Schema::hasColumn('scores', 'company_id')) {
-                $table->integer('company_id')->unsigned()->nullable();
-                $table->foreign('company_id', '31828_5c8b1bdc828e8')->references('id')->on('contact_companies')->onDelete('cascade');
+                if (!Schema::hasColumn('scores', 'team_id')) {
+                $table->integer('team_id')->unsigned()->nullable();
+                $table->foreign('team_id', '31828_5c8b1bdc828e8')->references('id')->on('participant_teams')->onDelete('cascade');
                 }
-                if (!Schema::hasColumn('scores', 'contact_id')) {
-                $table->integer('contact_id')->unsigned()->nullable();
-                $table->foreign('contact_id', '31828_5c8b1b95972b7')->references('id')->on('contacts')->onDelete('cascade');
+                if (!Schema::hasColumn('scores', 'participant_id')) {
+                $table->integer('participant_id')->unsigned()->nullable();
+                $table->foreign('participant_id', '31828_5c8b1b95972b7')->references('id')->on('participants')->onDelete('cascade');
                 }
                 
         });

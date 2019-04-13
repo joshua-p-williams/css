@@ -14,7 +14,7 @@ class TeamResultsController extends Controller
 {
     public function index(Request $request)
     {
-        $data = TeamRanking::with(['event', 'category', 'company'])
+        $data = TeamRanking::with(['event', 'category', 'team'])
                 ->ByEventId($request->input('eventId'))
                 ->ByCategoryId($request->input('categoryId'))
                 ->OrderByWinner()->get();

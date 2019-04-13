@@ -4,7 +4,7 @@ namespace App\Validators;
 
 use Illuminate\Support\Facades\Validator;
 use App\Score;
-use App\Contact;
+use App\Participant;
 use DB;
 
 class ScoreValidators {
@@ -14,10 +14,10 @@ class ScoreValidators {
             $unique = false;
             $data = $validator->getData();
 
-            if (array_key_exists('contact_id', $data) && array_key_exists('event_id', $data)) {
+            if (array_key_exists('participant_id', $data) && array_key_exists('event_id', $data)) {
                 $constraints = [
                     ['event_id', '=', $data['event_id']],
-                    ['contact_id', '=', $data['contact_id']],
+                    ['participant_id', '=', $data['participant_id']],
                 ];
                 if (array_key_exists('id', $data)) {
                     $constraints[] = ['id', '<>', $data['id']];
@@ -36,10 +36,10 @@ class ScoreValidators {
             $matches = false;
             $data = $validator->getData();
 
-            if (array_key_exists('contact_id', $data) && array_key_exists('company_id', $data)) {
-                $contact = Contact::find($data['contact_id']);
-                if ($contact !== null) {
-                    $matches = ($contact->company_id == $data['company_id']);
+            if (array_key_exists('participant_id', $data) && array_key_exists('team_id', $data)) {
+                $participant = Participant::find($data['participant_id']);
+                if ($participant !== null) {
+                    $matches = ($participant->team_id == $data['team_id']);
                 }
             }
 

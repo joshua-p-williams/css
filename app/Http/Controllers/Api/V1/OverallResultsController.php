@@ -14,7 +14,7 @@ class OverallResultsController extends Controller
 {
     public function index(Request $request)
     {
-        $data = OverallRanking::with(['event', 'category', 'company', 'contact'])
+        $data = OverallRanking::with(['event', 'category', 'team', 'participant'])
                 ->ByEventId($request->input('eventId'))
                 ->ByCategoryId($request->input('categoryId'))
                 ->OrderByWinner()->get();

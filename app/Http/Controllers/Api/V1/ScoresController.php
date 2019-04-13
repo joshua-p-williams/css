@@ -18,7 +18,7 @@ class ScoresController extends Controller
     {
         
 
-        return new ScoreResource(Score::with(['event', 'company', 'contact'])->get());
+        return new ScoreResource(Score::with(['event', 'team', 'participant'])->get());
     }
 
     public function show($id)
@@ -27,7 +27,7 @@ class ScoresController extends Controller
             return abort(401);
         }
 
-        $score = Score::with(['event', 'company', 'contact'])->findOrFail($id);
+        $score = Score::with(['event', 'team', 'participant'])->findOrFail($id);
 
         return new ScoreResource($score);
     }

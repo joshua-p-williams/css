@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App
  * @property string $event
- * @property string $contact
+ * @property string $participant
  * @property integer $CategoryCompletions
 */
 class CategoryCompletion extends Model

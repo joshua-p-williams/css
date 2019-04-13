@@ -14,7 +14,7 @@ class IndividualResultsController extends Controller
 {
     public function index(Request $request)
     {
-        $data = IndividualRanking::with(['event', 'category', 'company', 'contact'])
+        $data = IndividualRanking::with(['event', 'category', 'team', 'participant'])
                 ->ByEventId($request->input('eventId'))
                 ->ByCategoryId($request->input('categoryId'))
                 ->OrderByWinner()->get();

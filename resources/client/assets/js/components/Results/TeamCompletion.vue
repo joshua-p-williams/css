@@ -75,7 +75,7 @@ export default {
         ...mapGetters('TeamCompletionsIndex', ['data', 'total', 'loading', 'relationships']),
         columns: function () {
             let columns = [
-                { title: 'Team', field: 'company_name', sortable: true },
+                { title: 'Team', field: 'team_name', sortable: true },
                 { title: '% Complete', field: 'percent_complete', sortable: true },
             ];
 
