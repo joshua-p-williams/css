@@ -37,7 +37,7 @@
                                             label="name"
                                             @input="updateTeam"
                                             :value="item.team"
-                                            :options="participantteamsAll"
+                                            :options="TeamsAll"
                                             />
                                 </div>
                                 <div class="form-group">
@@ -91,7 +91,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('ScoresSingle', ['item', 'loading', 'eventsAll', 'participantteamsAll', 'participantsAll']),
+        ...mapGetters('ScoresSingle', ['item', 'loading', 'eventsAll', 'TeamsAll', 'participantsAll']),
         participantsByTeam() {
             let participants = this.participantsAll;
 

@@ -4,7 +4,7 @@ namespace App\Validators;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\ParticipantTeam;
+use App\Team;
 use App\Participant;
 use DB;
 
@@ -16,7 +16,7 @@ class ParticipantValidators {
             $data = $validator->getData();
 
             if (array_key_exists('team_id', $data)) {
-                $team = ParticipantTeam::find($data['team_id']);
+                $team = Team::find($data['team_id']);
                 if ($team !== null) {
                     $matches = ($team->category_id == $value);
                 }

@@ -25,7 +25,7 @@ class Score extends Model
     {
         return [
             'event_id' => 'integer|exists:events,id|max:4294967295|required|uniqueScore',
-            'team_id' => 'integer|exists:participant_teams,id|max:4294967295|required|participantMatchesTeam',
+            'team_id' => 'integer|exists:teams,id|max:4294967295|required|participantMatchesTeam',
             'participant_id' => 'integer|exists:participants,id|max:4294967295|required',
             'score' => 'integer|max:2147483647|required'
         ];
@@ -35,7 +35,7 @@ class Score extends Model
     {
         return [
             'event_id' => 'integer|exists:events,id|max:4294967295|required|uniqueScore',
-            'team_id' => 'integer|exists:participant_teams,id|max:4294967295|required|participantMatchesTeam',
+            'team_id' => 'integer|exists:teams,id|max:4294967295|required|participantMatchesTeam',
             'participant_id' => 'integer|exists:participants,id|max:4294967295|required',
             'score' => 'integer|max:2147483647|required'
         ];
@@ -52,7 +52,7 @@ class Score extends Model
     
     public function team()
     {
-        return $this->belongsTo(ParticipantTeam::class, 'team_id');
+        return $this->belongsTo(Team::class, 'team_id');
     }
     
     public function participant()

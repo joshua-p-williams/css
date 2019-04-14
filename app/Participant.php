@@ -23,7 +23,7 @@ class Participant extends Model
     public static function storeValidation($request)
     {
         return [
-            'team_id' => 'integer|exists:participant_teams,id|max:4294967295|required',
+            'team_id' => 'integer|exists:teams,id|max:4294967295|required',
             'category_id' => 'integer|exists:categories,id|max:4294967295|required|categoryMatchesTeam',
             'name' => 'max:191|required|uniqueParticipant',
             'phone' => 'max:191|nullable',
@@ -35,7 +35,7 @@ class Participant extends Model
     public static function updateValidation($request)
     {
         return [
-            'team_id' => 'integer|exists:participant_teams,id|max:4294967295|required',
+            'team_id' => 'integer|exists:teams,id|max:4294967295|required',
             'category_id' => 'integer|exists:categories,id|max:4294967295|required|categoryMatchesTeam',
             'name' => 'max:191|required|uniqueParticipant',
             'phone' => 'max:191|nullable',
@@ -50,7 +50,7 @@ class Participant extends Model
     
     public function team()
     {
-        return $this->belongsTo(ParticipantTeam::class, 'team_id');
+        return $this->belongsTo(Team::class, 'team_id');
     }
     
     public function category()

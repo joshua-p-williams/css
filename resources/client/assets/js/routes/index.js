@@ -31,10 +31,10 @@ import EventsIndex from '../components/cruds/Events/Index.vue'
 import EventsCreate from '../components/cruds/Events/Create.vue'
 import EventsShow from '../components/cruds/Events/Show.vue'
 import EventsEdit from '../components/cruds/Events/Edit.vue'
-import ParticipantTeamsIndex from '../components/cruds/ParticipantTeams/Index.vue'
-import ParticipantTeamsCreate from '../components/cruds/ParticipantTeams/Create.vue'
-import ParticipantTeamsShow from '../components/cruds/ParticipantTeams/Show.vue'
-import ParticipantTeamsEdit from '../components/cruds/ParticipantTeams/Edit.vue'
+import TeamsIndex from '../components/cruds/Teams/Index.vue'
+import TeamsCreate from '../components/cruds/Teams/Create.vue'
+import TeamsShow from '../components/cruds/Teams/Show.vue'
+import TeamsEdit from '../components/cruds/Teams/Edit.vue'
 import ParticipantsIndex from '../components/cruds/Participants/Index.vue'
 import ParticipantsCreate from '../components/cruds/Participants/Create.vue'
 import ParticipantsShow from '../components/cruds/Participants/Show.vue'
@@ -77,10 +77,10 @@ const routes = [
     { path: '/events/create', component: EventsCreate, name: 'events.create' },
     { path: '/events/:id', component: EventsShow, name: 'events.show' },
     { path: '/events/:id/edit', component: EventsEdit, name: 'events.edit' },
-    { path: '/participant-teams', component: ParticipantTeamsIndex, name: 'participant_teams.index' },
-    { path: '/participant-teams/create', component: ParticipantTeamsCreate, name: 'participant_teams.create' },
-    { path: '/participant-teams/:id', component: ParticipantTeamsShow, name: 'participant_teams.show' },
-    { path: '/participant-teams/:id/edit', component: ParticipantTeamsEdit, name: 'participant_teams.edit' },
+    { path: '/participant-teams', component: TeamsIndex, name: 'teams.index' },
+    { path: '/participant-teams/create', component: TeamsCreate, name: 'teams.create' },
+    { path: '/participant-teams/:id', component: TeamsShow, name: 'teams.show' },
+    { path: '/participant-teams/:id/edit', component: TeamsEdit, name: 'teams.edit' },
     { path: '/participants', component: ParticipantsIndex, name: 'participants.index' },
     { path: '/participants/create', component: ParticipantsCreate, name: 'participants.create' },
     { path: '/participants/:id', component: ParticipantsShow, name: 'participants.show' },

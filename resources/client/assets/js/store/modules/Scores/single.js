@@ -8,7 +8,7 @@ function initialState() {
             score: null,
         },
         eventsAll: [],
-        participantteamsAll: [],
+        TeamsAll: [],
         participantsAll: [],
         
         loading: false,
@@ -19,7 +19,7 @@ const getters = {
     item: state => state.item,
     loading: state => state.loading,
     eventsAll: state => state.eventsAll,
-    participantteamsAll: state => state.participantteamsAll,
+    TeamsAll: state => state.TeamsAll,
     participantsAll: state => state.participantsAll,
     
 }
@@ -151,7 +151,7 @@ const actions = {
             })
 
         dispatch('fetchEventsAll')
-    dispatch('fetchParticipantteamsAll')
+    dispatch('fetchTeamsAll')
     dispatch('fetchParticipantsAll')
     },
     fetchEventsAll({ commit }) {
@@ -160,10 +160,10 @@ const actions = {
                 commit('setEventsAll', response.data.data)
             })
     },
-    fetchParticipantteamsAll({ commit }) {
+    fetchTeamsAll({ commit }) {
         axios.get('/api/v1/participant-teams')
             .then(response => {
-                commit('setParticipantteamsAll', response.data.data)
+                commit('setTeamsAll', response.data.data)
             })
     },
     fetchParticipantsAll({ commit }) {
@@ -208,8 +208,8 @@ const mutations = {
     setEventsAll(state, value) {
         state.eventsAll = value
     },
-    setParticipantteamsAll(state, value) {
-        state.participantteamsAll = value
+    setTeamsAll(state, value) {
+        state.TeamsAll = value
     },
     setParticipantsAll(state, value) {
         state.participantsAll = value

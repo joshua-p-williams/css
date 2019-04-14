@@ -24,8 +24,8 @@ import CategoriesIndex from './modules/Categories'
 import CategoriesSingle from './modules/Categories/single'
 import EventsIndex from './modules/Events'
 import EventsSingle from './modules/Events/single'
-import ParticipantTeamsIndex from './modules/ParticipantTeams'
-import ParticipantTeamsSingle from './modules/ParticipantTeams/single'
+import TeamsIndex from './modules/Teams'
+import TeamsSingle from './modules/Teams/single'
 import ParticipantsIndex from './modules/Participants'
 import ParticipantsSingle from './modules/Participants/single'
 import ScoresIndex from './modules/Scores'
@@ -61,8 +61,8 @@ export default new Vuex.Store({
         CategoriesSingle,
         EventsIndex,
         EventsSingle,
-        ParticipantTeamsIndex,
-        ParticipantTeamsSingle,
+        TeamsIndex,
+        TeamsSingle,
         ParticipantsIndex,
         ParticipantsSingle,
         ScoresIndex,

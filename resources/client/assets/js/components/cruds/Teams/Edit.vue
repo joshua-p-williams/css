@@ -1,7 +1,7 @@
 <template>
     <section class="content-wrapper" style="min-height: 960px;">
         <section class="content-header">
-            <h1>Participants</h1>
+            <h1>Teams</h1>
         </section>
 
         <section class="content">
@@ -21,14 +21,15 @@
 
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="team">Team *</label>
-                                    <v-select
-                                            name="team"
-                                            label="name"
-                                            @input="updateTeam"
-                                            :value="item.team"
-                                            :options="TeamsAll"
-                                            />
+                                    <label for="name">Team Name *</label>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            name="name"
+                                            placeholder="Enter Team Name *"
+                                            :value="item.name"
+                                            @input="updateName"
+                                            >
                                 </div>
                                 <div class="form-group">
                                     <label for="category">Category *</label>
@@ -41,47 +42,58 @@
                                             />
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Name *</label>
+                                    <label for="primary_contact_name">Primary Contact Name *</label>
                                     <input
                                             type="text"
                                             class="form-control"
-                                            name="name"
-                                            placeholder="Enter Name *"
-                                            :value="item.name"
-                                            @input="updateName"
+                                            name="primary_contact_name"
+                                            placeholder="Enter Primary Contact Name *"
+                                            :value="item.primary_contact_name"
+                                            @input="updatePrimary_participant_name"
                                             >
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">Phone</label>
+                                    <label for="primary_contact_phone">Primary Contact Phone</label>
                                     <input
                                             type="text"
                                             class="form-control"
-                                            name="phone"
-                                            placeholder="Enter Phone"
-                                            :value="item.phone"
-                                            @input="updatePhone"
+                                            name="primary_contact_phone"
+                                            placeholder="Enter Primary Contact Phone"
+                                            :value="item.primary_contact_phone"
+                                            @input="updatePrimary_participant_phone"
                                             >
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email</label>
+                                    <label for="primary_contact_email">Primary Contact Email</label>
                                     <input
-                                            type="text"
+                                            type="email"
                                             class="form-control"
-                                            name="email"
-                                            placeholder="Enter Email"
-                                            :value="item.email"
-                                            @input="updateEmail"
+                                            name="primary_contact_email"
+                                            placeholder="Enter Primary Contact Email"
+                                            :value="item.primary_contact_email"
+                                            @input="updatePrimary_participant_email"
                                             >
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Address</label>
+                                    <label for="state">State</label>
                                     <input
                                             type="text"
                                             class="form-control"
-                                            name="address"
-                                            placeholder="Enter Address"
-                                            :value="item.address"
-                                            @input="updateAddress"
+                                            name="state"
+                                            placeholder="Enter State"
+                                            :value="item.state"
+                                            @input="updateState"
+                                            >
+                                </div>
+                                <div class="form-group">
+                                    <label for="county">County</label>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            name="county"
+                                            placeholder="Enter County"
+                                            :value="item.county"
+                                            @input="updateCounty"
                                             >
                                 </div>
                             </div>
@@ -114,7 +126,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('ParticipantsSingle', ['item', 'loading', 'TeamsAll', 'categoriesAll']),
+        ...mapGetters('TeamsSingle', ['item', 'loading', 'categoriesAll']),
     },
     created() {
         this.fetchData(this.$route.params.id)
@@ -129,37 +141,32 @@ export default {
         }
     },
     methods: {
-        ...mapActions('ParticipantsSingle', ['fetchData', 'updateData', 'resetState', 'setTeam', 'setCategory', 'setName', 'setPhone', 'setEmail', 'setAddress']),
-        categorySelected(categoryId) {
-            this.categoriesAll.forEach( item => {
-                if (item.id == categoryId) {
-                    this.updateCategory(item);
-                }
-            });
-        },
-        updateTeam(value) {
-            this.setTeam(value);
-            this.categorySelected(value.category_id);
+        ...mapActions('TeamsSingle', ['fetchData', 'updateData', 'resetState', 'setName', 'setCategory', 'setPrimary_participant_name', 'setPrimary_participant_phone', 'setPrimary_participant_email', 'setState', 'setCounty']),
+        updateName(e) {
+            this.setName(e.target.value)
         },
         updateCategory(value) {
             this.setCategory(value)
         },
-        updateName(e) {
-            this.setName(e.target.value)
+        updatePrimary_participant_name(e) {
+            this.setPrimary_participant_name(e.target.value)
         },
-        updatePhone(e) {
-            this.setPhone(e.target.value)
+        updatePrimary_participant_phone(e) {
+            this.setPrimary_participant_phone(e.target.value)
         },
-        updateEmail(e) {
-            this.setEmail(e.target.value)
+        updatePrimary_participant_email(e) {
+            this.setPrimary_participant_email(e.target.value)
         },
-        updateAddress(e) {
-            this.setAddress(e.target.value)
+        updateState(e) {
+            this.setState(e.target.value)
+        },
+        updateCounty(e) {
+            this.setCounty(e.target.value)
         },
         submitForm() {
             this.updateData()
                 .then(() => {
-                    this.$router.push({ name: 'participants.index' })
+                    this.$router.push({ name: 'teams.index' })
                     this.$eventHub.$emit('update-success')
                 })
                 .catch((error) => {

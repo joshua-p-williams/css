@@ -14,13 +14,13 @@ return [
 			'title' => 'Title',
 		],
 	],
-	team
+
 	'roles' => [
 		'title' => 'Roles',
 		'fields' => [
 			'title' => 'Title',
 			'permission' => 'Permissions',
-		],team
+		],
 	],
 	
 	'users' => [
@@ -99,12 +99,12 @@ return [
 			'score' => 'Score',
 		],
 	],
-	team
+	
 	'faq-management' => [
 		'title' => 'FAQ Management',
 		'fields' => [
 		],
-	],team
+	],
 	
 	'faq-categories' => [
 		'title' => 'Categories',

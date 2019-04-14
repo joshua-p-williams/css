@@ -94,8 +94,8 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li v-if="$can('participant_team_access')">
-                                <router-link :to="{ name: 'participant_teams.index' }">
+                            <li v-if="$can('team_access')">
+                                <router-link :to="{ name: 'teams.index' }">
                                     <i class="fa fa-users"></i>
                                     <span>@lang('quickadmin.participant-teams.title')</span>
                                 </router-link>

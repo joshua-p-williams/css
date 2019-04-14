@@ -37,7 +37,7 @@
                                             label="name"
                                             @input="updateTeam"
                                             :value="item.team"
-                                            :options="participantteamsAll"
+                                            :options="TeamsAll"
                                             />
                                 </div>
                                 <div class="form-group">
@@ -91,7 +91,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('ScoresSingle', ['item', 'loading', 'eventsAll', 'participantteamsAll', 'participantsAll']),
+        ...mapGetters('ScoresSingle', ['item', 'loading', 'eventsAll', 'TeamsAll', 'participantsAll']),
         participantsByTeam() {
             let participants = this.participantsAll;
 
@@ -103,14 +103,14 @@ export default {
     },
     created() {
         this.fetchEventsAll(),
-        this.fetchParticipantteamsAll(),
+        this.fetchTeamsAll(),
         this.fetchParticipantsAll()
     },
     destroyed() {
         this.resetState()
     },
     methods: {
-        ...mapActions('ScoresSingle', ['storeData', 'resetState', 'setEvent', 'setTeam', 'setParticipant', 'setScore', 'fetchEventsAll', 'fetchParticipantteamsAll', 'fetchParticipantsAll']),
+        ...mapActions('ScoresSingle', ['storeData', 'resetState', 'setEvent', 'setTeam', 'setParticipant', 'setScore', 'fetchEventsAll', 'fetchTeamsAll', 'fetchParticipantsAll']),
         updateEvent(value) {
             this.setEvent(value)
         },

@@ -28,7 +28,7 @@ class TeamRanking extends Model
     
     public function team()
     {
-        return $this->belongsTo(ParticipantTeam::class, 'team_id');
+        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function scopeOrderByWinner($query) {

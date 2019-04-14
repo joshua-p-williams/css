@@ -10,7 +10,7 @@ Route::group(['prefix' => '/v1', 'middleware' => ['auth:api'], 'namespace' => 'A
     Route::apiResource('faq-questions', 'FaqQuestionsController');
     Route::apiResource('categories', 'CategoriesController');
     Route::apiResource('events', 'EventsController');
-    Route::apiResource('participant-teams', 'ParticipantTeamsController');
+    Route::apiResource('participant-teams', 'TeamsController');
     Route::apiResource('participants', 'ParticipantsController');
     Route::apiResource('scores', 'ScoresController');
     Route::get('categoryCompletions', 'CategoryCompletionsController@index');
