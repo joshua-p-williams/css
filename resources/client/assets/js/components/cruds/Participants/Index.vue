@@ -70,9 +70,9 @@ export default {
                 { title: 'Team', field: 'team', tdComp: DatatableSingle },
                 { title: 'Category', field: 'category', tdComp: DatatableSingle },
                 { title: 'Name', field: 'name', sortable: true },
-                { title: 'Phone', field: 'phone', sortable: true },
-                { title: 'Email', field: 'email', sortable: true },
-                { title: 'Address', field: 'address', sortable: true },
+                { title: 'Phone', field: 'phone', sortable: true, visible: false },
+                { title: 'Email', field: 'email', sortable: true, visible: false },
+                { title: 'Address', field: 'address', sortable: true, visible: false },
                 { title: 'Actions', tdComp: DatatableActions, visible: true, thClass: 'text-right', tdClass: 'text-right', colStyle: 'width: 130px;' }
             ],
             query: { sort: 'id', order: 'desc' },

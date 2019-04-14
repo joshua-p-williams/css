@@ -13,7 +13,7 @@ class FaqCategorySeed extends Seeder
     {
         $items = [
             
-            ['id' => 1, 'title' => 'Sample category',],
+            ['id' => 1, 'title' => 'Rules',],
 
         ];
 
