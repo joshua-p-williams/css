@@ -52,7 +52,7 @@ const actions = {
                 params.set('category_id', state.item.category.id)
             }
 
-            axios.post('/api/v1/participant-teams', params)
+            axios.post('/api/v1/teams', params)
                 .then(response => {
                     commit('resetState')
                     resolve()
@@ -102,7 +102,7 @@ const actions = {
                 params.set('category_id', state.item.category.id)
             }
 
-            axios.post('/api/v1/participant-teams/' + state.item.id, params)
+            axios.post('/api/v1/teams/' + state.item.id, params)
                 .then(response => {
                     commit('setItem', response.data.data)
                     resolve()
@@ -124,7 +124,7 @@ const actions = {
         })
     },
     fetchData({ commit, dispatch }, id) {
-        axios.get('/api/v1/participant-teams/' + id)
+        axios.get('/api/v1/teams/' + id)
             .then(response => {
                 commit('setItem', response.data.data)
             })

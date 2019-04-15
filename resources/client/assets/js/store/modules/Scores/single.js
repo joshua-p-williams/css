@@ -3,12 +3,14 @@ function initialState() {
         item: {
             id: null,
             event: null,
+            category: null,
             team: null,
             participant: null,
             score: null,
         },
         eventsAll: [],
-        TeamsAll: [],
+        categoriesAll: [],
+        teamsAll: [],
         participantsAll: [],
         
         loading: false,
@@ -19,7 +21,8 @@ const getters = {
     item: state => state.item,
     loading: state => state.loading,
     eventsAll: state => state.eventsAll,
-    TeamsAll: state => state.TeamsAll,
+    categoriesAll: state => state.categoriesAll,
+    teamsAll: state => state.teamsAll,
     participantsAll: state => state.participantsAll,
     
 }
@@ -52,11 +55,19 @@ const actions = {
             } else {
                 params.set('event_id', state.item.event.id)
             }
+
+            if (_.isEmpty(state.item.category)) {
+                params.set('category_id', '')
+            } else {
+                params.set('category_id', state.item.category.id)
+            }
+
             if (_.isEmpty(state.item.team)) {
                 params.set('team_id', '')
             } else {
                 params.set('team_id', state.item.team.id)
             }
+
             if (_.isEmpty(state.item.participant)) {
                 params.set('participant_id', '')
             } else {
@@ -112,11 +123,19 @@ const actions = {
             } else {
                 params.set('event_id', state.item.event.id)
             }
+
+            if (_.isEmpty(state.item.category)) {
+                params.set('category_id', '')
+            } else {
+                params.set('category_id', state.item.category.id)
+            }
+
             if (_.isEmpty(state.item.team)) {
                 params.set('team_id', '')
             } else {
                 params.set('team_id', state.item.team.id)
             }
+
             if (_.isEmpty(state.item.participant)) {
                 params.set('participant_id', '')
             } else {
@@ -151,8 +170,9 @@ const actions = {
             })
 
         dispatch('fetchEventsAll')
-    dispatch('fetchTeamsAll')
-    dispatch('fetchParticipantsAll')
+        dispatch('fetchCategoriesAll')
+        dispatch('fetchTeamsAll')
+        dispatch('fetchParticipantsAll')
     },
     fetchEventsAll({ commit }) {
         axios.get('/api/v1/events')
@@ -160,8 +180,14 @@ const actions = {
                 commit('setEventsAll', response.data.data)
             })
     },
+    fetchCategoriesAll({ commit }) {
+        axios.get('/api/v1/categories')
+            .then(response => {
+                commit('setCategoriesAll', response.data.data)
+            })
+    },
     fetchTeamsAll({ commit }) {
-        axios.get('/api/v1/participant-teams')
+        axios.get('/api/v1/teams')
             .then(response => {
                 commit('setTeamsAll', response.data.data)
             })
@@ -174,6 +200,9 @@ const actions = {
     },
     setEvent({ commit }, value) {
         commit('setEvent', value)
+    },
+    setCategory({ commit }, value) {
+        commit('setCategory', value)
     },
     setTeam({ commit }, value) {
         commit('setTeam', value)
@@ -196,6 +225,9 @@ const mutations = {
     setEvent(state, value) {
         state.item.event = value
     },
+    setCategory(state, value) {
+        state.item.category = value
+    },
     setTeam(state, value) {
         state.item.team = value
     },
@@ -208,8 +240,11 @@ const mutations = {
     setEventsAll(state, value) {
         state.eventsAll = value
     },
+    setCategoriesAll(state, value) {
+        state.categoriesAll = value
+    },
     setTeamsAll(state, value) {
-        state.TeamsAll = value
+        state.teamsAll = value
     },
     setParticipantsAll(state, value) {
         state.participantsAll = value

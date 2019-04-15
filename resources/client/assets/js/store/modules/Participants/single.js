@@ -9,7 +9,7 @@ function initialState() {
             email: null,
             address: null,
         },
-        TeamsAll: [],
+        teamsAll: [],
         categoriesAll: [],
         
         loading: false,
@@ -19,7 +19,7 @@ function initialState() {
 const getters = {
     item: state => state.item,
     loading: state => state.loading,
-    TeamsAll: state => state.TeamsAll,
+    teamsAll: state => state.teamsAll,
     categoriesAll: state => state.categoriesAll,
     
 }
@@ -144,7 +144,7 @@ const actions = {
     dispatch('fetchCategoriesAll')
     },
     fetchTeamsAll({ commit }) {
-        axios.get('/api/v1/participant-teams')
+        axios.get('/api/v1/teams')
             .then(response => {
                 commit('setTeamsAll', response.data.data)
             })
@@ -201,7 +201,7 @@ const mutations = {
         state.item.address = value
     },
     setTeamsAll(state, value) {
-        state.TeamsAll = value
+        state.teamsAll = value
     },
     setCategoriesAll(state, value) {
         state.categoriesAll = value

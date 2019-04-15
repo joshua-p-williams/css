@@ -128,7 +128,7 @@ return [
 		],
 	],
 	
-	'participant-teams' => [
+	'teams' => [
 		'title' => 'Teams',
 		'fields' => [
 			'name' => 'Team Name',
