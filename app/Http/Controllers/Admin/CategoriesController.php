@@ -109,11 +109,11 @@ class CategoriesController extends Controller
     {if ($_GATES_$) {
             return abort(401);
         }
-        $contacts = \App\Contact::where('category_id', $id)->get();
+        $participants = \App\Participant::where('category_id', $id)->get();
 
         $category = Category::findOrFail($id);
 
-        return view('admin.categories.show', compact('category', 'contacts'));
+        return view('admin.categories.show', compact('category', 'participants'));
     }
 
 

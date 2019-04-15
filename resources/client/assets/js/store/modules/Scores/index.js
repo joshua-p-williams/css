@@ -3,8 +3,8 @@ function initialState() {
         all: [],
         relationships: {
             'event': 'name',
-            'company': 'name',
-            'contact': 'name',
+            'team': 'name',
+            'participant': 'name',
         },
         query: {},
         loading: false

@@ -172,7 +172,7 @@ $.validator.addMethod( "cifES", function( value ) {
 	 *	A. Corporations
 	 *	B. LLCs
 	 *	C. General partnerships
-	 *	D. Companies limited partnerships
+	 *	D. Teams limited partnerships
 	 *	E. Communities of goods
 	 *	F. Cooperative Societies
 	 *	G. Associations

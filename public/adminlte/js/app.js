@@ -99,8 +99,8 @@ $.AdminLTE.options = {
   directChat: {
     //Enable direct chat by default
     enable: true,
-    //The button to open and close the chat contacts pane
-    contactToggleSelector: '[data-widget="chat-pane-toggle"]'
+    //The button to open and close the chat participants pane
+    participantToggleSelector: '[data-widget="chat-pane-toggle"]'
   },
   //Define the set of colors to use globally around the website
   colors: {
@@ -205,9 +205,9 @@ $(function () {
 
   //Activate direct chat widget
   if (o.directChat.enable) {
-    $(document).on('click', o.directChat.contactToggleSelector, function () {
+    $(document).on('click', o.directChat.participantToggleSelector, function () {
       var box = $(this).parents('.direct-chat').first();
-      box.toggleClass('direct-chat-contacts-open');
+      box.toggleClass('direct-chat-participants-open');
     });
   }
 

@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @package App
  * @property string $event
- * @property string $company
- * @property string $contact
+ * @property string $team
+ * @property string $participant
  * @property integer $score
 */
 class Score extends Model
@@ -18,15 +18,15 @@ class Score extends Model
     use SoftDeletes;
 
     
-    protected $fillable = ['score', 'event_id', 'company_id', 'contact_id'];
+    protected $fillable = ['score', 'event_id', 'team_id', 'participant_id'];
     
 
     public static function storeValidation($request)
     {
         return [
             'event_id' => 'integer|exists:events,id|max:4294967295|required|uniqueScore',
-            'company_id' => 'integer|exists:contact_companies,id|max:4294967295|required|participantMatchesTeam',
-            'contact_id' => 'integer|exists:contacts,id|max:4294967295|required',
+            'team_id' => 'integer|exists:teams,id|max:4294967295|required|participantMatchesTeam',
+            'participant_id' => 'integer|exists:participants,id|max:4294967295|required',
             'score' => 'integer|max:2147483647|required'
         ];
     }
@@ -35,8 +35,8 @@ class Score extends Model
     {
         return [
             'event_id' => 'integer|exists:events,id|max:4294967295|required|uniqueScore',
-            'company_id' => 'integer|exists:contact_companies,id|max:4294967295|required|participantMatchesTeam',
-            'contact_id' => 'integer|exists:contacts,id|max:4294967295|required',
+            'team_id' => 'integer|exists:teams,id|max:4294967295|required|participantMatchesTeam',
+            'participant_id' => 'integer|exists:participants,id|max:4294967295|required',
             'score' => 'integer|max:2147483647|required'
         ];
     }
@@ -50,14 +50,14 @@ class Score extends Model
         return $this->belongsTo(Event::class, 'event_id')->withTrashed();
     }
     
-    public function company()
+    public function team()
     {
-        return $this->belongsTo(ContactCompany::class, 'company_id');
+        return $this->belongsTo(Team::class, 'team_id');
     }
     
-    public function contact()
+    public function participant()
     {
-        return $this->belongsTo(Contact::class, 'contact_id');
+        return $this->belongsTo(Participant::class, 'participant_id');
     }
     
     

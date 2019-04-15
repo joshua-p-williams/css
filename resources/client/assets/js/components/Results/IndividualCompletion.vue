@@ -57,7 +57,7 @@ export default {
     props: ['event', 'category'],
     data() {
         return {
-            query: { sort: 'contact_name', order: 'asc' },
+            query: { sort: 'participant_name', order: 'asc' },
             xprops: {
                 module: 'IndividualCompletionsIndex',
                 route: 'individualCompletions',
@@ -75,8 +75,8 @@ export default {
         ...mapGetters('IndividualCompletionsIndex', ['data', 'total', 'loading', 'relationships']),
         columns: function () {
             let columns = [
-                { title: 'Team', field: 'company_name', sortable: true },
-                { title: 'Name', field: 'contact_name', sortable: true },
+                { title: 'Team', field: 'team_name', sortable: true },
+                { title: 'Name', field: 'participant_name', sortable: true },
             ];
 
             if (!this.event) {

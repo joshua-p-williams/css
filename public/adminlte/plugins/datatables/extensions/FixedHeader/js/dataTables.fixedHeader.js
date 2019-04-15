@@ -9,7 +9,7 @@
  * @version     2.1.2
  * @file        dataTables.fixedHeader.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     www.sprymedia.co.uk/contact
+ * @participant     www.sprymedia.co.uk/participant
  * @copyright   Copyright 2009-2014 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:

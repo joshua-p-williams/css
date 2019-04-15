@@ -36,16 +36,16 @@
                                         <tr>
                                             <th>Team</th>
                                             <td>
-                                                <span class="label label-info" v-if="item.company !== null">
-                                                    {{ item.company.name }}
+                                                <span class="label label-info" v-if="item.team !== null">
+                                                    {{ item.team.name }}
                                                 </span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Participant</th>
                                             <td>
-                                                <span class="label label-info" v-if="item.contact !== null">
-                                                    {{ item.contact.name }}
+                                                <span class="label label-info" v-if="item.participant !== null">
+                                                    {{ item.participant.name }}
                                                 </span>
                                             </td>
                                         </tr>

@@ -3,13 +3,15 @@ function initialState() {
         item: {
             id: null,
             event: null,
-            company: null,
-            contact: null,
+            category: null,
+            team: null,
+            participant: null,
             score: null,
         },
         eventsAll: [],
-        contactcompaniesAll: [],
-        contactsAll: [],
+        categoriesAll: [],
+        teamsAll: [],
+        participantsAll: [],
         
         loading: false,
     }
@@ -19,8 +21,9 @@ const getters = {
     item: state => state.item,
     loading: state => state.loading,
     eventsAll: state => state.eventsAll,
-    contactcompaniesAll: state => state.contactcompaniesAll,
-    contactsAll: state => state.contactsAll,
+    categoriesAll: state => state.categoriesAll,
+    teamsAll: state => state.teamsAll,
+    participantsAll: state => state.participantsAll,
     
 }
 
@@ -52,15 +55,23 @@ const actions = {
             } else {
                 params.set('event_id', state.item.event.id)
             }
-            if (_.isEmpty(state.item.company)) {
-                params.set('company_id', '')
+
+            if (_.isEmpty(state.item.category)) {
+                params.set('category_id', '')
             } else {
-                params.set('company_id', state.item.company.id)
+                params.set('category_id', state.item.category.id)
             }
-            if (_.isEmpty(state.item.contact)) {
-                params.set('contact_id', '')
+
+            if (_.isEmpty(state.item.team)) {
+                params.set('team_id', '')
             } else {
-                params.set('contact_id', state.item.contact.id)
+                params.set('team_id', state.item.team.id)
+            }
+
+            if (_.isEmpty(state.item.participant)) {
+                params.set('participant_id', '')
+            } else {
+                params.set('participant_id', state.item.participant.id)
             }
 
             axios.post('/api/v1/scores', params)
@@ -112,15 +123,23 @@ const actions = {
             } else {
                 params.set('event_id', state.item.event.id)
             }
-            if (_.isEmpty(state.item.company)) {
-                params.set('company_id', '')
+
+            if (_.isEmpty(state.item.category)) {
+                params.set('category_id', '')
             } else {
-                params.set('company_id', state.item.company.id)
+                params.set('category_id', state.item.category.id)
             }
-            if (_.isEmpty(state.item.contact)) {
-                params.set('contact_id', '')
+
+            if (_.isEmpty(state.item.team)) {
+                params.set('team_id', '')
             } else {
-                params.set('contact_id', state.item.contact.id)
+                params.set('team_id', state.item.team.id)
+            }
+
+            if (_.isEmpty(state.item.participant)) {
+                params.set('participant_id', '')
+            } else {
+                params.set('participant_id', state.item.participant.id)
             }
 
             axios.post('/api/v1/scores/' + state.item.id, params)
@@ -151,8 +170,9 @@ const actions = {
             })
 
         dispatch('fetchEventsAll')
-    dispatch('fetchContactcompaniesAll')
-    dispatch('fetchContactsAll')
+        dispatch('fetchCategoriesAll')
+        dispatch('fetchTeamsAll')
+        dispatch('fetchParticipantsAll')
     },
     fetchEventsAll({ commit }) {
         axios.get('/api/v1/events')
@@ -160,26 +180,35 @@ const actions = {
                 commit('setEventsAll', response.data.data)
             })
     },
-    fetchContactcompaniesAll({ commit }) {
-        axios.get('/api/v1/contact-companies')
+    fetchCategoriesAll({ commit }) {
+        axios.get('/api/v1/categories')
             .then(response => {
-                commit('setContactcompaniesAll', response.data.data)
+                commit('setCategoriesAll', response.data.data)
             })
     },
-    fetchContactsAll({ commit }) {
-        axios.get('/api/v1/contacts')
+    fetchTeamsAll({ commit }) {
+        axios.get('/api/v1/teams')
             .then(response => {
-                commit('setContactsAll', response.data.data)
+                commit('setTeamsAll', response.data.data)
+            })
+    },
+    fetchParticipantsAll({ commit }) {
+        axios.get('/api/v1/participants')
+            .then(response => {
+                commit('setParticipantsAll', response.data.data)
             })
     },
     setEvent({ commit }, value) {
         commit('setEvent', value)
     },
-    setCompany({ commit }, value) {
-        commit('setCompany', value)
+    setCategory({ commit }, value) {
+        commit('setCategory', value)
     },
-    setContact({ commit }, value) {
-        commit('setContact', value)
+    setTeam({ commit }, value) {
+        commit('setTeam', value)
+    },
+    setParticipant({ commit }, value) {
+        commit('setParticipant', value)
     },
     setScore({ commit }, value) {
         commit('setScore', value)
@@ -196,11 +225,14 @@ const mutations = {
     setEvent(state, value) {
         state.item.event = value
     },
-    setCompany(state, value) {
-        state.item.company = value
+    setCategory(state, value) {
+        state.item.category = value
     },
-    setContact(state, value) {
-        state.item.contact = value
+    setTeam(state, value) {
+        state.item.team = value
+    },
+    setParticipant(state, value) {
+        state.item.participant = value
     },
     setScore(state, value) {
         state.item.score = value
@@ -208,11 +240,14 @@ const mutations = {
     setEventsAll(state, value) {
         state.eventsAll = value
     },
-    setContactcompaniesAll(state, value) {
-        state.contactcompaniesAll = value
+    setCategoriesAll(state, value) {
+        state.categoriesAll = value
     },
-    setContactsAll(state, value) {
-        state.contactsAll = value
+    setTeamsAll(state, value) {
+        state.teamsAll = value
+    },
+    setParticipantsAll(state, value) {
+        state.participantsAll = value
     },
     
     setLoading(state, loading) {

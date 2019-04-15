@@ -11,7 +11,7 @@
  * @version     2.2.4
  * @file        dataTables.tableTools.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     www.sprymedia.co.uk/contact
+ * @participant     www.sprymedia.co.uk/participant
  * @copyright   Copyright 2009-2015 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:

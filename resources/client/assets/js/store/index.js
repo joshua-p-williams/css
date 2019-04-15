@@ -24,10 +24,10 @@ import CategoriesIndex from './modules/Categories'
 import CategoriesSingle from './modules/Categories/single'
 import EventsIndex from './modules/Events'
 import EventsSingle from './modules/Events/single'
-import ContactCompaniesIndex from './modules/ContactCompanies'
-import ContactCompaniesSingle from './modules/ContactCompanies/single'
-import ContactsIndex from './modules/Contacts'
-import ContactsSingle from './modules/Contacts/single'
+import TeamsIndex from './modules/Teams'
+import TeamsSingle from './modules/Teams/single'
+import ParticipantsIndex from './modules/Participants'
+import ParticipantsSingle from './modules/Participants/single'
 import ScoresIndex from './modules/Scores'
 import ScoresSingle from './modules/Scores/single'
 
@@ -61,10 +61,10 @@ export default new Vuex.Store({
         CategoriesSingle,
         EventsIndex,
         EventsSingle,
-        ContactCompaniesIndex,
-        ContactCompaniesSingle,
-        ContactsIndex,
-        ContactsSingle,
+        TeamsIndex,
+        TeamsSingle,
+        ParticipantsIndex,
+        ParticipantsSingle,
         ScoresIndex,
         ScoresSingle,
     },

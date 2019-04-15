@@ -94,16 +94,16 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li v-if="$can('contact_company_access')">
-                                <router-link :to="{ name: 'contact_companies.index' }">
+                            <li v-if="$can('team_access')">
+                                <router-link :to="{ name: 'teams.index' }">
                                     <i class="fa fa-users"></i>
-                                    <span>@lang('quickadmin.contact-companies.title')</span>
+                                    <span>@lang('quickadmin.teams.title')</span>
                                 </router-link>
                             </li>
-                            <li v-if="$can('contact_access')">
-                                <router-link :to="{ name: 'contacts.index' }">
+                            <li v-if="$can('participant_access')">
+                                <router-link :to="{ name: 'participants.index' }">
                                     <i class="fa fa-user-plus"></i>
-                                    <span>@lang('quickadmin.contacts.title')</span>
+                                    <span>@lang('quickadmin.participants.title')</span>
                                 </router-link>
                             </li>
                         </ul>

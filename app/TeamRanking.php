@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App
  * @property string $event
- * @property string $contact
+ * @property string $participant
  * @property integer $TeamRanking
 */
 class TeamRanking extends Model
@@ -26,9 +26,9 @@ class TeamRanking extends Model
         return $this->belongsTo(Category::class, 'category_id')->withTrashed();
     }
     
-    public function company()
+    public function team()
     {
-        return $this->belongsTo(ContactCompany::class, 'company_id');
+        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function scopeOrderByWinner($query) {

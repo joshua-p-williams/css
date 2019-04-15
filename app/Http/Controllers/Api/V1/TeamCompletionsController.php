@@ -14,7 +14,7 @@ class TeamCompletionsController extends Controller
 {
     public function index(Request $request)
     {
-        $data = TeamCompletion::with(['event', 'category', 'company'])
+        $data = TeamCompletion::with(['event', 'category', 'team'])
                 ->ByEventId($request->input('eventId'))
                 ->ByCategoryId($request->input('categoryId'))
                 ->HasParticipants()->Unfinished()->get();

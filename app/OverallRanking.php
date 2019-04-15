@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App
  * @property string $event
- * @property string $contact
+ * @property string $participant
  * @property integer $TeamRanking
 */
 class OverallRanking extends Model
 {
     protected $table = 'v_overall_ranking';
-    protected $primaryKey = 'contact_id';
+    protected $primaryKey = 'participant_id';
 
     public function event()
     {
@@ -26,14 +26,14 @@ class OverallRanking extends Model
         return $this->belongsTo(Category::class, 'category_id')->withTrashed();
     }
     
-    public function company()
+    public function team()
     {
-        return $this->belongsTo(ContactCompany::class, 'company_id');
+        return $this->belongsTo(Team::class, 'team_id');
     }
     
-    public function contact()
+    public function participant()
     {
-        return $this->belongsTo(Contact::class, 'contact_id');
+        return $this->belongsTo(Participant::class, 'participant_id');
     }
 
     public function scopeOrderByWinner($query) {

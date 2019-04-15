@@ -8,7 +8,7 @@
  * @version     1.0.6
  * @file        dataTables.responsive.js
  * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     www.sprymedia.co.uk/contact
+ * @participant     www.sprymedia.co.uk/participant
  * @copyright   Copyright 2014-2015 SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:

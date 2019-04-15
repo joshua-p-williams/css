@@ -31,23 +31,33 @@
                                             />
                                 </div>
                                 <div class="form-group">
-                                    <label for="company">Team</label>
+                                    <label for="category">Category</label>
                                     <v-select
-                                            name="company"
+                                            name="category"
                                             label="name"
-                                            @input="updateCompany"
-                                            :value="item.company"
-                                            :options="contactcompaniesAll"
+                                            @input="updateCategory"
+                                            :value="item.category"
+                                            :options="categoriesAll"
                                             />
                                 </div>
                                 <div class="form-group">
-                                    <label for="contact">Participant *</label>
+                                    <label for="participant">Participant *</label>
                                     <v-select
-                                            name="contact"
+                                            name="participant"
                                             label="name"
-                                            @input="updateContact"
-                                            :value="item.contact"
-                                            :options="contactsByCompany"
+                                            @input="updateParticipant"
+                                            :value="item.participant"
+                                            :options="limitedParticipants"
+                                            />
+                                </div>
+                                <div class="form-group">
+                                    <label for="team">Team</label>
+                                    <v-select
+                                            name="team"
+                                            label="name"
+                                            @input="updateTeam"
+                                            :value="item.team"
+                                            :options="limitedTeams"
                                             />
                                 </div>
                                 <div class="form-group">
@@ -64,13 +74,22 @@
                             </div>
 
                             <div class="box-footer">
-                                <vue-button-spinner
+                                    <vue-button-spinner
                                         class="btn btn-primary btn-sm"
                                         :isLoading="loading"
-                                        :disabled="loading"
-                                        >
-                                    Save
-                                </vue-button-spinner>
+                                        :disabled="loading">
+                                        Save
+                                    </vue-button-spinner>
+                                <div class="btn-group pull-right">
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                        @click="clear">
+                                        Clear
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        @click="close">
+                                        Close
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -87,47 +106,98 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            selectedCompany: null,
+            selectedTeam: null,
         }
     },
     computed: {
-        ...mapGetters('ScoresSingle', ['item', 'loading', 'eventsAll', 'contactcompaniesAll', 'contactsAll']),
-        contactsByCompany() {
-            let participants = this.contactsAll;
+        ...mapGetters('ScoresSingle', ['item', 'loading', 'eventsAll', 'teamsAll', 'categoriesAll', 'participantsAll']),
+        limitedParticipants() {
+            let participants = this.participantsAll;
 
-            if (this.item.company && this.item.company.id) {
-                participants = participants.filter(i => i.company_id == this.item.company.id);
+            if (this.item.category && this.item.category.id) {
+                participants = participants.filter(i => i.category_id == this.item.category.id);
             }
+
+            if (this.item.team && this.item.team.id) {
+                participants = participants.filter(i => i.team_id == this.item.team.id);
+            }
+
             return participants;
-        }
+        },
+        limitedTeams() {
+            let teams = this.teamsAll;
+
+            if (this.item.category && this.item.category.id) {
+                teams = teams.filter(i => i.category_id == this.item.category.id);
+            }
+
+            if (this.item.participant && this.item.participant.id) {
+                teams = teams.filter(i => i.id == this.item.participant.team_id);
+            }
+
+            return teams;
+        },
     },
     created() {
-        this.fetchEventsAll(),
-        this.fetchContactcompaniesAll(),
-        this.fetchContactsAll()
+        this.init()
     },
     destroyed() {
         this.resetState()
     },
     methods: {
-        ...mapActions('ScoresSingle', ['storeData', 'resetState', 'setEvent', 'setCompany', 'setContact', 'setScore', 'fetchEventsAll', 'fetchContactcompaniesAll', 'fetchContactsAll']),
+        ...mapActions('ScoresSingle', ['storeData', 'resetState', 'setEvent', 'setCategory', 'setTeam', 'setParticipant', 'setScore', 'fetchEventsAll', 'fetchCategoriesAll', 'fetchTeamsAll', 'fetchParticipantsAll']),
+        init() {
+            this.fetchEventsAll(),
+            this.fetchCategoriesAll(),
+            this.fetchTeamsAll(),
+            this.fetchParticipantsAll()
+        },
+        byName(a, b) {
+            if (a.name < b.name) {
+                return -1;
+            }
+            if (a.name > b.name) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        },
         updateEvent(value) {
             this.setEvent(value)
         },
-        updateCompany(value) {
-            this.setCompany(value)
+        updateCategory(value) {
+            this.setCategory(value)
         },
-        updateContact(value) {
-            this.setContact(value)
+        updateTeam(value) {
+            this.setTeam(value)
+        },
+        updateParticipant(value) {
+            this.setParticipant(value);
+            if (this.limitedTeams && this.limitedTeams.length == 1) {
+                this.updateTeam(this.limitedTeams[0]);
+            }
         },
         updateScore(e) {
             this.setScore(e.target.value)
         },
+        clear() {
+            this.resetState();
+            this.init();
+        },
+        close() {
+            this.$router.push({ name: 'scores.index' });
+        },
         submitForm() {
+            let event = this.item.event;
+            let category = this.item.category;
             this.storeData()
                 .then(() => {
-                    this.$router.push({ name: 'scores.index' })
                     this.$eventHub.$emit('create-success')
+                    this.resetState();
+                    this.init();
+                    this.updateEvent(event);
+                    this.updateCategory(category);
                 })
                 .catch((error) => {
                     console.error(error)

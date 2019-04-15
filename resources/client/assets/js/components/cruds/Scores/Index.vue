@@ -68,8 +68,8 @@ export default {
             columns: [
                 { title: '#', field: 'id', sortable: true, colStyle: 'width: 50px;', visible: false },
                 { title: 'Event', field: 'event', tdComp: DatatableSingle },
-                { title: 'Team', field: 'company', tdComp: DatatableSingle },
-                { title: 'Participant', field: 'contact', tdComp: DatatableSingle },
+                { title: 'Team', field: 'team', tdComp: DatatableSingle },
+                { title: 'Participant', field: 'participant', tdComp: DatatableSingle },
                 { title: 'Score', field: 'score', sortable: true },
                 { title: 'Actions', tdComp: DatatableActions, visible: true, thClass: 'text-right', tdClass: 'text-right', colStyle: 'width: 130px;' }
             ],
