@@ -1,11 +1,11 @@
 <template>
     <section class="content-wrapper">
-        <section class="content-header">
+        <section class="content-header no-print">
             <h1>Dashboard</h1>
         </section>
 
         <section class="content">
-            <div class="row">
+            <div class="row no-print">
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header with-border">
@@ -24,9 +24,12 @@
                                 <button type="button" class="btn btn-default btn-sm" @click="selectIndividual">
                                     <i class="fa fa-user-plus"></i> Individual
                                 </button>
+                                <button type="button" class="btn btn-default btn-sm" @click="selectCeremony">
+                                    <i class="fa fa-trophy"></i> Ceremony
+                                </button>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" v-show="outstandingSelection != 'ceremony'">
                                 <label for="event">Event</label>
                                 <v-select
                                     name="event"
@@ -36,7 +39,7 @@
                                     :options="eventsAll" />
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" v-show="outstandingSelection != 'ceremony'">
                                 <label for="category">Category</label>
                                 <v-select
                                     name="category"
@@ -51,9 +54,11 @@
                 </div>
             </div>
 
+            <ceremony-results v-if="outstandingSelection == 'ceremony'"></ceremony-results>
             <category-completion v-if="outstandingSelection == 'overall'" :event="event" :category="category"></category-completion>
             <team-completion v-if="outstandingSelection == 'team'" :event="event" :category="category"></team-completion>
             <individual-completion v-if="outstandingSelection == 'individual'" :event="event" :category="category"></individual-completion>
+
         </section>
 
         <section class="content">
@@ -78,8 +83,8 @@ export default {
         ...mapGetters('HomeIndex', ['event', 'category', 'outstandingSelection', 'loading', 'eventsAll', 'categoriesAll']),
     },
     created() {
-        this.fetchEventsAll()
-        this.fetchCategoriesAll()
+        this.fetchEventsAll();
+        this.fetchCategoriesAll();
     },
     methods: {
         ...mapActions('HomeIndex', ['setEvent', 'setCategory', 'setOutstandingSelection', 'fetchEventsAll', 'fetchCategoriesAll']),
@@ -97,6 +102,9 @@ export default {
         },
         selectIndividual: function () {
             this.setOutstandingSelection('individual');
+        },
+        selectCeremony: function () {
+            this.setOutstandingSelection('ceremony');
         },
     }
 }

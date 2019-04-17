@@ -10,6 +10,7 @@ import IndividualCompletionsIndex from './modules/IndividualCompletions'
 import OverallResultsIndex from './modules/OverallResults'
 import TeamResultsIndex from './modules/TeamResults'
 import IndividualResultsIndex from './modules/IndividualResults'
+import CeremonyResultsIndex from './modules/CeremonyResults'
 import PermissionsIndex from './modules/Permissions'
 import PermissionsSingle from './modules/Permissions/single'
 import RolesIndex from './modules/Roles'
@@ -47,6 +48,7 @@ export default new Vuex.Store({
         OverallResultsIndex,
         TeamResultsIndex,
         IndividualResultsIndex,
+        CeremonyResultsIndex,
         PermissionsIndex,
         PermissionsSingle,
         RolesIndex,

@@ -92,6 +92,7 @@ Vue.component('individual-completion', require('./components/Results/IndividualC
 Vue.component('overall-results', require('./components/Results/OverallResults.vue'))
 Vue.component('team-results', require('./components/Results/TeamResults.vue'))
 Vue.component('individual-results', require('./components/Results/IndividualResults.vue'))
+Vue.component('ceremony-results', require('./components/Results/CeremonyResults.vue'))
 
 moment.updateLocale(window.app_locale, {
     week: {
