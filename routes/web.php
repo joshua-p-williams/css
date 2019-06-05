@@ -10,8 +10,8 @@ $this->post('login', 'Auth\LoginController@login')->name('auth.login');
 $this->post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 
 // Change Password Routes...
-$this->get('change_password', 'Auth\ChangePasswordController@showChangePasswordForm')->name('auth.change_password');
-$this->patch('change_password', 'Auth\ChangePasswordController@changePassword')->name('auth.change_password');
+$this->get('change_password', 'Api\V1\ChangePasswordController@showChangePasswordForm')->name('auth.change_password');
+$this->patch('change_password', 'Api\V1\ChangePasswordController@changePassword')->name('auth.change_password');
 
 // Password Reset Routes...
 $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('auth.password.reset');
