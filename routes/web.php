@@ -22,3 +22,5 @@ $this->post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 });
+
+Route::get('participantList', 'CSVController@participantList');
