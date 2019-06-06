@@ -24,3 +24,4 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 });
 
 Route::get('participantList', 'CSVController@participantList');
+Route::get('allResults', 'CSVController@allResults');
