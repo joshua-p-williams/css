@@ -29,6 +29,15 @@
                                 </button>
                             </div>
 
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm" @click="downloadParticipantsList">
+                                    <i class="fa fa-download"></i> Participant List
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm" @click="downloadFinalResults">
+                                    <i class="fa fa-download"></i> Final Results
+                                </button>
+                            </div>
+
                             <div class="form-group" v-show="outstandingSelection != 'ceremony'">
                                 <label for="event">Event</label>
                                 <v-select
@@ -105,6 +114,14 @@ export default {
         },
         selectCeremony: function () {
             this.setOutstandingSelection('ceremony');
+        },
+        downloadParticipantsList: function () {
+            window.open('/participantList', '_blank');
+            return false;
+        },
+        downloadFinalResults: function () {
+            window.open('/allResults', '_blank');
+            return false;
         },
     }
 }
