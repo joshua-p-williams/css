@@ -23,5 +23,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/{any}', 'HomeController@index')->where('any', '.*');
 });
 
-Route::get('participantList', 'CSVController@participantList');
-Route::get('allResults', 'CSVController@allResults');
+Route::group(['middleware' => ['auth'], 'prefix' => 'download'], function () {
+    Route::get('participantList', 'CSVController@participantList');
+    Route::get('allResults', 'CSVController@allResults');
+});

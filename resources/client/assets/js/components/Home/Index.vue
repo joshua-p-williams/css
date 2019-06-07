@@ -116,11 +116,11 @@ export default {
             this.setOutstandingSelection('ceremony');
         },
         downloadParticipantsList: function () {
-            window.open('/participantList', '_blank');
+            window.open('/download/participantList', '_blank');
             return false;
         },
         downloadFinalResults: function () {
-            window.open('/allResults', '_blank');
+            window.open('/download/allResults', '_blank');
             return false;
         },
     }
