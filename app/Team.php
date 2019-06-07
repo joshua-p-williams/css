@@ -18,8 +18,12 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
     
-    protected $fillable = ['name', 'primary_contact_name', 'primary_contact_phone', 'primary_contact_email', 'state', 'county', 'category_id'];
+    protected $fillable = ['name', 'primary_contact_name', 'primary_contact_phone', 'primary_contact_email', 'state', 'county', 'category_id', 'exclude_team_rank', 'exclude_ind_rank'];
     
+    protected $casts = [
+        'exclude_team_rank' => 'boolean',
+        'exclude_ind_rank' => 'boolean',
+    ];
 
     public static function storeValidation($request)
     {
@@ -30,7 +34,9 @@ class Team extends Model
             'primary_contact_phone' => 'max:191|nullable',
             'primary_contact_email' => 'email|max:191|nullable',
             'state' => 'max:191|nullable',
-            'county' => 'max:191|nullable'
+            'county' => 'max:191|nullable',
+            'exclude_team_rank' => 'required',
+            'exclude_ind_rank' => 'required',
         ];
     }
 
@@ -43,7 +49,9 @@ class Team extends Model
             'primary_contact_phone' => 'max:191|nullable',
             'primary_contact_email' => 'email|max:191|nullable',
             'state' => 'max:191|nullable',
-            'county' => 'max:191|nullable'
+            'county' => 'max:191|nullable',
+            'exclude_team_rank' => 'required',
+            'exclude_ind_rank' => 'required',
         ];
     }
 

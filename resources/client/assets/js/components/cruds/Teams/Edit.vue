@@ -96,6 +96,22 @@
                                             @input="updateCounty"
                                             >
                                 </div>
+                                <div class="form-group">
+                                    <label for="excludeTeamRank">Exclude From Team Rank</label>
+                                    <input
+                                            type="checkbox"
+                                            name="excludeTeamRank"
+                                            v-model="excludeTeamRank"
+                                            >
+                                </div>
+                                <div class="form-group">
+                                    <label for="excludeIndRank">Exclude From Individual Rank</label>
+                                    <input
+                                            type="checkbox"
+                                            name="excludeIndRank"
+                                            v-model="excludeIndRank"
+                                            >
+                                </div>
                             </div>
 
                             <div class="box-footer">
@@ -127,6 +143,22 @@ export default {
     },
     computed: {
         ...mapGetters('TeamsSingle', ['item', 'loading', 'categoriesAll']),
+        excludeTeamRank: {
+            get() {
+                return this.$store.state.TeamsSingle.item.exclude_team_rank;
+            },
+            set(value) {
+                this.setExcludeTeamRank(value);
+            }
+        },
+        excludeIndRank: {
+            get() {
+                return this.$store.state.TeamsSingle.item.exclude_ind_rank;
+            },
+            set(value) {
+                this.setExcludeIndRank(value);
+            }
+        }
     },
     created() {
         this.fetchData(this.$route.params.id)
@@ -141,7 +173,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('TeamsSingle', ['fetchData', 'updateData', 'resetState', 'setName', 'setCategory', 'setPrimary_participant_name', 'setPrimary_participant_phone', 'setPrimary_participant_email', 'setState', 'setCounty']),
+        ...mapActions('TeamsSingle', ['fetchData', 'updateData', 'resetState', 'setName', 'setCategory', 'setPrimary_participant_name', 'setPrimary_participant_phone', 'setPrimary_participant_email', 'setState', 'setCounty', 'setExcludeTeamRank', 'setExcludeIndRank']),
         updateName(e) {
             this.setName(e.target.value)
         },

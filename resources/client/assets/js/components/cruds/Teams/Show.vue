@@ -57,6 +57,14 @@
                                             <th>County</th>
                                             <td>{{ item.county }}</td>
                                             </tr>
+                                        <tr>
+                                            <th>Exclude From Team Rank</th>
+                                            <td>{{ item.excludeTeamRank }}</td>
+                                            </tr>
+                                        <tr>
+                                            <th>Exclude From Individual Rank</th>
+                                            <td>{{ item.excludeIndRank }}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

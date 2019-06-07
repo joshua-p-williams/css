@@ -74,6 +74,8 @@ export default {
                 { title: 'Primary Contact Email', field: 'primary_contact_email', sortable: true, visible: false },
                 { title: 'State', field: 'state', sortable: true, visible: false },
                 { title: 'County', field: 'county', sortable: true, visible: false },
+                { title: 'Exclude Team Rank', field: 'excludeTeamRank', sortable: true, visible: false },
+                { title: 'Exclude Individual Rank', field: 'excludeIndRank', sortable: true, visible: false },
                 { title: 'Actions', tdComp: DatatableActions, visible: true, thClass: 'text-right', tdClass: 'text-right', colStyle: 'width: 130px;' }
             ],
             query: { sort: 'id', order: 'desc' },

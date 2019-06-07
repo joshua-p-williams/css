@@ -38,7 +38,10 @@ class TeamsController extends Controller
             return abort(401);
         }
 
-        $team = Team::create($request->all());
+        $all = $request->all();
+        $all['exclude_team_rank'] = isset($all['exclude_team_rank']) ? $all['exclude_team_rank'] === 'true' : false;
+        $all['exclude_ind_rank'] = isset($all['exclude_ind_rank']) ? $all['exclude_ind_rank'] === 'true' : false;
+        $team = Team::create($all);
         
         
 
@@ -54,7 +57,10 @@ class TeamsController extends Controller
         }
 
         $team = Team::findOrFail($id);
-        $team->update($request->all());
+        $all = $request->all();
+        $all['exclude_team_rank'] = isset($all['exclude_team_rank']) ? $all['exclude_team_rank'] === 'true' : false;
+        $all['exclude_ind_rank'] = isset($all['exclude_ind_rank']) ? $all['exclude_ind_rank'] === 'true' : false;
+        $team->update($all);
         
         
         

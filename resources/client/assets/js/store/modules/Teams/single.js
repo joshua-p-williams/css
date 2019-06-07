@@ -9,6 +9,8 @@ function initialState() {
             primary_contact_email: null,
             state: null,
             county: null,
+            exclude_team_rank: null,
+            exclude_ind_rank: null,
         },
         categoriesAll: [],
         
@@ -158,9 +160,15 @@ const actions = {
     setCounty({ commit }, value) {
         commit('setCounty', value)
     },
+    setExcludeTeamRank({ commit }, value) {
+        commit('setExcludeTeamRank', value)
+    },
+    setExcludeIndRank({ commit }, value) {
+        commit('setExcludeIndRank', value)
+    },
     resetState({ commit }) {
         commit('resetState')
-    }
+    },
 }
 
 const mutations = {
@@ -188,10 +196,15 @@ const mutations = {
     setCounty(state, value) {
         state.item.county = value
     },
+    setExcludeTeamRank(state, value) {
+        state.item.exclude_team_rank = value
+    },
+    setExcludeIndRank(state, value) {
+        state.item.exclude_ind_rank = value
+    },
     setCategoriesAll(state, value) {
         state.categoriesAll = value
-    },
-    
+    },    
     setLoading(state, loading) {
         state.loading = loading
     },

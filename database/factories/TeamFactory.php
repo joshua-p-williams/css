@@ -9,5 +9,7 @@ $factory->define(App\Team::class, function (Faker\Generator $faker) {
         "primary_contact_email" => $faker->safeEmail,
         "state" => $faker->name,
         "county" => $faker->name,
+        "exclude_team_rank" => $faker->boolean,
+        "exclude_ind_rank" => $faker->boolean,
     ];
 });
