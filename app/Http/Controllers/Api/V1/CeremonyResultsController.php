@@ -7,6 +7,7 @@ use App\Category;
 use App\TeamRanking;
 use App\IndividualRanking;
 use App\OverallRanking;
+use App\OverallTeamRanking;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -95,13 +96,28 @@ class CeremonyResultsController extends Controller
             }
         }
 
-        $output['Overall']['data']['Overall'] = [
+        $output['Overall']['data']['Team'] = [
             'id' => $event->id,
-            'name' => 'Overall',
+            'name' => 'Overall Team',
             'categories' => [],
         ];
         foreach ($categories as $category) {
-            $output['Overall']['data']['Overall']['categories'][$category->name] =
+            $output['Overall']['data']['Team']['categories'][$category->name] =
+            [
+                'id' => $category->id,
+                'name' => $category->name,
+                'results' => OverallTeamRanking::ByCategoryId($category->id)
+                        ->OrderByWinner()->take(3)->get(),
+            ];
+        }
+
+        $output['Overall']['data']['Individual'] = [
+            'id' => $event->id,
+            'name' => 'Overall Individual',
+            'categories' => [],
+        ];
+        foreach ($categories as $category) {
+            $output['Overall']['data']['Individual']['categories'][$category->name] =
             [
                 'id' => $category->id,
                 'name' => $category->name,
