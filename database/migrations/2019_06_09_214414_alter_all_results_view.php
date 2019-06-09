@@ -18,7 +18,7 @@ class AlterAllResultsView extends Migration
         select category_name
         , team_name
         , participant_name
-        , MAX(total_score) as total_score
+        , SUM(total_score) as total_score
         , MAX(tie_breaker_1) as tie_breaker_1
         , MAX(tie_breaker_2) as tie_breaker_2
         , MAX(tie_breaker_3) as tie_breaker_3
