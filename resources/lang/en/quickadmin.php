@@ -137,7 +137,9 @@ return [
 			'primary-participant-phone' => 'Primary Contact Phone',
 			'primary-participant-email' => 'Primary Contact Email',
 			'state' => 'State',
-			'county' => 'County',
+            'county' => 'County',
+            'exclude-team-rank' => 'Exclude From Team Rank',
+            'exclude-ind-rank' => 'Exclude From Individual Rank',
 		],
 	],
 	
