@@ -35,8 +35,8 @@ class Team extends Model
             'primary_contact_email' => 'email|max:191|nullable',
             'state' => 'max:191|nullable',
             'county' => 'max:191|nullable',
-            'exclude_team_rank' => 'required',
-            'exclude_ind_rank' => 'required',
+            'exclude_team_rank' => 'nullable',
+            'exclude_ind_rank' => 'nullable',
         ];
     }
 
@@ -50,8 +50,8 @@ class Team extends Model
             'primary_contact_email' => 'email|max:191|nullable',
             'state' => 'max:191|nullable',
             'county' => 'max:191|nullable',
-            'exclude_team_rank' => 'required',
-            'exclude_ind_rank' => 'required',
+            'exclude_team_rank' => 'nullable',
+            'exclude_ind_rank' => 'nullable',
         ];
     }
 

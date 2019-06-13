@@ -9,6 +9,32 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header with-border">
+                            <h3 class="box-title">Export</h3><br />
+                            <span>Export the final results.</span>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-sm" @click="downloadParticipantsList">
+                                    <i class="fa fa-download"></i> Participant List
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm" @click="downloadIndividualResults">
+                                    <i class="fa fa-download"></i> Individual Results
+                                </button>
+                                <button type="button" class="btn btn-default btn-sm" @click="downloadTeamResults">
+                                    <i class="fa fa-download"></i> Team Results
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header with-border">
                             <h3 class="box-title">Outstanding Scores and Current Results</h3><br />
                             <span>See what is still waiting to be scored as well as the current results.</span>
                         </div>
@@ -26,15 +52,6 @@
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm" @click="selectCeremony">
                                     <i class="fa fa-trophy"></i> Ceremony
-                                </button>
-                            </div>
-
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-sm" @click="downloadParticipantsList">
-                                    <i class="fa fa-download"></i> Participant List
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm" @click="downloadFinalResults">
-                                    <i class="fa fa-download"></i> Final Results
                                 </button>
                             </div>
 
@@ -119,8 +136,12 @@ export default {
             window.open('/download/participantList', '_blank');
             return false;
         },
-        downloadFinalResults: function () {
-            window.open('/download/allResults', '_blank');
+        downloadIndividualResults: function () {
+            window.open('/download/individualResults', '_blank');
+            return false;
+        },
+        downloadTeamResults: function () {
+            window.open('/download/teamResults', '_blank');
             return false;
         },
     }

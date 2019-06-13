@@ -16,6 +16,10 @@ class CreateEventsTable extends Migration
             Schema::create('events', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
+                $table->boolean('use_in_tb_1')->default(false);
+                $table->boolean('use_in_tb_2')->default(false);
+                $table->boolean('use_in_tb_3')->default(false);
+                $table->boolean('use_in_tb_4')->default(false);
                 
                 $table->timestamps();
                 $table->softDeletes();
