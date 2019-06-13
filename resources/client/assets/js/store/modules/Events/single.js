@@ -3,6 +3,10 @@ function initialState() {
         item: {
             id: null,
             name: null,
+            use_in_tb_1: false,
+            use_in_tb_2: false,
+            use_in_tb_3: false,
+            use_in_tb_4: false,
         },
         
         
@@ -121,6 +125,19 @@ const actions = {
     setName({ commit }, value) {
         commit('setName', value)
     },
+    setUseInTb1({ commit }, value) {
+        commit('setUseInTb1', value)
+    },
+    setUseInTb2({ commit }, value) {
+        commit('setUseInTb2', value)
+    },
+    setUseInTb3({ commit }, value) {
+        commit('setUseInTb3', value)
+    },
+    setUseInTb4({ commit }, value) {
+        commit('setUseInTb4', value)
+    },
+
     resetState({ commit }) {
         commit('resetState')
     }
@@ -132,6 +149,18 @@ const mutations = {
     },
     setName(state, value) {
         state.item.name = value
+    },
+    setUseInTb1(state, value) {
+        state.item.use_in_tb_1 = value
+    },
+    setUseInTb2(state, value) {
+        state.item.use_in_tb_2 = value
+    },
+    setUseInTb3(state, value) {
+        state.item.use_in_tb_3 = value
+    },
+    setUseInTb4(state, value) {
+        state.item.use_in_tb_4 = value
     },
     
     

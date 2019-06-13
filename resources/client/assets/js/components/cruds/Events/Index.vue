@@ -68,6 +68,10 @@ export default {
             columns: [
                 { title: '#', field: 'id', sortable: true, colStyle: 'width: 50px;', visible: false },
                 { title: 'Name', field: 'name', sortable: true },
+                { title: 'Use In TB 1', field: 'useInTb1', sortable: true, visible: false },
+                { title: 'Use In TB 2', field: 'useInTb2', sortable: true, visible: false },
+                { title: 'Use In TB 3', field: 'useInTb3', sortable: true, visible: false },
+                { title: 'Use In TB 4', field: 'useInTb4', sortable: true, visible: false },
                 { title: 'Actions', tdComp: DatatableActions, visible: true, thClass: 'text-right', tdClass: 'text-right', colStyle: 'width: 130px;' }
             ],
             query: { sort: 'id', order: 'desc' },

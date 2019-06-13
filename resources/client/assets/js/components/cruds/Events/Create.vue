@@ -61,7 +61,39 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('EventsSingle', ['item', 'loading'])
+        ...mapGetters('EventsSingle', ['item', 'loading']),
+        useInTb1: {
+            get() {
+                return this.$store.state.EventsSingle.item.use_in_tb_1;
+            },
+            set(value) {
+                this.setUseInTb1(value);
+            }
+        },
+        useInTb2: {
+            get() {
+                return this.$store.state.EventsSingle.item.use_in_tb_2;
+            },
+            set(value) {
+                this.setUseInTb2(value);
+            }
+        },
+        useInTb3: {
+            get() {
+                return this.$store.state.EventsSingle.item.use_in_tb_3;
+            },
+            set(value) {
+                this.setUseInTb3(value);
+            }
+        },
+        useInTb4: {
+            get() {
+                return this.$store.state.EventsSingle.item.use_in_tb_4;
+            },
+            set(value) {
+                this.setUseInTb4(value);
+            }
+        },
     },
     created() {
         // Code ...
@@ -70,7 +102,7 @@ export default {
         this.resetState()
     },
     methods: {
-        ...mapActions('EventsSingle', ['storeData', 'resetState', 'setName']),
+        ...mapActions('EventsSingle', ['storeData', 'resetState', 'setName', 'setUseInTb1', 'setUseInTb2', 'setUseInTb3', 'setUseInTb4']),
         updateName(e) {
             this.setName(e.target.value)
         },
