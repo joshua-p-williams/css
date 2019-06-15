@@ -43,6 +43,7 @@ import ScoresIndex from '../components/cruds/Scores/Index.vue'
 import ScoresCreate from '../components/cruds/Scores/Create.vue'
 import ScoresShow from '../components/cruds/Scores/Show.vue'
 import ScoresEdit from '../components/cruds/Scores/Edit.vue'
+import SettingsIndex from '../components/cruds/Settings/Index.vue'
 
 Vue.use(VueRouter)
 
@@ -89,6 +90,7 @@ const routes = [
     { path: '/scores/create', component: ScoresCreate, name: 'scores.create' },
     { path: '/scores/:id', component: ScoresShow, name: 'scores.show' },
     { path: '/scores/:id/edit', component: ScoresEdit, name: 'scores.edit' },
+    { path: '/settings', component: SettingsIndex, name: 'settings.index' },
 ]
 
 export default new VueRouter({
