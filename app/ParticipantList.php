@@ -4,12 +4,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class TeamRanking
+ * Class ParticipantList
  *
  * @package App
  * @property string $event
  * @property string $participant
- * @property integer $TeamRanking
 */
 class ParticipantList extends Model
 {

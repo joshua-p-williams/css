@@ -132,35 +132,59 @@ class CreateSummaryViews extends Migration
 
         DB::statement("
         create or replace view v_team_ranking as
-        select
-            s.category_id ,
-            s.category_name ,
-            s.event_id ,
-            s.event_name ,
-            s.team_id ,
-            s.team_name ,
-            sum(s.score) as score ,
-            sum(s.tie_breaker_1) as tie_breaker_1,
-            sum(s.tie_breaker_2) as tie_breaker_2,
-            sum(s.tie_breaker_3) as tie_breaker_3,
-            sum(s.tie_breaker_4) as tie_breaker_4
-        from v_individual_ranking s
-        where s.exclude_team_rank = 0
+        select ranked.category_id,
+        ranked.category_name,
+        ranked.event_id,
+        ranked.event_name,
+        ranked.team_id,
+        ranked.team_name,
+        sum(ranked.score) as score,
+        sum(ranked.tie_breaker_1) as tie_breaker_1,
+        sum(ranked.tie_breaker_2) as tie_breaker_2,
+        sum(ranked.tie_breaker_3) as tie_breaker_3,
+        sum(ranked.tie_breaker_4) as tie_breaker_4
+        from (
+            select a.category_id,
+            a.category_name,
+            a.event_id,
+            a.event_name,
+            a.team_id,
+            a.team_name,
+            a.participant_id,
+            a.participant_name,
+            a.score ,
+            a.tie_breaker_1 ,
+            a.tie_breaker_2 ,
+            a.tie_breaker_3 ,
+            a.tie_breaker_4 ,
+            (
+                select count(*) + 1 from v_individual_ranking b 
+                where b.exclude_team_rank = 0
+                and b.category_id = a.category_id
+                and b.event_id = a.event_id
+                and b.team_id = a.team_id
+                and ((a.score * 100000000000) + (a.tie_breaker_1 * 100000000) + (a.tie_breaker_2 * 100000) + (a.tie_breaker_3 * 100) + a.tie_breaker_4)
+                < ((b.score * 100000000000) + (b.tie_breaker_1 * 100000000) + (b.tie_breaker_2 * 100000) + (b.tie_breaker_3 * 100) + b.tie_breaker_4)
+            ) as rank_num
+            from v_individual_ranking a
+            where a.exclude_team_rank = 0
+        ) ranked
+        where ranked.rank_num <= (select top_scores_keep from settings order by id limit 1)
         group by
-            s.category_id ,
-            s.category_name ,
-            s.event_id ,
-            s.event_name ,
-            s.team_id ,
-            s.team_name
+            ranked.category_id ,
+            ranked.category_name ,
+            ranked.event_id ,
+            ranked.event_name ,
+            ranked.team_id ,
+            ranked.team_name
         order by
-            s.category_name,
-            s.event_name,
-            sum(s.score) desc,
-            sum(s.tie_breaker_1) desc,
-            sum(s.tie_breaker_2) desc,
-            sum(s.tie_breaker_3) desc,
-            sum(s.tie_breaker_4) desc
+            ranked.category_name,
+            ranked.event_name,
+            sum(ranked.score) desc,
+            sum(ranked.tie_breaker_1) desc,
+            sum(ranked.tie_breaker_2) desc,
+            sum(ranked.tie_breaker_3) desc,
+            sum(ranked.tie_breaker_4) desc
         ");
 
         DB::statement("
@@ -332,27 +356,52 @@ class CreateSummaryViews extends Migration
         
         DB::statement("
 		create or replace view v_overall_team_ranking as
-        select
-            s.category_id ,
-            s.category_name ,
-            s.team_id ,
-            s.team_name ,
-            sum(s.score) as score ,
-            sum(s.tie_breaker_1) as tie_breaker_1 ,
-            sum(s.tie_breaker_2) as tie_breaker_2 ,
-            sum(s.tie_breaker_3) as tie_breaker_3 ,
-            sum(s.tie_breaker_4) as tie_breaker_4
-        from v_team_ranking s
+        select ranked.category_id,
+        ranked.category_name,
+        ranked.team_id,
+        ranked.team_name,
+        sum(ranked.score) as score,
+        sum(ranked.tie_breaker_1) as tie_breaker_1,
+        sum(ranked.tie_breaker_2) as tie_breaker_2,
+        sum(ranked.tie_breaker_3) as tie_breaker_3,
+        sum(ranked.tie_breaker_4) as tie_breaker_4
+        from (
+            select a.category_id,
+            a.category_name,
+            a.team_id,
+            a.team_name,
+            a.participant_id,
+            a.participant_name,
+            a.score ,
+            a.tie_breaker_1 ,
+            a.tie_breaker_2 ,
+            a.tie_breaker_3 ,
+            a.tie_breaker_4 ,
+            (
+                select count(*) + 1 from v_individual_ranking b 
+                where b.exclude_team_rank = 0
+                and b.category_id = a.category_id
+                and b.event_id = a.event_id
+                and b.team_id = a.team_id
+                and ((a.score * 100000000000) + (a.tie_breaker_1 * 100000000) + (a.tie_breaker_2 * 100000) + (a.tie_breaker_3 * 100) + a.tie_breaker_4)
+                < ((b.score * 100000000000) + (b.tie_breaker_1 * 100000000) + (b.tie_breaker_2 * 100000) + (b.tie_breaker_3 * 100) + b.tie_breaker_4)
+            ) as rank_num
+            from v_individual_ranking a
+            where a.exclude_team_rank = 0
+        ) ranked
+        where ranked.rank_num <= (select top_scores_keep from settings order by id limit 1)
         group by
-            s.category_id ,
-            s.category_name ,
-            s.team_id ,
-            s.team_name
+            ranked.category_id ,
+            ranked.category_name ,
+            ranked.team_id ,
+            ranked.team_name
         order by
-            sum(s.tie_breaker_1) desc,
-            sum(s.tie_breaker_2) desc,
-            sum(s.tie_breaker_3) desc,
-            sum(s.tie_breaker_4) desc
+            ranked.category_name,
+            sum(ranked.score) desc,
+            sum(ranked.tie_breaker_1) desc,
+            sum(ranked.tie_breaker_2) desc,
+            sum(ranked.tie_breaker_3) desc,
+            sum(ranked.tie_breaker_4) desc
         ");
         
     }
