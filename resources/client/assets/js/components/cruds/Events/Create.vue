@@ -31,6 +31,38 @@
                                             @input="updateName"
                                             >
                                 </div>
+                                <div class="form-group">
+                                    <label for="useInTb1">Use In Tie Breaker 1</label>
+                                    <input
+                                            type="checkbox"
+                                            name="useInTb1"
+                                            v-model="useInTb1"
+                                            >
+                                </div>
+                                <div class="form-group">
+                                    <label for="useInTb2">Use In Tie Breaker 2</label>
+                                    <input
+                                            type="checkbox"
+                                            name="useInTb2"
+                                            v-model="useInTb2"
+                                            >
+                                </div>
+                                <div class="form-group">
+                                    <label for="useInTb3">Use In Tie Breaker 3</label>
+                                    <input
+                                            type="checkbox"
+                                            name="useInTb3"
+                                            v-model="useInTb3"
+                                            >
+                                </div>
+                                <div class="form-group">
+                                    <label for="useInTb4">Use In Tie Breaker 4</label>
+                                    <input
+                                            type="checkbox"
+                                            name="useInTb4"
+                                            v-model="useInTb4"
+                                            >
+                                </div>
                             </div>
 
                             <div class="box-footer">
