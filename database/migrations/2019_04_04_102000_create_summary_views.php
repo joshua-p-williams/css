@@ -28,7 +28,8 @@ class CreateSummaryViews extends Migration
         left join scores s on c.id = s.participant_id and e.id = s.event_id
         where e.deleted_at is null
         and cat.deleted_at is null
-        and e.name = 'Responsibility Exam'
+        and s.deleted_at is null
+        and e.id in (select id from events where use_in_tb_1 = 1)
         group by e.name, cat.id, cat.name, c.id, c.name         
         ");
 
@@ -47,7 +48,8 @@ class CreateSummaryViews extends Migration
         left join scores s on c.id = s.participant_id and e.id = s.event_id
         where e.deleted_at is null
         and cat.deleted_at is null
-        and e.name = 'Safety Trail'
+        and s.deleted_at is null
+        and e.id in (select id from events where use_in_tb_2 = 1)
         group by e.name, cat.id, cat.name, c.id, c.name        
         ");
 
@@ -66,7 +68,8 @@ class CreateSummaryViews extends Migration
         left join scores s on c.id = s.participant_id and e.id = s.event_id
         where e.deleted_at is null
         and cat.deleted_at is null
-        and e.name in ('Responsibility Exam', 'Orienteering', 'Wildlife Identification', 'Safety Trail')
+        and s.deleted_at is null
+        and e.id in (select id from events where use_in_tb_3 = 1)
         group by cat.id, cat.name, c.id, c.name        
         ");
 
@@ -85,7 +88,8 @@ class CreateSummaryViews extends Migration
         left join scores s on c.id = s.participant_id and e.id = s.event_id
         where e.deleted_at is null
         and cat.deleted_at is null
-        and e.name in ('Shotgun', 'Rifle', 'Archery', 'Muzzleloader')
+        and s.deleted_at is null
+        and e.id in (select id from events where use_in_tb_4 = 1)
         group by cat.id, cat.name, c.id, c.name      
         ");
 
@@ -105,7 +109,9 @@ class CreateSummaryViews extends Migration
             COALESCE(tb1.score, 0) as tie_breaker_1 ,
             COALESCE(tb2.score, 0) as tie_breaker_2 ,
             COALESCE(tb3.score, 0) as tie_breaker_3 ,
-            COALESCE(tb4.score, 0) as tie_breaker_4 
+            COALESCE(tb4.score, 0) as tie_breaker_4 , 
+            cmp.exclude_team_rank ,
+            cmp.exclude_ind_rank
         from categories cat
         join events e
         inner join participants c on cat.id = c.category_id
@@ -116,43 +122,69 @@ class CreateSummaryViews extends Migration
         left join v_individual_tie_breaker_3 tb3 on s.participant_id = tb3.participant_id
         left join v_individual_tie_breaker_4 tb4 on s.participant_id = tb4.participant_id
         where cat.deleted_at is null
+        and cmp.exclude_ind_rank = 0
         and e.deleted_at is null 
         /*and cmp.deleted_at is null*/
         /*and c.deleted_at is null*/
         and s.deleted_at is null
-        order by cat.id, e.id, s.score desc, tb1.score desc, tb2.score desc, tb3.score desc, tb4.score desc          
+        order by cat.id, e.id, s.score desc, tb1.score desc, tb2.score desc, tb3.score desc, tb4.score desc       
         ");
 
         DB::statement("
         create or replace view v_team_ranking as
-        select
-            s.category_id ,
-            s.category_name ,
-            s.event_id ,
-            s.event_name ,
-            s.team_id ,
-            s.team_name ,
-            sum(s.score) as score ,
-            sum(s.tie_breaker_1) as tie_breaker_1,
-            sum(s.tie_breaker_2) as tie_breaker_2,
-            sum(s.tie_breaker_3) as tie_breaker_3,
-            sum(s.tie_breaker_4) as tie_breaker_4
-        from v_individual_ranking s
+        select ranked.category_id,
+        ranked.category_name,
+        ranked.event_id,
+        ranked.event_name,
+        ranked.team_id,
+        ranked.team_name,
+        sum(ranked.score) as score,
+        sum(ranked.tie_breaker_1) as tie_breaker_1,
+        sum(ranked.tie_breaker_2) as tie_breaker_2,
+        sum(ranked.tie_breaker_3) as tie_breaker_3,
+        sum(ranked.tie_breaker_4) as tie_breaker_4
+        from (
+            select a.category_id,
+            a.category_name,
+            a.event_id,
+            a.event_name,
+            a.team_id,
+            a.team_name,
+            a.participant_id,
+            a.participant_name,
+            a.score ,
+            a.tie_breaker_1 ,
+            a.tie_breaker_2 ,
+            a.tie_breaker_3 ,
+            a.tie_breaker_4 ,
+            (
+                select count(*) + 1 from v_individual_ranking b 
+                where b.exclude_team_rank = 0
+                and b.category_id = a.category_id
+                and b.event_id = a.event_id
+                and b.team_id = a.team_id
+                and ((a.score * 100000000000) + (a.tie_breaker_1 * 100000000) + (a.tie_breaker_2 * 100000) + (a.tie_breaker_3 * 100) + a.tie_breaker_4)
+                < ((b.score * 100000000000) + (b.tie_breaker_1 * 100000000) + (b.tie_breaker_2 * 100000) + (b.tie_breaker_3 * 100) + b.tie_breaker_4)
+            ) as rank_num
+            from v_individual_ranking a
+            where a.exclude_team_rank = 0
+        ) ranked
+        where ranked.rank_num <= (select top_scores_keep from settings order by id limit 1)
         group by
-            s.category_id ,
-            s.category_name ,
-            s.event_id ,
-            s.event_name ,
-            s.team_id ,
-            s.team_name
+            ranked.category_id ,
+            ranked.category_name ,
+            ranked.event_id ,
+            ranked.event_name ,
+            ranked.team_id ,
+            ranked.team_name
         order by
-            s.category_name,
-            s.event_name,
-            sum(s.score) desc,
-            sum(s.tie_breaker_1) desc,
-            sum(s.tie_breaker_2) desc,
-            sum(s.tie_breaker_3) desc,
-            sum(s.tie_breaker_4) desc
+            ranked.category_name,
+            ranked.event_name,
+            sum(ranked.score) desc,
+            sum(ranked.tie_breaker_1) desc,
+            sum(ranked.tie_breaker_2) desc,
+            sum(ranked.tie_breaker_3) desc,
+            sum(ranked.tie_breaker_4) desc
         ");
 
         DB::statement("
@@ -320,7 +352,58 @@ class CreateSummaryViews extends Migration
         where cat.deleted_at is null
         and e.deleted_at is null
         order by cat.name, e.name
-        ");        
+        ");   
+        
+        DB::statement("
+		create or replace view v_overall_team_ranking as
+        select ranked.category_id,
+        ranked.category_name,
+        ranked.team_id,
+        ranked.team_name,
+        sum(ranked.score) as score,
+        sum(ranked.tie_breaker_1) as tie_breaker_1,
+        sum(ranked.tie_breaker_2) as tie_breaker_2,
+        sum(ranked.tie_breaker_3) as tie_breaker_3,
+        sum(ranked.tie_breaker_4) as tie_breaker_4
+        from (
+            select a.category_id,
+            a.category_name,
+            a.team_id,
+            a.team_name,
+            a.participant_id,
+            a.participant_name,
+            a.score ,
+            a.tie_breaker_1 ,
+            a.tie_breaker_2 ,
+            a.tie_breaker_3 ,
+            a.tie_breaker_4 ,
+            (
+                select count(*) + 1 from v_individual_ranking b 
+                where b.exclude_team_rank = 0
+                and b.category_id = a.category_id
+                and b.event_id = a.event_id
+                and b.team_id = a.team_id
+                and ((a.score * 100000000000) + (a.tie_breaker_1 * 100000000) + (a.tie_breaker_2 * 100000) + (a.tie_breaker_3 * 100) + a.tie_breaker_4)
+                < ((b.score * 100000000000) + (b.tie_breaker_1 * 100000000) + (b.tie_breaker_2 * 100000) + (b.tie_breaker_3 * 100) + b.tie_breaker_4)
+            ) as rank_num
+            from v_individual_ranking a
+            where a.exclude_team_rank = 0
+        ) ranked
+        where ranked.rank_num <= (select top_scores_keep from settings order by id limit 1)
+        group by
+            ranked.category_id ,
+            ranked.category_name ,
+            ranked.team_id ,
+            ranked.team_name
+        order by
+            ranked.category_name,
+            sum(ranked.score) desc,
+            sum(ranked.tie_breaker_1) desc,
+            sum(ranked.tie_breaker_2) desc,
+            sum(ranked.tie_breaker_3) desc,
+            sum(ranked.tie_breaker_4) desc
+        ");
+        
     }
 
     /**
@@ -330,6 +413,7 @@ class CreateSummaryViews extends Migration
      */
     public function down()
     {
+        DB::statement("DROP VIEW v_overall_team_ranking");
         DB::statement("DROP VIEW v_category_completion");
         DB::statement("DROP VIEW v_cc_event_category_completion");
         DB::statement("DROP VIEW v_cc_category_paricipants");

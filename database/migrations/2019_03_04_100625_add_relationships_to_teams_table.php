@@ -16,8 +16,7 @@ class AddRelationshipsToTeamsTable extends Migration
             if (!Schema::hasColumn('teams', 'category_id')) {
                 $table->integer('category_id')->unsigned()->nullable();
                 $table->foreign('category_id', '31872_5c8eff58c4e7a')->references('id')->on('categories')->onDelete('cascade');
-                }
-                
+            }                
         });
     }
 

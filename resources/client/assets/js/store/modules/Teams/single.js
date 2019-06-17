@@ -9,8 +9,8 @@ function initialState() {
             primary_contact_email: null,
             state: null,
             county: null,
-            exclude_team_rank: null,
-            exclude_ind_rank: null,
+            exclude_team_rank: false,
+            exclude_ind_rank: false,
         },
         categoriesAll: [],
         

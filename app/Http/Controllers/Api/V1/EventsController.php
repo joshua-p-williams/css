@@ -38,7 +38,12 @@ class EventsController extends Controller
             return abort(401);
         }
 
-        $event = Event::create($request->all());
+        $all = $request->all();
+        $all['use_in_tb_1'] = isset($all['use_in_tb_1']) ? $all['use_in_tb_1'] === 'true' : false;
+        $all['use_in_tb_2'] = isset($all['use_in_tb_2']) ? $all['use_in_tb_2'] === 'true' : false;
+        $all['use_in_tb_3'] = isset($all['use_in_tb_3']) ? $all['use_in_tb_3'] === 'true' : false;
+        $all['use_in_tb_4'] = isset($all['use_in_tb_4']) ? $all['use_in_tb_4'] === 'true' : false;
+        $event = Event::create($all);
         
         
 
@@ -54,7 +59,12 @@ class EventsController extends Controller
         }
 
         $event = Event::findOrFail($id);
-        $event->update($request->all());
+        $all = $request->all();
+        $all['use_in_tb_1'] = isset($all['use_in_tb_1']) ? $all['use_in_tb_1'] === 'true' : false;
+        $all['use_in_tb_2'] = isset($all['use_in_tb_2']) ? $all['use_in_tb_2'] === 'true' : false;
+        $all['use_in_tb_3'] = isset($all['use_in_tb_3']) ? $all['use_in_tb_3'] === 'true' : false;
+        $all['use_in_tb_4'] = isset($all['use_in_tb_4']) ? $all['use_in_tb_4'] === 'true' : false;
+        $event->update($all);
         
         
         

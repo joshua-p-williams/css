@@ -20,4 +20,5 @@ Route::group(['prefix' => '/v1', 'middleware' => ['auth:api'], 'namespace' => 'A
     Route::get('teamResults', 'TeamResultsController@index');
     Route::get('individualResults', 'IndividualResultsController@index');
     Route::get('ceremonyResults', 'CeremonyResultsController@index');
+    Route::apiResource('settings', 'SettingsController', ['only' => ['index', 'update']]);
 });

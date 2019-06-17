@@ -76,6 +76,7 @@ class PermissionSeed extends Seeder
             ['id' => 84, 'title' => 'participant_delete',],
             ['id' => 85, 'title' => 'team_management_access',],
             ['id' => 86, 'title' => 'competition_access',],
+            ['id' => 87, 'title' => 'settings',],
 
         ];
 

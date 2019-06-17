@@ -15,10 +15,8 @@ class CategorySeed extends Seeder
             
             ['id' => 1, 'name' => 'Senior',],
             ['id' => 2, 'name' => 'Junior',],
-            ['id' => 3, 'name' => 'Individual',],
-            ['id' => 4, 'name' => 'Alumni',],
-            ['id' => 5, 'name' => 'Coach',],
-
+            ['id' => 3, 'name' => 'Alumni',],
+            ['id' => 4, 'name' => 'Coach',],
         ];
 
         foreach ($items as $item) {

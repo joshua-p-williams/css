@@ -29,6 +29,22 @@
                                             <th>Name</th>
                                             <td>{{ item.name }}</td>
                                             </tr>
+                                        <tr>
+                                            <th>Use In Tie Breaker 1</th>
+                                            <td>{{ item.useInTb1 }}</td>
+                                            </tr>
+                                        <tr>
+                                            <th>Use In Tie Breaker 2</th>
+                                            <td>{{ item.useInTb2 }}</td>
+                                            </tr>
+                                        <tr>
+                                            <th>Use In Tie Breaker 3</th>
+                                            <td>{{ item.useInTb3 }}</td>
+                                            </tr>
+                                        <tr>
+                                            <th>Use In Tie Breaker 4</th>
+                                            <td>{{ item.useInTb4 }}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

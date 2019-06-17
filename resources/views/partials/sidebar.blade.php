@@ -73,6 +73,12 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    <li v-if="$can('settings')">
+                        <router-link :to="{ name: 'settings.index' }">
+                            <i class="fa fa-cogs"></i>
+                            <span>@lang('quickadmin.settings.title')</span>
+                        </router-link>
+                    </li>
                     <li v-if="$can('category_access')">
                         <router-link :to="{ name: 'categories.index' }">
                             <i class="fa fa-university"></i>

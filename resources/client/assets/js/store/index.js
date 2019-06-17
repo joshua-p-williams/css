@@ -31,6 +31,7 @@ import ParticipantsIndex from './modules/Participants'
 import ParticipantsSingle from './modules/Participants/single'
 import ScoresIndex from './modules/Scores'
 import ScoresSingle from './modules/Scores/single'
+import SettingsIndex from './modules/Settings'
 
 Vue.use(Vuex)
 
@@ -69,6 +70,7 @@ export default new Vuex.Store({
         ParticipantsSingle,
         ScoresIndex,
         ScoresSingle,
+        SettingsIndex,
     },
     strict: debug,
 })

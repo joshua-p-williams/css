@@ -69,6 +69,12 @@ return [
 		'fields' => [
 			'name' => 'Name',
 		],
+    ],
+    
+	'settings' => [
+		'title' => 'Settings',
+		'fields' => [
+		],
 	],
 	
 	'teams' => [

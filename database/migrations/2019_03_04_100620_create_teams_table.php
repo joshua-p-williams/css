@@ -24,7 +24,9 @@ class CreateTeamsTable extends Migration
                 $table->string('primary_contact_email')->nullable();
                 $table->string('state')->nullable();
                 $table->string('county')->nullable();
-
+                $table->boolean('exclude_team_rank')->default(false);
+                $table->boolean('exclude_ind_rank')->default(false);
+    
                 $table->timestamps();
                 
             });
