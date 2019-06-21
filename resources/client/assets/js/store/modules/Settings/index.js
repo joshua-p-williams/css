@@ -2,7 +2,8 @@ function initialState() {
     return {
         item: {
             id: null,
-            topScoresKeep: 999,
+            top_scores_keep: 999,
+            xcount_for_tb: false,
         },
         
         loading: false,
@@ -78,6 +79,9 @@ const actions = {
     setTopScoresKeep({ commit }, value) {
         commit('setTopScoresKeep', value)
     },
+    setXcountForTb({ commit }, value) {
+        commit('setXcountForTb', value)
+    },
     resetState({ commit }) {
         commit('resetState')
     }
@@ -91,7 +95,11 @@ const mutations = {
     setTopScoresKeep(state, value) {
         state.item.top_scores_keep = value
     },
-    
+
+    setXcountForTb(state, value) {
+        state.item.xcount_for_tb = value
+    },
+
     setLoading(state, loading) {
         state.loading = loading
     },

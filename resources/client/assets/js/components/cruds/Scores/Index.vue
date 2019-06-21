@@ -71,6 +71,7 @@ export default {
                 { title: 'Team', field: 'team', tdComp: DatatableSingle },
                 { title: 'Participant', field: 'participant', tdComp: DatatableSingle },
                 { title: 'Score', field: 'score', sortable: true },
+                { title: 'Xcount', field: 'xcount', sortable: true },
                 { title: 'Actions', tdComp: DatatableActions, visible: true, thClass: 'text-right', tdClass: 'text-right', colStyle: 'width: 130px;' }
             ],
             query: { sort: 'id', order: 'desc' },

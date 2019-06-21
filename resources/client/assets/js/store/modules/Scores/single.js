@@ -7,6 +7,7 @@ function initialState() {
             team: null,
             participant: null,
             score: null,
+            xcount: null,
         },
         eventsAll: [],
         categoriesAll: [],
@@ -213,6 +214,9 @@ const actions = {
     setScore({ commit }, value) {
         commit('setScore', value)
     },
+    setXcount({ commit }, value) {
+        commit('setXcount', value)
+    },
     resetState({ commit }) {
         commit('resetState')
     }
@@ -236,6 +240,9 @@ const mutations = {
     },
     setScore(state, value) {
         state.item.score = value
+    },
+    setXcount(state, value) {
+        state.item.xcount = value
     },
     setEventsAll(state, value) {
         state.eventsAll = value

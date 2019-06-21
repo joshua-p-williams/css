@@ -61,6 +61,17 @@
                                             @input="updateScore"
                                             >
                                 </div>
+                                <div class="form-group">
+                                    <label for="xcount">X Count</label>
+                                    <input
+                                            type="number"
+                                            class="form-control"
+                                            name="xcount"
+                                            placeholder="Enter X Count"
+                                            :value="item.xcount"
+                                            @input="updateXcount"
+                                            >
+                                </div>
                             </div>
 
                             <div class="box-footer">
@@ -114,7 +125,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('ScoresSingle', ['fetchData', 'updateData', 'resetState', 'setEvent', 'setTeam', 'setParticipant', 'setScore']),
+        ...mapActions('ScoresSingle', ['fetchData', 'updateData', 'resetState', 'setEvent', 'setTeam', 'setParticipant', 'setScore', 'setXcount']),
         updateEvent(value) {
             this.setEvent(value)
         },
@@ -126,6 +137,9 @@ export default {
         },
         updateScore(e) {
             this.setScore(e.target.value)
+        },
+        updateXcount(e) {
+            this.setXcount(e.target.value)
         },
         submitForm() {
             this.updateData()

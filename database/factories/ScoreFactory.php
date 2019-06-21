@@ -6,5 +6,6 @@ $factory->define(App\Score::class, function (Faker\Generator $faker) {
         "team_id" => factory('App\Team')->create(),
         "participant_id" => factory('App\Participant')->create(),
         "score" => $faker->randomNumber(2),
+        "xcount" => $faker->randomNumber(2),
     ];
 });
