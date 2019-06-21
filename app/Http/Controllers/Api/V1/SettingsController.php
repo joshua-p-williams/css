@@ -25,7 +25,9 @@ class SettingsController extends Controller
         }
 
         $score = Settings::findOrFail($id);
-        $score->update($request->all());
+        $all = $request->all();
+        $all['xcount_for_tb'] = isset($all['xcount_for_tb']) ? $all['xcount_for_tb'] === 'true' : false;
+        $score->update($all);
         
         return (new SettingsResource($score))
             ->response()

@@ -31,6 +31,14 @@
                                             @input="updateTopScoresKeep"
                                             >
                                 </div>
+                                <div class="form-group">
+                                    <label for="xcountForTb">Use X Count for Tie Breaker 1</label>
+                                    <input
+                                            type="checkbox"
+                                            name="xcountForTb"
+                                            v-model="xcountForTb"
+                                            >
+                                </div>
                             </div>
 
                             <div class="box-footer">
@@ -63,6 +71,14 @@ export default {
     },
     computed: {
         ...mapGetters('SettingsIndex', ['item', 'loading', ]),
+        xcountForTb: {
+            get() {
+                return this.$store.state.SettingsIndex.item.xcount_for_tb;
+            },
+            set(value) {
+                this.setXcountForTb(value);
+            }
+        },
     },
     created() {
         this.fetchData()
@@ -71,7 +87,7 @@ export default {
         this.resetState()
     },
     methods: {
-        ...mapActions('SettingsIndex', ['fetchData', 'updateData', 'resetState', 'setTopScoresKeep']),
+        ...mapActions('SettingsIndex', ['fetchData', 'updateData', 'resetState', 'setTopScoresKeep', 'setXcountForTb']),
         updateTopScoresKeep(e) {
             this.setTopScoresKeep(e.target.value)
         },

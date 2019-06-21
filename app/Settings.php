@@ -16,13 +16,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Settings extends Model
 {
     
-    protected $fillable = ['top_scores_keep', ];
+    protected $fillable = ['top_scores_keep', 'xcount_for_tb'];
     
+    protected $casts = [
+        'xcount_for_tb' => 'boolean',
+    ];
 
     public static function storeValidation($request)
     {
         return [
             'top_scores_keep' => 'integer|required',
+            'xcount_for_tb' => 'nullable',
         ];
     }
 
@@ -30,6 +34,7 @@ class Settings extends Model
     {
         return [
             'top_scores_keep' => 'integer|required',
+            'xcount_for_tb' => 'nullable',
         ];
     }
     

@@ -16,6 +16,10 @@ class AddXcount extends Migration
         Schema::table('scores', function (Blueprint $table) {
             $table->integer('xcount')->nullable();
         });
+
+        Schema::table('settings', function (Blueprint $table) {
+            $table->boolean('xcount_for_tb')->default(false);
+        });
     }
 
     /**
@@ -27,6 +31,10 @@ class AddXcount extends Migration
     {
         Schema::table('scores', function (Blueprint $table) {
             $table->dropColumn('xcount');
+        });
+
+        Schema::table('settings', function (Blueprint $table) {
+            $table->dropColumn('xcount_for_tb');
         });
     }
 }
