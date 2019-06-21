@@ -52,7 +52,11 @@
                                         <tr>
                                             <th>Score</th>
                                             <td>{{ item.score }}</td>
-                                            </tr>
+                                        </tr>
+                                        <tr>
+                                            <th>X Count</th>
+                                            <td>{{ item.xcount }}</td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>

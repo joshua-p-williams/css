@@ -18,7 +18,7 @@ class Score extends Model
     use SoftDeletes;
 
     
-    protected $fillable = ['score', 'event_id', 'team_id', 'participant_id'];
+    protected $fillable = ['score', 'event_id', 'team_id', 'participant_id', 'xcount'];
     
 
     public static function storeValidation($request)
@@ -27,7 +27,8 @@ class Score extends Model
             'event_id' => 'integer|exists:events,id|max:4294967295|required|uniqueScore',
             'team_id' => 'integer|exists:teams,id|max:4294967295|required|participantMatchesTeam',
             'participant_id' => 'integer|exists:participants,id|max:4294967295|required',
-            'score' => 'integer|max:2147483647|required'
+            'score' => 'integer|max:2147483647|required',
+            'xcount' => 'integer|max:2147483647|nullable',
         ];
     }
 
@@ -37,7 +38,8 @@ class Score extends Model
             'event_id' => 'integer|exists:events,id|max:4294967295|required|uniqueScore',
             'team_id' => 'integer|exists:teams,id|max:4294967295|required|participantMatchesTeam',
             'participant_id' => 'integer|exists:participants,id|max:4294967295|required',
-            'score' => 'integer|max:2147483647|required'
+            'score' => 'integer|max:2147483647|required',
+            'xcount' => 'integer|max:2147483647|nullable',
         ];
     }
 
