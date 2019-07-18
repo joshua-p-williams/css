@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Gate;
 
 class ScoresController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        
-
-        return new ScoreResource(Score::with(['event', 'team', 'participant'])->get());
+        return new ScoreResource(Score::with(['event', 'team', 'participant'])
+            ->ByEventId($request->input('eventId'))
+            ->ByTeamId($request->input('teamId'))
+            ->ByParticipantId($request->input('participantId'))
+            ->get());
     }
 
     public function show($id)

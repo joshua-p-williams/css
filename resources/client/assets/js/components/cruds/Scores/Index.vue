@@ -5,6 +5,51 @@
         </section>
 
         <section class="content">
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Search</h3><br />
+                            <span>Filter the scores by the following values</span>
+                        </div>
+
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <label for="event">Event</label>
+                                <v-select
+                                    name="event"
+                                    label="name"
+                                    @input="updateEvent"
+                                    :value="event"
+                                    :options="eventsAll" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="team">Team</label>
+                                <v-select
+                                    name="team"
+                                    label="name"
+                                    @input="updateTeam"
+                                    :value="team"
+                                    :options="teamsAll" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="participant">Participant</label>
+                                <v-select
+                                    name="participant"
+                                    label="name"
+                                    @input="updateParticipant"
+                                    :value="participant"
+                                    :options="participantsAll" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
@@ -22,7 +67,7 @@
                                     <i class="fa fa-plus"></i> Add new
                                 </router-link>
 
-                                <button type="button" class="btn btn-default btn-sm" @click="fetchData">
+                                <button type="button" class="btn btn-default btn-sm" @click="refresh">
                                     <i class="fa fa-refresh" :class="{'fa-spin': loading}"></i> Refresh
                                 </button>
                             </div>
@@ -83,14 +128,17 @@ export default {
         }
     },
     created() {
-        this.$root.relationships = this.relationships
-        this.fetchData()
+        this.$root.relationships = this.relationships;
+        this.fetchData();
+        this.fetchEventsAll();
+        this.fetchTeamsAll();
+        this.fetchParticipantsAll();
     },
     destroyed() {
         this.resetState()
     },
     computed: {
-        ...mapGetters('ScoresIndex', ['data', 'total', 'loading', 'relationships']),
+        ...mapGetters('ScoresIndex', ['data', 'total', 'loading', 'relationships', 'event', 'team', 'participant', 'eventsAll', 'teamsAll', 'participantsAll']),
     },
     watch: {
         query: {
@@ -101,7 +149,32 @@ export default {
         }
     },
     methods: {
-        ...mapActions('ScoresIndex', ['fetchData', 'setQuery', 'resetState']),
+        ...mapActions('ScoresIndex', ['fetchData', 'setQuery', 'resetState', 'setEvent', 'setTeam', 'setParticipant', 'fetchEventsAll', 'fetchTeamsAll', 'fetchParticipantsAll']),
+        updateEvent(value) {
+            this.setEvent(value);
+            this.refresh();
+        },
+        updateTeam(value) {
+            this.setTeam(value)
+            this.refresh();
+        },
+        updateParticipant(value) {
+            this.setParticipant(value)
+            this.refresh();
+        },
+        refresh: function () {
+            let constraints = (this.event || this.team || this.participant) ? {eventId: null, teamId: null, participantId: null} : null;
+            if (this.event) {
+                constraints.eventId = this.event.id;
+            }
+            if (this.team) {
+                constraints.teamId = this.team.id;
+            }
+            if (this.participant) {
+                constraints.participantId = this.participant.id;
+            }
+            this.fetchData(constraints);
+        }
     }
 }
 </script>

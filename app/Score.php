@@ -62,5 +62,27 @@ class Score extends Model
         return $this->belongsTo(Participant::class, 'participant_id');
     }
     
+
+
+    public function scopeByEventId($query, $val) {
+        if (empty($val)) {
+            return $query;
+        }
+        return $query->where('event_id', $val);
+    }
+
+    public function scopeByTeamId($query, $val) {
+        if (empty($val)) {
+            return $query;
+        }
+        return $query->where('team_id', $val);
+    }
+
+    public function scopeByParticipantId($query, $val) {
+        if (empty($val)) {
+            return $query;
+        }
+        return $query->where('participant_id', $val);
+    }
     
 }
