@@ -26,14 +26,14 @@
 
                     <div class="box">
                         <div class="box-header with-border box-header-emphasize">
-                            <h3>{{group}}</h3>
+                            <h3>{{data[group].name}}</h3>
                         </div>
                     </div>
 
                     <div class="box" v-for="(eventDetails, eventName) in data[group].data" :key="eventDetails.id">
 
                         <div class="box-header with-border">
-                            <h3 class="box-title"><strong>{{group}}</strong> - <em>{{eventName}}</em></h3>
+                            <h3 class="box-title"><strong>{{data[group].name}}</strong> - <em>{{eventName}}</em></h3>
                         </div>
 
                         <span v-if="!eventDetails.categories">No Results</span>
@@ -55,6 +55,11 @@
                                     <tr v-for="result in categoryDetails.results">
                                         <td v-for="(columnName, columnHeader) in data[group].columns">
                                             {{result[columnName]}}
+                                            <ul class="participant-list" v-if="columnName == 'team_name'">
+                                                <li v-for="participant in result.participants">
+                                                    {{participant.name}}
+                                                </li>
+                                            </ul>
                                         </td>
                                     </tr>
                                 </tbody>

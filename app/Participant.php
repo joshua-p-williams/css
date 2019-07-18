@@ -58,5 +58,12 @@ class Participant extends Model
         return $this->belongsTo(Category::class, 'category_id')->withTrashed();
     }
     
+
+    public function scopeByTeamId($query, $val) {
+        if (empty($val)) {
+            return $query;
+        }
+        return $query->where('team_id', $val);
+    }
     
 }

@@ -31,6 +31,11 @@ class TeamRanking extends Model
         return $this->belongsTo(Team::class, 'team_id');
     }
 
+    public function participants() 
+    {
+        return $this->hasMany(Participant::class, 'team_id', 'team_id');
+    }
+
     public function scopeOrderByWinner($query) {
         return $query->orderBy('score', 'desc')
                      ->orderBy('tie_breaker_1', 'desc')

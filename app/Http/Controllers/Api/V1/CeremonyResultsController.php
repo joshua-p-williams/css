@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Event;
 use App\Category;
 use App\TeamRanking;
+use App\Participant;
 use App\IndividualRanking;
 use App\OverallRanking;
 use App\OverallTeamRanking;
@@ -22,8 +23,9 @@ class CeremonyResultsController extends Controller
         $categories = Category::get();
 
         $output = [
-            'groups' => ['Team', 'Individual', 'Overall'],
+            'groups' => ['Team', 'Individual', 'Overall_Team', 'Overall_Individual'],
             'Team' => [
+                'name' => 'Team',
                 'columns' => [
                     'Team Name' => 'team_name',
                     'Score' => 'score',
@@ -35,6 +37,7 @@ class CeremonyResultsController extends Controller
                 'data' => [],
             ],
             'Individual' => [
+                'name' => 'Individual',
                 'columns' => [
                     'Name' => 'participant_name',
                     'Team' => 'team_name',
@@ -46,7 +49,20 @@ class CeremonyResultsController extends Controller
                 ],
                 'data' => [],
             ],
-            'Overall' => [
+            'Overall_Team' => [
+                'name' => 'Overall Team',
+                'columns' => [
+                    'Team' => 'team_name',
+                    'Score' => 'score',
+                    'Tie 1' => 'tie_breaker_1',
+                    'Tie 2' => 'tie_breaker_2',
+                    'Tie 3' => 'tie_breaker_3',
+                    'Tie 4' => 'tie_breaker_4',
+                ],
+                'data' => [],
+            ],
+            'Overall_Individual' => [
+                'name' => 'Overall Individual',
                 'columns' => [
                     'Name' => 'participant_name',
                     'Team' => 'team_name',
@@ -71,9 +87,9 @@ class CeremonyResultsController extends Controller
                 [
                     'id' => $category->id,
                     'name' => $category->name,
-                    'results' => TeamRanking::ByEventId($event->id)
-                            ->ByCategoryId($category->id)
-                            ->OrderByWinner()->take(3)->get(),
+                    'results' => TeamRanking::with('participants')->ByEventId($event->id)
+                    ->ByCategoryId($category->id)
+                    ->OrderByWinner()->take(3)->get(),
                 ];
             }
         }
@@ -96,28 +112,28 @@ class CeremonyResultsController extends Controller
             }
         }
 
-        $output['Overall']['data']['Team'] = [
+        $output['Overall_Team']['data']['Team'] = [
             'id' => $event->id,
             'name' => 'Overall Team',
             'categories' => [],
         ];
         foreach ($categories as $category) {
-            $output['Overall']['data']['Team']['categories'][$category->name] =
+            $output['Overall_Team']['data']['Team']['categories'][$category->name] =
             [
                 'id' => $category->id,
                 'name' => $category->name,
-                'results' => OverallTeamRanking::ByCategoryId($category->id)
+                'results' => OverallTeamRanking::with('participants')->ByCategoryId($category->id)
                         ->OrderByWinner()->take(3)->get(),
             ];
         }
 
-        $output['Overall']['data']['Individual'] = [
+        $output['Overall_Individual']['data']['Individual'] = [
             'id' => $event->id,
             'name' => 'Overall Individual',
             'categories' => [],
         ];
         foreach ($categories as $category) {
-            $output['Overall']['data']['Individual']['categories'][$category->name] =
+            $output['Overall_Individual']['data']['Individual']['categories'][$category->name] =
             [
                 'id' => $category->id,
                 'name' => $category->name,
