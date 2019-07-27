@@ -1,19 +1,6 @@
 <template>
     <div class="row">
         <div class="col-xs-12">
-            <!-- div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Ceremony Results</h3><br />
-                </div>
-
-                <div class="box-body" v-if="!loading">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default btn-sm" @click="refresh">
-                            <i class="fa fa-refresh" :class="{'fa-spin': loading}"></i> Refresh
-                        </button>
-                    </div>
-                </div>
-            </div -->
 
             <div class="box" v-if="!loading && !data">
                 <div class="box-body">
@@ -37,7 +24,8 @@
                                     <h3 class="box-title"><strong>{{categoryName}}</strong> - <em>{{groupName}}</em></h3>
                                 </div>
                                 <div class="box-body">
-                                    <table class="table table-striped table-hover">
+                                    <span v-if="!data.event_results[eventSlug][categorySlug][groupSlug].length">No Results</span>
+                                    <table class="table table-striped table-hover" v-if="data.event_results[eventSlug][categorySlug][groupSlug].length">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -68,6 +56,56 @@
                 </div>
 
             </div>
+
+
+
+            <div v-if="!loading && data">
+                <div v-for="(categoryName, categorySlug) in data.overall_categories">
+                    <div class="box">
+                        <div class="box-header with-border box-header-emphasize">
+                            <h3><strong>Overall</strong></h3>
+                            <h3><em>{{categoryName}}</em></h3>
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <div v-for="(groupName, groupSlug) in data.overall_groups">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><strong>{{categoryName}}</strong> - <em>{{groupName}}</em></h3>
+                            </div>
+                            <div class="box-body">
+                                <span v-if="!data.overall_results[categorySlug][groupSlug].length">No Results</span>
+                                <table class="table table-striped table-hover" v-if="data.overall_results[categorySlug][groupSlug].length">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th v-for="(columnHeader, columnName) in (groupSlug == 'team' ? data.team_columns : data.individual_columns)">
+                                                {{columnHeader}}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(result, position) in data.overall_results[categorySlug][groupSlug]">
+                                            <td><span class='badge'>{{ordinalSuffix(position + 1)}}</span></td>
+                                            <td v-for="(columnHeader, columnName) in (groupSlug == 'team' ? data.team_columns : data.individual_columns)">
+                                                {{result[columnName]}}
+                                                <ul class="participant-list" v-if="columnName == 'team_name'">
+                                                    <li v-for="participant in result.participants">
+                                                        {{participant.name}}
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="page-break-before: always"></p>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </template>

@@ -20,12 +20,6 @@ class CeremonyResultsController extends Controller
     public function index(Request $request)
     {
         return $this->byEvent();
-        return $this->byGroup();
-    }
-
-    public function test(Request $request) {
-        return $this->byGroup();
-        return $this->byEvent();
     }
 
     public function byEvent()
@@ -46,13 +40,17 @@ class CeremonyResultsController extends Controller
                 'senior' => 'Senior',
             ],
             'event_groups' => [
-                'team' => 'Team',
                 'individual' => 'Individual',
+                'team' => 'Team',
             ],
             'overall_categories' => [
                 'coach' => 'Coach',
                 'junior' => 'Junior',
                 'senior' => 'Senior',
+            ],
+            'overall_groups' => [
+                'individual' => 'Individual',
+                'team' => 'Team',
             ],
             'team_columns' => [
                 'team_name' => 'Team',
@@ -118,134 +116,6 @@ class CeremonyResultsController extends Controller
 
         $output['event_results'] = $eventResults;
         $output['overall_results'] = $overallResults;
-        return $output;
-    }
-
-    public function byGroup()
-    {
-        $events = Event::get();
-        $categories = Category::get();
-
-        $output = [
-            'groups' => ['Team', 'Individual', 'Overall_Team', 'Overall_Individual'],
-            'Team' => [
-                'name' => 'Team',
-                'columns' => [
-                    'Team Name' => 'team_name',
-                    'Score' => 'score',
-                    'Tie 1' => 'tie_breaker_1',
-                    'Tie 2' => 'tie_breaker_2',
-                    'Tie 3' => 'tie_breaker_3',
-                    'Tie 4' => 'tie_breaker_4',
-                ],
-                'data' => [],
-            ],
-            'Individual' => [
-                'name' => 'Individual',
-                'columns' => [
-                    'Name' => 'participant_name',
-                    'Team' => 'team_name',
-                    'Score' => 'score',
-                    'Tie 1' => 'tie_breaker_1',
-                    'Tie 2' => 'tie_breaker_2',
-                    'Tie 3' => 'tie_breaker_3',
-                    'Tie 4' => 'tie_breaker_4',
-                ],
-                'data' => [],
-            ],
-            'Overall_Team' => [
-                'name' => 'Overall Team',
-                'columns' => [
-                    'Team' => 'team_name',
-                    'Score' => 'score',
-                    'Tie 1' => 'tie_breaker_1',
-                    'Tie 2' => 'tie_breaker_2',
-                    'Tie 3' => 'tie_breaker_3',
-                    'Tie 4' => 'tie_breaker_4',
-                ],
-                'data' => [],
-            ],
-            'Overall_Individual' => [
-                'name' => 'Overall Individual',
-                'columns' => [
-                    'Name' => 'participant_name',
-                    'Team' => 'team_name',
-                    'Score' => 'score',
-                    'Tie 1' => 'tie_breaker_1',
-                    'Tie 2' => 'tie_breaker_2',
-                    'Tie 3' => 'tie_breaker_3',
-                    'Tie 4' => 'tie_breaker_4',
-                ],
-                'data' => [],
-            ],
-        ];
-
-        foreach($events as $event) {
-            $output['Team']['data'][$event->name] = [
-                'id' => $event->id,
-                'name' => $event->name,
-                'categories' => [],
-            ];
-            foreach ($categories as $category) {
-                $output['Team']['data'][$event->name]['categories'][$category->name] =
-                [
-                    'id' => $category->id,
-                    'name' => $category->name,
-                    'results' => TeamRanking::with('participants')->ByEventId($event->id)
-                    ->ByCategoryId($category->id)
-                    ->OrderByWinner()->take(3)->get(),
-                ];
-            }
-        }
-
-        foreach($events as $event) {
-            $output['Individual']['data'][$event->name] = [
-                'id' => $event->id,
-                'name' => $event->name,
-                'categories' => [],
-            ];
-            foreach ($categories as $category) {
-                $output['Individual']['data'][$event->name]['categories'][$category->name] =
-                [
-                    'id' => $category->id,
-                    'name' => $category->name,
-                    'results' => IndividualRanking::ByEventId($event->id)
-                            ->ByCategoryId($category->id)
-                            ->OrderByWinner()->take(3)->get(),
-                ];
-            }
-        }
-
-        $output['Overall_Team']['data']['Team'] = [
-            'id' => $event->id,
-            'name' => 'Overall Team',
-            'categories' => [],
-        ];
-        foreach ($categories as $category) {
-            $output['Overall_Team']['data']['Team']['categories'][$category->name] =
-            [
-                'id' => $category->id,
-                'name' => $category->name,
-                'results' => OverallTeamRanking::with('participants')->ByCategoryId($category->id)
-                        ->OrderByWinner()->take(3)->get(),
-            ];
-        }
-
-        $output['Overall_Individual']['data']['Individual'] = [
-            'id' => $event->id,
-            'name' => 'Overall Individual',
-            'categories' => [],
-        ];
-        foreach ($categories as $category) {
-            $output['Overall_Individual']['data']['Individual']['categories'][$category->name] =
-            [
-                'id' => $category->id,
-                'name' => $category->name,
-                'results' => OverallRanking::ByCategoryId($category->id)
-                        ->OrderByWinner()->take(3)->get(),
-            ];
-        }
-
         return $output;
     }
 
