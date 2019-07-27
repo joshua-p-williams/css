@@ -22,53 +22,51 @@
             </div>
 
             <div v-if="!loading && data">
-                <div v-for="group in data.groups" v-if="data[group]">
-
-                    <div class="box">
-                        <div class="box-header with-border box-header-emphasize">
-                            <h3>{{data[group].name}}</h3>
-                        </div>
-                    </div>
-
-                    <div class="box" v-for="(eventDetails, eventName) in data[group].data" :key="eventDetails.id">
-
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><strong>{{data[group].name}}</strong> - <em>{{eventName}}</em></h3>
+                <div v-for="(eventName, eventSlug) in data.events">
+                    <div v-for="(categoryName, categorySlug) in data.event_categories">
+                        <div class="box">
+                            <div class="box-header with-border box-header-emphasize">
+                                <h3><strong>{{eventName}}</strong></h3>
+                                <h3><em>{{categoryName}}</em></h3>
+                            </div>
                         </div>
 
-                        <span v-if="!eventDetails.categories">No Results</span>
-
-                        <div class="box-body" v-for="(categoryDetails, categoryName) in eventDetails.categories" :key="categoryDetails.id" v-if="categoryDetails.results.length">
-                            <h4 class="box-title"><strong><u>{{categoryName}}</u></strong></h4>
-
-                            <span v-if="!categoryDetails.results.length">No Results</span>
-
-                            <table class="table table-striped table-hover" v-if="categoryDetails.results.length">
-                                <thead>
-                                    <tr>
-                                        <th v-for="(columnName, columnHeader) in data[group].columns">
-                                            {{columnHeader}}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="result in categoryDetails.results">
-                                        <td v-for="(columnName, columnHeader) in data[group].columns">
-                                            {{result[columnName]}}
-                                            <ul class="participant-list" v-if="columnName == 'team_name'">
-                                                <li v-for="participant in result.participants">
-                                                    {{participant.name}}
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
+                        <div class="box">
+                            <div v-for="(groupName, groupSlug) in data.event_groups">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title"><strong>{{categoryName}}</strong> - <em>{{groupName}}</em></h3>
+                                </div>
+                                <div class="box-body">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th v-for="(columnHeader, columnName) in (groupSlug == 'team' ? data.team_columns : data.individual_columns)">
+                                                    {{columnHeader}}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(result, position) in data.event_results[eventSlug][categorySlug][groupSlug]">
+                                                <td><span class='badge'>{{ordinalSuffix(position + 1)}}</span></td>
+                                                <td v-for="(columnHeader, columnName) in (groupSlug == 'team' ? data.team_columns : data.individual_columns)">
+                                                    {{result[columnName]}}
+                                                    <ul class="participant-list" v-if="columnName == 'team_name'">
+                                                        <li v-for="participant in result.participants">
+                                                            {{participant.name}}
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-
+                        <p style="page-break-before: always"></p>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -109,7 +107,21 @@ export default {
         ...mapActions('CeremonyResultsIndex', ['fetchData', 'setQuery', 'resetState']),
         refresh: function () {
             this.fetchData();
-        }
+        },
+        ordinalSuffix: function (i) {
+            var j = i % 10,
+                k = i % 100;
+            if (j == 1 && k != 11) {
+                return i + "st";
+            }
+            if (j == 2 && k != 12) {
+                return i + "nd";
+            }
+            if (j == 3 && k != 13) {
+                return i + "rd";
+            }
+            return i + "th";
+        }        
     }
 }</script>
 
