@@ -62,4 +62,12 @@ if [ ! -f .docker-env ]; then
 export SETUP_ON=$(date)
 " > .docker-env
 
+  echo ""
+  echo "**********************"
+  echo "*        Done!       *"
+  echo "* Open a browser to; *"
+  echo "*  http://localhost  *"
+  echo "**********************"
+  echo ""
+
 fi
