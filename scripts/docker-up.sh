@@ -54,6 +54,9 @@ if [ ! -f .docker-env ]; then
   echo "Seeding database..."
   docker-compose exec app php artisan migrate --seed
 
+  echo "Setting up passport..."
+  docker-compose exec app php artisan passport:install
+
   echo "Installing web components..."
   docker-compose exec app npm install
   docker-compose exec app npm run dev
