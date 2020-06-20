@@ -20,9 +20,25 @@ else
   if [ $? != 0 ]; then
     sudo docker-compose up -d
   fi
+
 fi
 
 if [ ! -f .docker-env ]; then
+
+  # Wait on the database to become available
+  echo "Waiting on processes to start..."
+  psCount=$(docker-compose ps | grep Up | wc -l)
+  while [ ! $psCount -gt 3 ]; do
+    sleep 1
+    psCount=$(docker-compose ps | grep Up | wc -l)
+  done
+
+  echo "Waiting on database to become available..."
+  while ! docker-compose exec db mysqladmin ping -prootpw -hlocalhost --silent; do
+    sleep 1
+  done
+  sleep 10 # Give more time for good measure
+  echo "Database is now available..."
 
   echo "Creating default .env file..."
   if [ ! -f .env ]; then
@@ -45,4 +61,5 @@ if [ ! -f .docker-env ]; then
   echo "#!/bin/bash
 export SETUP_ON=$(date)
 " > .docker-env
+
 fi
