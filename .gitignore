@@ -17,4 +17,4 @@ yarn-error.log
 .env
 .phpunit.result.cache
 .docker-env
-/.mysql-data
+/.mysql-data*

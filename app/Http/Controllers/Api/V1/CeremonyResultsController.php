@@ -24,16 +24,15 @@ class CeremonyResultsController extends Controller
 
     public function byEvent()
     {
-        $output = [
+        $outputRangeEvents = [
             'events' => [
-                'wildlife_identification' => 'Wildlife Identification',
-                'archery' => 'Archery',
-                'orienteering' => 'Orienteering',
-                'muzzleloader' => 'Muzzleloader',
-                'safety_trail' => 'Safety Trail',
-                'rifle' => 'Rifle',
-                'shotgun' => 'Shotgun',
-                'responsibility_exam' => 'Responsibility Exam',
+                'air_pistol' => 'Air Pistol',
+                'air_rifle' => 'Air Rifle',
+                'small_pistol' => 'Small-bore Pistol',
+                'small_rifle' => 'Small-bore Rifle',
+                'muzzle_loader' => 'Muzzle Loader Target Challenge',
+                'archery' => 'Archery – 3D & 5 Spot',
+                'shotgun' => 'Shotgun – Sporting Clays',
             ],
             'event_categories' => [
                 'junior' => 'Junior',
@@ -44,7 +43,6 @@ class CeremonyResultsController extends Controller
                 'team' => 'Team',
             ],
             'overall_categories' => [
-                'coach' => 'Coach',
                 'junior' => 'Junior',
                 'senior' => 'Senior',
             ],
@@ -55,21 +53,17 @@ class CeremonyResultsController extends Controller
             'team_columns' => [
                 'team_name' => 'Team',
                 'score' => 'Score',
-                'tie_breaker_1' => 'Tie 1',
-                'tie_breaker_2' => 'Tie 2',
-                'tie_breaker_3' => 'Tie 3',
-                'tie_breaker_4' => 'Tie 4',
+                'tie_breaker_1' => 'X Count',
             ],
             'individual_columns' => [
                 'team_name' => 'Team',
                 'participant_name' => 'Name',
                 'score' => 'Score',
-                'tie_breaker_1' => 'Tie 1',
-                'tie_breaker_2' => 'Tie 2',
-                'tie_breaker_3' => 'Tie 3',
-                'tie_breaker_4' => 'Tie 4',
+                'tie_breaker_1' => 'X Count',
             ],
         ];
+
+        $output = $outputRangeEvents;
 
         $events = [];
         foreach($output['events'] as $eventSlug => $eventName) {
