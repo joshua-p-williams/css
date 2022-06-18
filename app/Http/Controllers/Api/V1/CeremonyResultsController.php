@@ -24,6 +24,53 @@ class CeremonyResultsController extends Controller
 
     public function byEvent()
     {
+        $outputYHEC = [
+            'events' => [
+                'wildlife_identification' => 'Wildlife Identification',
+                'archery' => 'Archery',
+                'orienteering' => 'Orienteering',
+                'muzzleloader' => 'Muzzleloader',
+                'safety_trail' => 'Safety Trail',
+                'rifle' => 'Rifle',
+                'shotgun' => 'Shotgun',
+                'responsibility_exam' => 'Responsibility Exam',
+            ],
+            'event_categories' => [
+                'junior' => 'Junior',
+                'senior' => 'Senior',
+            ],
+            'event_groups' => [
+                'individual' => 'Individual',
+                'team' => 'Team',
+            ],
+            'overall_categories' => [
+                'coach' => 'Coach',
+                'junior' => 'Junior',
+                'senior' => 'Senior',
+            ],
+            'overall_groups' => [
+                'individual' => 'Individual',
+                'team' => 'Team',
+            ],
+            'team_columns' => [
+                'team_name' => 'Team',
+                'score' => 'Score',
+                'tie_breaker_1' => 'Tie 1',
+                'tie_breaker_2' => 'Tie 2',
+                'tie_breaker_3' => 'Tie 3',
+                'tie_breaker_4' => 'Tie 4',
+            ],
+            'individual_columns' => [
+                'team_name' => 'Team',
+                'participant_name' => 'Name',
+                'score' => 'Score',
+                'tie_breaker_1' => 'Tie 1',
+                'tie_breaker_2' => 'Tie 2',
+                'tie_breaker_3' => 'Tie 3',
+                'tie_breaker_4' => 'Tie 4',
+            ],
+        ];
+
         $outputRangeEvents = [
             'events' => [
                 'air_pistol' => 'Air Pistol',
