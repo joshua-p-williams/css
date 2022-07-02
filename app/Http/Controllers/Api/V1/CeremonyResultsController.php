@@ -75,8 +75,8 @@ class CeremonyResultsController extends Controller
             'events' => [
                 'air_pistol' => 'Air Pistol',
                 'air_rifle' => 'Air Rifle',
-                'small_pistol' => 'Small-bore Pistol',
-                'small_rifle' => 'Small-bore Rifle',
+                'small_pistol' => '.22 Small-bore Pistol',
+                'small_rifle' => '.22 Small-bore Rifle',
                 'muzzle_loader' => 'Muzzle Loader Target Challenge',
                 'archery' => 'Archery – 3D & 5 Spot',
                 'shotgun' => 'Shotgun – Sporting Clays',
