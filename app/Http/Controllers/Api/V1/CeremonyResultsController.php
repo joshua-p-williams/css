@@ -22,6 +22,19 @@ class CeremonyResultsController extends Controller
         return $this->byEvent();
     }
 
+    private function hasTies($ranking)
+    {
+        $hasTies = false;
+        $rankingCount = count($ranking);
+        for ($i = 1; $i < $rankingCount; $i++) {
+            if ($ranking[$i]['ranking'] === $ranking[$i - 1]['ranking']) {
+                $hasTies = true;
+                break;
+            }
+        }
+        return $hasTies;
+    }
+
     public function byEvent()
     {
         $outputYHEC = [
@@ -132,26 +145,37 @@ class CeremonyResultsController extends Controller
             $eventResults[$eventSlug] = [];
 
             foreach ($eventCategories as $categorySlug => $category) {
-                $eventResults[$eventSlug][$categorySlug] = [
-                    'team' => TeamRanking::with('participants')
+                $teamRanking = TeamRanking::with('participants')
                                 ->ByEventId($event->id)
                                 ->ByCategoryId($category->id)
-                                ->ByTop(3)->get(), //->OrderByWinner()->take(3)->get(),
-                    'individual' => IndividualRanking::ByEventId($event->id)
+                                ->ByTop(3)->get(); //->OrderByWinner()->take(3)->get();
+
+                $individualRanking = IndividualRanking::ByEventId($event->id)
                                     ->ByCategoryId($category->id)
-                                    ->ByTop(3)->get(), //->OrderByWinner()->take(3)->get(),
+                                    ->ByTop(3)->get(); //->OrderByWinner()->take(3)->get();
+
+                $eventResults[$eventSlug][$categorySlug] = [
+                    'team' => $teamRanking,
+                    'individual' => $individualRanking,
+                    'team_ties' => $this->hasTies($teamRanking),
+                    'individual_ties' => $this->hasTies($individualRanking),
                 ];
             }
         }
 
         $overallResults = [];
         foreach ($overallCategories as $categorySlug => $category) {
+            $teamRanking = OverallTeamRanking::with('participants')
+                            ->ByCategoryId($category->id)
+                            ->ByTop(3)->get(); //->OrderByWinner()->take(3)->get();
+            $individualRanking = OverallRanking::ByCategoryId($category->id)
+                                ->ByTop(3)->get(); //->OrderByWinner()->take(3)->get();
+
             $overallResults[$categorySlug] = [
-                'team' => OverallTeamRanking::with('participants')
-                          ->ByCategoryId($category->id)
-                          ->ByTop(3)->get(), //->OrderByWinner()->take(3)->get(),
-                'individual' => OverallRanking::ByCategoryId($category->id)
-                                ->ByTop(3)->get(), //->OrderByWinner()->take(3)->get(),
+                'team' => $teamRanking,
+                'individual' => $individualRanking,
+                'team_ties' => $this->hasTies($teamRanking),
+                'individual_ties' => $this->hasTies($individualRanking),
             ];
         }
 

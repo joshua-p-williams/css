@@ -25,6 +25,9 @@
                                 </div>
                                 <div class="box-body">
                                     <span v-if="!data.event_results[eventSlug][categorySlug][groupSlug].length">No Results</span>
+                                    <div class="has-ties" v-if="data.event_results[eventSlug][categorySlug][groupSlug + '_ties']">
+                                        There are ties that still need to be broken!
+                                    </div>
                                     <table class="table table-striped table-hover" v-if="data.event_results[eventSlug][categorySlug][groupSlug].length">
                                         <thead>
                                             <tr>
@@ -75,6 +78,9 @@
                             </div>
                             <div class="box-body">
                                 <span v-if="!data.overall_results[categorySlug][groupSlug].length">No Results</span>
+                                <div class="has-ties" v-if="data.overall_results[categorySlug][groupSlug + '_ties']">
+                                    There are ties that still need to be broken!
+                                </div>
                                 <table class="table table-striped table-hover" v-if="data.overall_results[categorySlug][groupSlug].length">
                                     <thead>
                                         <tr>
@@ -168,6 +174,13 @@ export default {
     background-color: #222d32;
     font-weight: 900;
     color: white;
+    text-align: center;
+    font-size: 30px;
+}
+.has-ties {
+    background-color: #d83006;
+    color: white;
+    font-weight: 900;
     text-align: center;
     font-size: 30px;
 }
