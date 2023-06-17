@@ -36,7 +36,7 @@
                                         </thead>
                                         <tbody>
                                             <tr v-for="(result, position) in data.event_results[eventSlug][categorySlug][groupSlug]">
-                                                <td><span class='badge'>{{ordinalSuffix(position + 1)}}</span></td>
+                                                <td><span class='badge'>{{ordinalSuffix(result['ranking'])}}</span></td>
                                                 <td v-for="(columnHeader, columnName) in (groupSlug == 'team' ? data.team_columns : data.individual_columns)">
                                                     {{result[columnName]}}
                                                     <ul class="participant-list" v-if="columnName == 'team_name'">

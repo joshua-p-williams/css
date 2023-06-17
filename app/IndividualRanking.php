@@ -40,6 +40,10 @@ class IndividualRanking extends Model
         return $query->whereNull('score_id');
     }
 
+    public function scopeByTop($query, $id) {
+        return $query->orderBy('ranking')->where('ranking', '<=', $id);
+    }
+
     public function scopeOrderByWinner($query) {
         return $query->orderBy('score', 'desc')
                      ->orderBy('tie_breaker_1', 'desc')

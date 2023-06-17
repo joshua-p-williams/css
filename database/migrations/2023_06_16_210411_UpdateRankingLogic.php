@@ -131,6 +131,70 @@ class UpdateRankingLogic extends Migration
             sum(overall_team.tie_breaker_3) desc,    
             sum(overall_team.tie_breaker_4) desc    
         ");
+
+        DB::statement("
+        create or replace view v_individual_ranking as
+		select z.category_id ,
+			   z.category_name ,
+			   z.event_id ,
+			   z.event_name ,
+			   z.team_id ,
+			   z.team_name ,
+			   z.participant_id ,
+			   z.participant_name ,
+			   z.score_id ,
+			   z.score ,
+			   z.tie_breaker_1 ,
+			   z.tie_breaker_2 ,
+			   z.tie_breaker_3 ,
+			   z.tie_breaker_4 ,
+	           z.exclude_team_rank ,
+	           z.exclude_ind_rank ,
+	           DENSE_RANK() OVER (
+	            	PARTITION BY z.category_id, z.event_id 
+	            	ORDER BY 
+	            	z.score DESC , 
+	            	z.tie_breaker_1 DESC ,
+	            	z.tie_breaker_2 DESC ,
+	            	z.tie_breaker_3 DESC ,
+	            	z.tie_breaker_4 DESC
+	           ) AS ranking
+		from (
+	        select
+	            cat.id as category_id ,
+	            cat.name as category_name ,
+	            e.id as event_id ,
+	            e.name as event_name ,
+	            cmp.id as team_id ,
+	            cmp.name as team_name ,
+	            c.id as participant_id ,
+	            c.name as participant_name ,
+	            s.id as score_id ,
+	            COALESCE(s.score, 0) as score ,
+	            COALESCE(tb1.score, 0) as tie_breaker_1 ,
+	            COALESCE(tb2.score, 0) as tie_breaker_2 ,
+	            COALESCE(tb3.score, 0) as tie_breaker_3 ,
+	            COALESCE(tb4.score, 0) as tie_breaker_4 , 
+	            cmp.exclude_team_rank ,
+	            cmp.exclude_ind_rank
+	        from categories cat
+	        join events e
+	        inner join participants c on cat.id = c.category_id
+	        left join teams cmp on c.team_id = cmp.id
+	        left join scores s on e.id = s.event_id and c.id = s.participant_id
+	        left join v_individual_tie_breaker_1 tb1 on s.participant_id = tb1.participant_id
+	        left join v_individual_tie_breaker_2 tb2 on s.participant_id = tb2.participant_id
+	        left join v_individual_tie_breaker_3 tb3 on s.participant_id = tb3.participant_id
+	        left join v_individual_tie_breaker_4 tb4 on s.participant_id = tb4.participant_id
+	        where cat.deleted_at is null
+	        and ( e.name = tb1.tie_breaker_name or (select xcount_for_tb from settings order by id limit 1) = 0)
+	        and cmp.exclude_ind_rank = 0
+	        and e.deleted_at is null 
+	        /*and cmp.deleted_at is null*/
+	        /*and c.deleted_at is null*/
+	        and s.deleted_at is null
+		) as z
+        ");
     }
 
     /**
@@ -248,5 +312,42 @@ class UpdateRankingLogic extends Migration
             sum(overall_team.tie_breaker_4) desc    
         ");
 
+        DB::statement("
+        create or replace view v_individual_ranking as
+        select
+            cat.id as category_id ,
+            cat.name as category_name ,
+            e.id as event_id ,
+            e.name as event_name ,
+            cmp.id as team_id ,
+            cmp.name as team_name ,
+            c.id as participant_id ,
+            c.name as participant_name ,
+            s.id as score_id ,
+            COALESCE(s.score, 0) as score ,
+            COALESCE(tb1.score, 0) as tie_breaker_1 ,
+            COALESCE(tb2.score, 0) as tie_breaker_2 ,
+            COALESCE(tb3.score, 0) as tie_breaker_3 ,
+            COALESCE(tb4.score, 0) as tie_breaker_4 , 
+            cmp.exclude_team_rank ,
+            cmp.exclude_ind_rank
+        from categories cat
+        join events e
+        inner join participants c on cat.id = c.category_id
+        left join teams cmp on c.team_id = cmp.id
+        left join scores s on e.id = s.event_id and c.id = s.participant_id
+        left join v_individual_tie_breaker_1 tb1 on s.participant_id = tb1.participant_id
+        left join v_individual_tie_breaker_2 tb2 on s.participant_id = tb2.participant_id
+        left join v_individual_tie_breaker_3 tb3 on s.participant_id = tb3.participant_id
+        left join v_individual_tie_breaker_4 tb4 on s.participant_id = tb4.participant_id
+        where cat.deleted_at is null
+        and ( e.name = tb1.tie_breaker_name or (select xcount_for_tb from settings order by id limit 1) = 0)
+        and cmp.exclude_ind_rank = 0
+        and e.deleted_at is null 
+        /*and cmp.deleted_at is null*/
+        /*and c.deleted_at is null*/
+        and s.deleted_at is null
+        order by cat.id, e.id, s.score desc, tb1.score desc, tb2.score desc, tb3.score desc, tb4.score desc       
+        ");
     }
 }
