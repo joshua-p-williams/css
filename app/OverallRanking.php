@@ -36,12 +36,8 @@ class OverallRanking extends Model
         return $this->belongsTo(Participant::class, 'participant_id');
     }
 
-    public function scopeOrderByWinner($query) {
-        return $query->orderBy('score', 'desc')
-                     ->orderBy('tie_breaker_1', 'desc')
-                     ->orderBy('tie_breaker_2', 'desc')
-                     ->orderBy('tie_breaker_3', 'desc')
-                     ->orderBy('tie_breaker_4', 'desc');
+    public function scopeByTop($query, $id) {
+        return $query->orderBy('ranking')->where('ranking', '<=', $id);
     }
 
     public function scopeByEventId($query, $val) {

@@ -149,9 +149,9 @@ class CeremonyResultsController extends Controller
             $overallResults[$categorySlug] = [
                 'team' => OverallTeamRanking::with('participants')
                           ->ByCategoryId($category->id)
-                          ->OrderByWinner()->take(3)->get(),
+                          ->ByTop(3)->get(), //->OrderByWinner()->take(3)->get(),
                 'individual' => OverallRanking::ByCategoryId($category->id)
-                                ->OrderByWinner()->take(3)->get(),
+                                ->ByTop(3)->get(), //->OrderByWinner()->take(3)->get(),
             ];
         }
 
