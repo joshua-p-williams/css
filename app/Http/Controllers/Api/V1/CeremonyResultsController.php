@@ -136,7 +136,7 @@ class CeremonyResultsController extends Controller
                     'team' => TeamRanking::with('participants')
                                 ->ByEventId($event->id)
                                 ->ByCategoryId($category->id)
-                                ->OrderByWinner()->take(3)->get(),
+                                ->ByTop(3)->get(), //->OrderByWinner()->take(3)->get(),
                     'individual' => IndividualRanking::ByEventId($event->id)
                                     ->ByCategoryId($category->id)
                                     ->ByTop(3)->get(), //->OrderByWinner()->take(3)->get(),

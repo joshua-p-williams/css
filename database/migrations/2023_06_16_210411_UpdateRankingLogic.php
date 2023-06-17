@@ -195,6 +195,77 @@ class UpdateRankingLogic extends Migration
 	        and s.deleted_at is null
 		) as z
         ");
+
+        DB::statement("
+        create or replace view v_team_ranking as
+        select z.category_id ,
+               z.category_name ,
+               z.event_id ,
+               z.event_name ,
+               z.team_id ,
+               z.team_name ,
+               z.score ,
+               z.tie_breaker_1 ,
+               z.tie_breaker_2 ,
+               z.tie_breaker_3 ,
+               z.tie_breaker_4 ,
+	           DENSE_RANK() OVER (
+	            	PARTITION BY z.category_id, z.event_id 
+	            	ORDER BY 
+	            	z.score DESC , 
+	            	z.tie_breaker_1 DESC ,
+	            	z.tie_breaker_2 DESC ,
+	            	z.tie_breaker_3 DESC ,
+	            	z.tie_breaker_4 DESC
+	           ) AS ranking
+        from (
+			select ranked.category_id,
+	        ranked.category_name,
+	        ranked.event_id,
+	        ranked.event_name,
+	        ranked.team_id,
+	        ranked.team_name,
+	        sum(ranked.score) as score,
+	        sum(ranked.tie_breaker_1) as tie_breaker_1,
+	        sum(ranked.tie_breaker_2) as tie_breaker_2,
+	        sum(ranked.tie_breaker_3) as tie_breaker_3,
+	        sum(ranked.tie_breaker_4) as tie_breaker_4
+	        from (
+	            select a.category_id,
+	            a.category_name,
+	            a.event_id,
+	            a.event_name,
+	            a.team_id,
+	            a.team_name,
+	            a.participant_id,
+	            a.participant_name,
+	            a.score ,
+	            a.tie_breaker_1 ,
+	            a.tie_breaker_2 ,
+	            a.tie_breaker_3 ,
+	            a.tie_breaker_4 ,
+	            (
+	                select count(*) + 1 from v_individual_ranking b 
+	                where b.exclude_team_rank = 0
+	                and b.category_id = a.category_id
+	                and b.event_id = a.event_id
+	                and b.team_id = a.team_id
+	                and ((a.score * 100000000000) + (a.tie_breaker_1 * 100000000) + (a.tie_breaker_2 * 100000) + (a.tie_breaker_3 * 100) + a.tie_breaker_4)
+	                < ((b.score * 100000000000) + (b.tie_breaker_1 * 100000000) + (b.tie_breaker_2 * 100000) + (b.tie_breaker_3 * 100) + b.tie_breaker_4)
+	            ) as rank_num
+	            from v_individual_ranking a
+	            where a.exclude_team_rank = 0
+	        ) ranked
+	        where ranked.rank_num <= (select top_scores_keep from settings order by id limit 1)
+	        group by
+	            ranked.category_id ,
+	            ranked.category_name ,
+	            ranked.event_id ,
+	            ranked.event_name ,
+	            ranked.team_id ,
+	            ranked.team_name
+        ) as z
+        ");
     }
 
     /**
@@ -348,6 +419,63 @@ class UpdateRankingLogic extends Migration
         /*and c.deleted_at is null*/
         and s.deleted_at is null
         order by cat.id, e.id, s.score desc, tb1.score desc, tb2.score desc, tb3.score desc, tb4.score desc       
+        ");
+
+        DB::statement("
+        create or replace view v_team_ranking as
+        select ranked.category_id,
+        ranked.category_name,
+        ranked.event_id,
+        ranked.event_name,
+        ranked.team_id,
+        ranked.team_name,
+        sum(ranked.score) as score,
+        sum(ranked.tie_breaker_1) as tie_breaker_1,
+        sum(ranked.tie_breaker_2) as tie_breaker_2,
+        sum(ranked.tie_breaker_3) as tie_breaker_3,
+        sum(ranked.tie_breaker_4) as tie_breaker_4
+        from (
+            select a.category_id,
+            a.category_name,
+            a.event_id,
+            a.event_name,
+            a.team_id,
+            a.team_name,
+            a.participant_id,
+            a.participant_name,
+            a.score ,
+            a.tie_breaker_1 ,
+            a.tie_breaker_2 ,
+            a.tie_breaker_3 ,
+            a.tie_breaker_4 ,
+            (
+                select count(*) + 1 from v_individual_ranking b 
+                where b.exclude_team_rank = 0
+                and b.category_id = a.category_id
+                and b.event_id = a.event_id
+                and b.team_id = a.team_id
+                and ((a.score * 100000000000) + (a.tie_breaker_1 * 100000000) + (a.tie_breaker_2 * 100000) + (a.tie_breaker_3 * 100) + a.tie_breaker_4)
+                < ((b.score * 100000000000) + (b.tie_breaker_1 * 100000000) + (b.tie_breaker_2 * 100000) + (b.tie_breaker_3 * 100) + b.tie_breaker_4)
+            ) as rank_num
+            from v_individual_ranking a
+            where a.exclude_team_rank = 0
+        ) ranked
+        where ranked.rank_num <= (select top_scores_keep from settings order by id limit 1)
+        group by
+            ranked.category_id ,
+            ranked.category_name ,
+            ranked.event_id ,
+            ranked.event_name ,
+            ranked.team_id ,
+            ranked.team_name
+        order by
+            ranked.category_name,
+            ranked.event_name,
+            sum(ranked.score) desc,
+            sum(ranked.tie_breaker_1) desc,
+            sum(ranked.tie_breaker_2) desc,
+            sum(ranked.tie_breaker_3) desc,
+            sum(ranked.tie_breaker_4) desc
         ");
     }
 }
