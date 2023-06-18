@@ -75,6 +75,7 @@ export default {
         ...mapGetters('IndividualResultsIndex', ['data', 'total', 'loading', 'relationships']),
         columns: function () {
             let columns = [
+                { title: 'Ranking', field: 'ranking', sortable: false },
                 { title: 'Team', field: 'team_name', sortable: false },
                 { title: 'Name', field: 'participant_name', sortable: false },
                 { title: 'Score', field: 'score', sortable: false },
@@ -85,11 +86,11 @@ export default {
             ];
 
             if (!this.event) {
-                columns.push({ title: 'Event', field: 'event_name', sortable: false });
+                columns.unshift({ title: 'Event', field: 'event_name', sortable: false });
             }
 
             if (!this.category) {
-                columns.push({ title: 'Category', field: 'category_name', sortable: false });
+                columns.unshift({ title: 'Category', field: 'category_name', sortable: false });
             }
 
             return columns;

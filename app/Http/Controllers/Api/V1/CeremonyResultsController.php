@@ -86,7 +86,7 @@ class CeremonyResultsController extends Controller
 
         $outputRangeEvents = [
             'events' => [
-                // 'air_pistol' => 'Air Pistol',
+                'air_pistol' => 'Air Pistol',
                 // 'air_rifle' => 'Air Rifle',
                 // 'small_pistol' => '.22 Small-bore Pistol',
                 // 'small_rifle' => '.22 Small-bore Rifle',
