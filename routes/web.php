@@ -26,5 +26,5 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
 Route::group(['middleware' => ['auth'], 'prefix' => 'download'], function () {
     Route::get('participantList', 'CSVController@participantList');
     Route::get('teamResults', 'CSVController@teamResults');
-    Route::get('individualResults', 'CSVController@individualResults');
+    Route::get('individualResults', 'ExcelController@individualResults');
 });
