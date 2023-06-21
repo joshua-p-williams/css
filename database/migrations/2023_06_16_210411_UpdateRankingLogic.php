@@ -377,7 +377,7 @@ class UpdateRankingLogic extends Migration
         order by cat.id, e.id, s.score desc, tb1.score desc, tb2.score desc, tb3.score desc, tb4.score desc       
         ");
 
-        DB::statement("drop view v_individual_ranking_src");
+        DB::statement("drop view if exists v_individual_ranking_src");
 
         DB::statement("
         create or replace view v_team_ranking as
