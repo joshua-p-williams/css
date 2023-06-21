@@ -4,11 +4,11 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
-use App\Exports\Sheets\IndividualResultsByCategoryAndEvent;
+use App\Exports\Sheets\TeamResultsByCategoryAndEvent;
 use App\CategoryCompletion;
-use App\Exports\Sheets\OverallResultsByCategory;
+use App\Exports\Sheets\OverallTeamResultsByCategory;
 
-class IndividualResultsExport implements WithMultipleSheets
+class TeamResultsExport implements WithMultipleSheets
 {
     use Exportable;
 
@@ -25,12 +25,12 @@ class IndividualResultsExport implements WithMultipleSheets
                 $categories[$categoryEvent->category_id] = $categoryEvent->category_name;
             }
 
-            $sheets[] = new IndividualResultsByCategoryAndEvent($categoryEvent->category_id, $categoryEvent->category_name, $categoryEvent->event_id, $categoryEvent->event_name);
+            $sheets[] = new TeamResultsByCategoryAndEvent($categoryEvent->category_id, $categoryEvent->category_name, $categoryEvent->event_id, $categoryEvent->event_name);
         }
 
         $overallSheets = [];
         foreach($categories as $categoryId => $categoryName) {
-            $overallSheets[] = new OverallResultsByCategory($categoryId, $categoryName);
+            $overallSheets[] = new OverallTeamResultsByCategory($categoryId, $categoryName);
         }
 
         // Add the overall results to the beginning of the sheets array
