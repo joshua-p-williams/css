@@ -142,9 +142,7 @@ class UpdateRankingLogic extends Migration
 			sum(a.tie_breaker_3) DESC ,
 			sum(a.tie_breaker_4) DESC
 		) AS ranking             
-        from v_individual_ranking_src a
-        where a.exclude_team_rank = 0
-        and a.ranking <= (select top_scores_keep from settings order by id limit 1)
+        from v_team_ranking a
         group by
             a.category_id ,
             a.category_name ,
