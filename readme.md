@@ -57,6 +57,8 @@ php artisan vendor:publish --tag=lfm_public
 
 See https://mindsers.blog/post/https-using-nginx-certbot-docker/
 
+Open the `env/nginx/conf.d/app.conf` and uncomment the commented out lines and remove the first `server` section.
+
 Create a new certificate with the following;
 
 ```
