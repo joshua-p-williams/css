@@ -75,6 +75,7 @@ export default {
         ...mapGetters('TeamResultsIndex', ['data', 'total', 'loading', 'relationships']),
         columns: function () {
             let columns = [
+                { title: 'Ranking', field: 'ranking', sortable: false },
                 { title: 'Name', field: 'team_name', sortable: false },
                 { title: 'Score', field: 'score', sortable: false },
                 { title: 'Tie 1', field: 'tie_breaker_1', sortable: false },
@@ -84,11 +85,11 @@ export default {
             ];
 
             if (!this.event) {
-                columns.push({ title: 'Event', field: 'event_name', sortable: false });
+                columns.unshift({ title: 'Event', field: 'event_name', sortable: false });
             }
 
             if (!this.category) {
-                columns.push({ title: 'Category', field: 'category_name', sortable: false });
+                columns.unshift({ title: 'Category', field: 'category_name', sortable: false });
             }
 
             return columns;

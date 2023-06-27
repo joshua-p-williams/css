@@ -17,7 +17,7 @@ class OverallResultsController extends Controller
         $data = OverallRanking::with(['event', 'category', 'team', 'participant'])
                 ->ByEventId($request->input('eventId'))
                 ->ByCategoryId($request->input('categoryId'))
-                ->OrderByWinner()->get();
+                ->ByTop(10000)->get(); // ->OrderByWinner()->get();
 
         return new OverallRankingResource($data);
     }

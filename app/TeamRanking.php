@@ -36,8 +36,13 @@ class TeamRanking extends Model
         return $this->hasMany(Participant::class, 'team_id', 'team_id');
     }
 
+    public function scopeByTop($query, $id) {
+        return $query->orderBy('ranking')->where('ranking', '<=', $id);
+    }
+
     public function scopeOrderByWinner($query) {
-        return $query->orderBy('score', 'desc')
+        return $query->orderBy('ranking')
+                     ->orderBy('score', 'desc')
                      ->orderBy('tie_breaker_1', 'desc')
                      ->orderBy('tie_breaker_2', 'desc')
                      ->orderBy('tie_breaker_3', 'desc')

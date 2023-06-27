@@ -53,3 +53,20 @@ php artisan vendor:publish --tag=lfm_config
 php artisan vendor:publish --tag=lfm_public
 ```
 
+# Setting up a certificate
+
+See https://mindsers.blog/post/https-using-nginx-certbot-docker/
+
+Open the `env/nginx/conf.d/app.conf` and uncomment the commented out lines and remove the first `server` section.
+
+Create a new certificate with the following;
+
+```
+docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d yhecscores.com -d www.yhecscores.com
+```
+
+The certificate can be renewed with;
+
+```
+docker-compose run --rm certbot renew
+```

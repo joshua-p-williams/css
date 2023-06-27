@@ -34,12 +34,20 @@ services:
     volumes:
       - ./:/var/www
       - ./env/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
     networks:
       - app-network
 
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+
   #MySQL Service
   db:
-    image: mysql:5.7.22
+    image: mysql:8.0.33
     container_name: db
     restart: unless-stopped
     tty: true
