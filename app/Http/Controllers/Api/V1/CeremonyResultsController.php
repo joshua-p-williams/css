@@ -123,7 +123,7 @@ class CeremonyResultsController extends Controller
             ],
         ];
 
-        $output = $outputRangeEvents;
+        $output = $outputYHEC;
 
         $events = [];
         foreach($output['events'] as $eventSlug => $eventName) {
