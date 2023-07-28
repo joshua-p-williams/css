@@ -87,18 +87,18 @@ class UpdateRankingLogic extends Migration
             s.participant_id ,
             s.participant_name ,
             sum(s.score) as score ,
-            sum(s.tie_breaker_1) as tie_breaker_1 ,
-            sum(s.tie_breaker_2) as tie_breaker_2 ,
-            sum(s.tie_breaker_3) as tie_breaker_3 ,
-            sum(s.tie_breaker_4) as tie_breaker_4 ,
+            s.tie_breaker_1 ,
+            s.tie_breaker_2 ,
+            s.tie_breaker_3 ,
+            s.tie_breaker_4 ,
             DENSE_RANK() OVER (
             	PARTITION BY s.category_id 
             	ORDER BY 
             	sum(s.score) DESC , 
-            	sum(s.tie_breaker_1) DESC ,
-            	sum(s.tie_breaker_2) DESC ,
-            	sum(s.tie_breaker_3) DESC ,
-            	sum(s.tie_breaker_4) DESC
+            	s.tie_breaker_1 DESC ,
+            	s.tie_breaker_2 DESC ,
+            	s.tie_breaker_3 DESC ,
+            	s.tie_breaker_4 DESC
             ) AS ranking
         from v_individual_ranking s
         inner join participants c on s.participant_id = c.id
@@ -109,12 +109,11 @@ class UpdateRankingLogic extends Migration
             cmp.id,
             cmp.name,
             s.participant_id ,
-            s.participant_name
-        order by
-            sum(s.tie_breaker_1) desc,
-            sum(s.tie_breaker_2) desc,
-            sum(s.tie_breaker_3) desc,
-            sum(s.tie_breaker_4) desc
+            s.participant_name ,
+            s.tie_breaker_1 ,
+            s.tie_breaker_2 ,
+            s.tie_breaker_3 ,
+            s.tie_breaker_4
         ");
 
         DB::statement("
