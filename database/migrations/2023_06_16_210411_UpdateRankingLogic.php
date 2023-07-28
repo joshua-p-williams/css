@@ -129,25 +129,29 @@ class UpdateRankingLogic extends Migration
         a.team_id,
         a.team_name,
         sum(a.score) as score ,
-        sum(a.tie_breaker_1) as tie_breaker_1 ,
-        sum(a.tie_breaker_2) as tie_breaker_2 ,
-        sum(a.tie_breaker_3) as tie_breaker_3 ,
-        sum(a.tie_breaker_4) as tie_breaker_4 ,
+        a.tie_breaker_1 as tie_breaker_1 ,
+        a.tie_breaker_2 as tie_breaker_2 ,
+        a.tie_breaker_3 as tie_breaker_3 ,
+        a.tie_breaker_4 as tie_breaker_4 ,
 		DENSE_RANK() OVER (
 			PARTITION BY a.category_id
 			ORDER BY 
 			sum(a.score) DESC , 
-			sum(a.tie_breaker_1) DESC ,
-			sum(a.tie_breaker_2) DESC ,
-			sum(a.tie_breaker_3) DESC ,
-			sum(a.tie_breaker_4) DESC
+			a.tie_breaker_1 DESC ,
+			a.tie_breaker_2 DESC ,
+			a.tie_breaker_3 DESC ,
+			a.tie_breaker_4 DESC
 		) AS ranking             
         from v_team_ranking a
         group by
             a.category_id ,
             a.category_name ,
             a.team_id ,
-            a.team_name
+            a.team_name ,
+            a.tie_breaker_1 ,
+            a.tie_breaker_2 ,
+            a.tie_breaker_3 ,
+            a.tie_breaker_4 
         ");
 
         DB::statement("
