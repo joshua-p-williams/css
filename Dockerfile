@@ -22,8 +22,8 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     ca-certificates
 
-# Install Node.js 18.x (LTS) manually from NodeSource
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+# --- Install Node.js 14 (instead of 18) ---
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && \
     apt-get install -y nodejs
 
 # Install PHP extensions
