@@ -1,12 +1,12 @@
 FROM php:7.2-fpm
 
-# Copy composer.lock and composer.json
-COPY composer.lock composer.json /var/www/
-
 # Set working directory
 WORKDIR /var/www
 
-# Install dependencies
+# Copy composer files early for cache
+COPY composer.lock composer.json /var/www/
+
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpng-dev \
@@ -19,36 +19,37 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    nodejs \
-    npm
+    gnupg \
+    ca-certificates
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install Node.js 18.x (LTS) manually from NodeSource
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
-# Install extensions
+# Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
-RUN docker-php-ext-install gd
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Configure and install GD
+RUN docker-php-ext-configure gd \
+    --with-freetype-dir=/usr/include/ \
+    --with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-install gd
 
-# Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php \
+    -- --install-dir=/usr/local/bin --filename=composer
 
-# Update npm
-RUN npm i npm@latest -g
+# Create app user and assign ownership
+RUN groupadd -g 1000 www && \
+    useradd -u 1000 -ms /bin/bash -g www www
 
-# Copy existing application directory contents
+# Copy application code and set ownership
 COPY . /var/www
-
-# Copy existing application directory permissions
 COPY --chown=www:www . /var/www
 
-# Change current user to www
+# Switch to non-root user
 USER www
 
-# Expose port 9000 and start php-fpm server
+# Expose PHP-FPM port and start the process
 EXPOSE 9000
 CMD ["php-fpm"]
