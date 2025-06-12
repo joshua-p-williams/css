@@ -12,6 +12,7 @@ Options:
 Commands:
     backup-all               Create a full project backup
     backup-db                Create a database backup (MySQL volume only)
+    restore-db FILE          Restore the database from a .tar.gz backup file
 "
 
 # Defaults
@@ -80,6 +81,41 @@ backup_db() {
     success "Updated latest DB backup: $latest"
 }
 
+restore_db() {
+    local archive_path="$1"
+
+    if [ -z "$archive_path" ]; then
+        fail "You must provide the path to a .tar.gz backup file."
+    fi
+
+    if [ ! -f "$archive_path" ]; then
+        fail "Backup file does not exist: $archive_path"
+    fi
+
+    if [[ "$archive_path" != *.tar.gz ]]; then
+        fail "Backup file must be a .tar.gz archive"
+    fi
+
+    local db_path="$__project_path/.mysql-data"
+
+    info "Restoring database from archive: $archive_path"
+
+    # Remove existing database directory
+    if [ -d "$db_path" ]; then
+        info "Removing existing database directory at $db_path"
+        rm -rf "$db_path" || fail "Failed to remove existing .mysql-data"
+    fi
+
+    # Extract tarball into project root
+    tar -xzf "$archive_path" -C "$__project_path" || fail "Failed to extract archive"
+
+    if [ ! -d "$db_path" ]; then
+        fail "Expected .mysql-data directory was not restored from archive"
+    fi
+
+    success "Database successfully restored from $archive_path"
+}
+
 # Argument parsing
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
@@ -112,6 +148,9 @@ case "$__command" in
         ;;
     backup-db)
         backup_db
+        ;;
+    restore-db)
+        restore_db "${POSITIONAL[1]}"
         ;;
     *)
         echo "$__usage"
