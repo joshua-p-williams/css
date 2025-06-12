@@ -45,7 +45,7 @@ ensure_backup_dir_exists() {
 }
 
 timestamp() {
-    date +%Y-%d-%m-%H-%M-%S
+    date +%Y-%m-%d-%H-%M-%S
 }
 
 backup_all() {
