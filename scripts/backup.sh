@@ -1,12 +1,120 @@
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-stamp=`date +%Y-%d-%m-%H-%M-%S`
+#!/bin/bash
 
-cd $DIR/..
-sudo tar -czf ~/backups/db-$stamp.tar.gz ./
-sudo cp ~/backups/db-$stamp.tar.gz /media/josh/BD9A-891F/range-events-2021/
-# tar -czf db-$stamp.tar.gz ./.mysql-data
-# mv db-$stamp.tar.gz /home/css/css/public/backup/
-# rm -Rf /home/css/css/public/backup/db-latest.tar.gz
-# cp /home/css/css/public/backup/db-$stamp.tar.gz /home/css/css/public/backup/db-latest.tar.gz
+__usage="
+Usage: $(basename "$0") [OPTIONS]... [COMMAND]
 
-echo "Backed up to ~/backups/db-$stamp.tar.gz"
+Script to safely back up the CSS project.
+
+Options:
+    -h, --help               Show this help message
+    -p, --project-path PATH  Specify the project base path (default: auto-detected)
+
+Commands:
+    backup-all               Create a full project backup
+    backup-db                Create a database backup (MySQL volume only)
+"
+
+# Defaults
+__project_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+__backup_dir="$__project_path/public/backup"
+
+# Logging helpers
+info() {
+    echo -e "\033[0;34m[INFO] $1\033[0m"
+}
+
+success() {
+    echo -e "\033[0;32m[SUCCESS] $1\033[0m"
+}
+
+error() {
+    echo -e "\033[0;31m[ERROR] $1\033[0m"
+}
+
+fail() {
+    error "$1"
+    exit 1
+}
+
+ensure_backup_dir_exists() {
+    if [ ! -d "$__backup_dir" ]; then
+        info "Creating backup directory at $__backup_dir"
+        mkdir -p "$__backup_dir" || fail "Could not create backup directory"
+    fi
+}
+
+timestamp() {
+    date +%Y-%d-%m-%H-%M-%S
+}
+
+backup_all() {
+    ensure_backup_dir_exists
+    local stamp
+    stamp=$(timestamp)
+    local tarball="$__backup_dir/all-$stamp.tar.gz"
+    local latest="$__backup_dir/all-latest.tar.gz"
+
+    info "Creating full project backup..."
+    tar -czf "$tarball" -C "$__project_path" . --exclude='./public/backup' || fail "Failed to create full backup"
+    cp -f "$tarball" "$latest" || fail "Failed to copy latest backup"
+    success "Full backup created: $tarball"
+    success "Updated latest backup: $latest"
+}
+
+backup_db() {
+    ensure_backup_dir_exists
+    local stamp
+    stamp=$(timestamp)
+    local tarball="$__backup_dir/db-$stamp.tar.gz"
+    local latest="$__backup_dir/db-latest.tar.gz"
+
+    info "Creating database backup..."
+    local db_path="$__project_path/.mysql-data"
+    if [ ! -d "$db_path" ]; then
+        fail "Database directory not found at $db_path"
+    fi
+
+    tar -czf "$tarball" -C "$__project_path" .mysql-data || fail "Failed to create DB backup"
+    cp -f "$tarball" "$latest" || fail "Failed to copy latest DB backup"
+    success "Database backup created: $tarball"
+    success "Updated latest DB backup: $latest"
+}
+
+# Argument parsing
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        -h|--help)
+            echo "$__usage"
+            exit 0
+            ;;
+        -p|--project-path)
+            __project_path="$2"
+            __backup_dir="$__project_path/public/backup"
+            shift
+            shift
+            ;;
+        *) # unknown option or command
+            POSITIONAL+=("$1")
+            shift
+            ;;
+    esac
+done
+
+set -- "${POSITIONAL[@]}"
+__command=${POSITIONAL[0]}
+
+# Command dispatcher
+case "$__command" in
+    backup-all)
+        backup_all
+        ;;
+    backup-db)
+        backup_db
+        ;;
+    *)
+        echo "$__usage"
+        exit 1
+        ;;
+esac
